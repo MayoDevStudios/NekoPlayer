@@ -1395,7 +1395,7 @@ namespace YouTubePlayerEX.App.Screens
                                                 {
                                                     AutoSizeAxes = Axes.X,
                                                     Height = 32,
-                                                    CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                                                    CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS / 1.5f,
                                                     Masking = true,
                                                     AlwaysPresent = true,
                                                     Children = new Drawable[]
@@ -1403,7 +1403,7 @@ namespace YouTubePlayerEX.App.Screens
                                                         new Container
                                                         {
                                                             RelativeSizeAxes = Axes.Both,
-                                                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                                                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS / 1.5f,
                                                             Children = new Drawable[] {
                                                                 likeButtonBackground = new Box
                                                                 {
@@ -1447,7 +1447,7 @@ namespace YouTubePlayerEX.App.Screens
                                                 {
                                                     AutoSizeAxes = Axes.X,
                                                     Height = 32,
-                                                    CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                                                    CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS / 1.5f,
                                                     Masking = true,
                                                     AlwaysPresent = true,
                                                     Children = new Drawable[]
@@ -1455,7 +1455,7 @@ namespace YouTubePlayerEX.App.Screens
                                                         new Container
                                                         {
                                                             RelativeSizeAxes = Axes.Both,
-                                                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                                                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS / 1.5f,
                                                             Children = new Drawable[] {
                                                                 dislikeButtonBackground = new Box
                                                                 {
@@ -1499,7 +1499,7 @@ namespace YouTubePlayerEX.App.Screens
                                                 {
                                                     AutoSizeAxes = Axes.X,
                                                     Height = 32,
-                                                    CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                                                    CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS / 1.5f,
                                                     Masking = true,
                                                     AlwaysPresent = true,
                                                     ClickAction = f =>
@@ -1514,7 +1514,7 @@ namespace YouTubePlayerEX.App.Screens
                                                         new Container
                                                         {
                                                             RelativeSizeAxes = Axes.Both,
-                                                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                                                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS / 1.5f,
                                                             Child = new Box
                                                             {
                                                                 RelativeSizeAxes = Axes.Both,
@@ -1552,7 +1552,7 @@ namespace YouTubePlayerEX.App.Screens
                                                     Enabled = { Value = true },
                                                     AutoSizeAxes = Axes.X,
                                                     Height = 32,
-                                                    CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                                                    CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS / 1.5f,
                                                     Masking = true,
                                                     AlwaysPresent = true,
                                                     ClickAction = f =>
@@ -1569,7 +1569,7 @@ namespace YouTubePlayerEX.App.Screens
                                                         new Container
                                                         {
                                                             RelativeSizeAxes = Axes.Both,
-                                                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                                                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS / 1.5f,
                                                             Child = new Box
                                                             {
                                                                 RelativeSizeAxes = Axes.Both,

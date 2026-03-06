@@ -2,7 +2,7 @@
   <PropertyGroup Label="Project">
     <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
     <OutputType>WinExe</OutputType>
-    <AssemblyName>YouTubePlayerEX</AssemblyName>
+    <AssemblyName>NekoPlayer</AssemblyName>
     <ApplicationIcon>game.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <Version>0.0.0</Version>
@@ -12,7 +12,7 @@
     <PackageReference Include="Velopack" Version="0.0.1298" />
   </ItemGroup>
   <ItemGroup Label="Project References">
-    <ProjectReference Include="..\YouTubePlayerEX.App\NekoPlayer.App.csproj" />
+    <ProjectReference Include="..\NekoPlayer.App\NekoPlayer.App.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="bassloud.dll">

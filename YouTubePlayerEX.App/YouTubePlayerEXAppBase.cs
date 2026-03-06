@@ -586,11 +586,11 @@ namespace YouTubePlayerEX.App
             if (Host.Window == null)
                 return;
 
-            string newTitle = "YouTube Player EX";
+            string newTitle = "NekoPlayer";
 
             if (!string.IsNullOrEmpty(customTitle))
             {
-                newTitle = $"YouTube Player EX > {customTitle}";
+                newTitle = $"NekoPlayer > {customTitle}";
             }
 
             if (newTitle != Host.Window.Title)

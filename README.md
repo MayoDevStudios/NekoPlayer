@@ -1,8 +1,8 @@
 <p align="center">
-  <img width="500" alt="YouTube Player EX Logo" src="assets/logo.png">
+  <img width="500" alt="NekoPlayer Logo" src="assets/New NekoPlayer Logo.png">
 </p>
 
-# YouTube Player EX
+# NekoPlayer
 
 [![Build status](https://github.com/BoomboxRapsody/YouTubePlayerEX/actions/workflows/ci.yml/badge.svg?branch=master&event=push)](https://github.com/BoomboxRapsody/YouTubePlayerEX/actions/workflows/ci.yml)
 [![GitHub release](https://img.shields.io/github/release/BoomboxRapsody/YouTubePlayerEX.svg)](https://github.com/BoomboxRapsody/YouTubePlayerEX/releases/latest)
@@ -19,7 +19,7 @@ The enhanced YouTube video player written in [custom osu-framework](https://gith
 
 If your platform is unsupported or not listed above, there is still a chance you can run the release or manually build it by following the instructions below.
 
-## Developing YouTube Player EX
+## Developing NekoPlayer
 
 ### Prerequisites
 
@@ -59,7 +59,7 @@ To build for mobile platforms, you will likely need to run `sudo dotnet workload
 
 #### From CLI
 
-You can also build and run *YouTube Player EX* from the command-line with a single command:
+You can also build and run *NekoPlayer* from the command-line with a single command:
 
 ```shell
 dotnet run --project YouTubePlayerEX.Desktop.Windows (for Windows)
@@ -86,7 +86,7 @@ If you wish to help with localisation efforts, head over to [this](https://app.t
 
 ## Licence
 
-*YouTube Player EX*'s code and framework are licensed under the [MIT licence](https://opensource.org/licenses/MIT). Please see [the licence file](LICENCE) for more information. [tl;dr](https://tldrlegal.com/license/mit-license) you can do whatever you want as long as you include the original copyright and license notice in any copy of the software/source.
+*NekoPlayer*'s code and framework are licensed under the [MIT licence](https://opensource.org/licenses/MIT). Please see [the licence file](LICENCE) for more information. [tl;dr](https://tldrlegal.com/license/mit-license) you can do whatever you want as long as you include the original copyright and license notice in any copy of the software/source.
 
 **Note:** FFmpeg binaries are distributed under their original licenses (GPL/LGPL) from the source.
 Please refer to [FFmpeg License](https://www.ffmpeg.org/legal.html) for details.

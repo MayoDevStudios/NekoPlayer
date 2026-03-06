@@ -15,7 +15,7 @@ namespace YouTubePlayerEX.Desktop.Windows
 
             HostOptions hostOptions = new HostOptions
             {
-                FriendlyGameName = "YouTube Player EX",
+                FriendlyGameName = "NekoPlayer",
             };
 
             using (GameHost host = Host.GetSuitableDesktopHost(@"YouTubePlayerEX", hostOptions))

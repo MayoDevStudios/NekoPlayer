@@ -1293,7 +1293,7 @@ namespace YouTubePlayerEX.App.Screens
                                                                 {
                                                                     Width = 100,
                                                                     Height = 100,
-                                                                    Texture = textures.Get(@"YouTubePlayerEXLogo"),
+                                                                    Texture = textures.Get(@"NewNekoPlayerLogo"),
                                                                     FillMode = FillMode.Fit,
                                                                 }
                                                             },
@@ -1302,7 +1302,7 @@ namespace YouTubePlayerEX.App.Screens
                                                         {
                                                             RelativeSizeAxes = Axes.X,
                                                             AutoSizeAxes = Axes.Y,
-                                                            Text = "YouTube Player EX",
+                                                            Text = "NekoPlayer",
                                                             TextAnchor = Anchor.Centre,
                                                             Colour = overlayColourProvider.Content2,
                                                         },
@@ -3880,7 +3880,7 @@ namespace YouTubePlayerEX.App.Screens
                                 LargeImageKey = videoData.Snippet.Thumbnails.High.Url,
                                 LargeImageUrl = $"https://youtu.be/{videoData.Id}",
                                 LargeImageText = videoData.Snippet.Title,
-                                SmallImageText = "YouTube Player EX",
+                                SmallImageText = "NekoPlayer",
                                 SmallImageKey = "youtube_player_ex_logo"
                             },
                         });
@@ -3893,7 +3893,7 @@ namespace YouTubePlayerEX.App.Screens
                             Assets = new Assets()
                             {
                                 LargeImageKey = "youtube_player_ex_logo",
-                                LargeImageText = "YouTube Player EX",
+                                LargeImageText = "NekoPlayer",
                             },
                         });
                     }
@@ -3908,7 +3908,7 @@ namespace YouTubePlayerEX.App.Screens
                             State = "Watching Video",
                             Assets = new Assets()
                             {
-                                LargeImageText = "YouTube Player EX",
+                                LargeImageText = "NekoPlayer",
                                 LargeImageKey = "youtube_player_ex_logo"
                             },
                         });
@@ -3921,7 +3921,7 @@ namespace YouTubePlayerEX.App.Screens
                             Assets = new Assets()
                             {
                                 LargeImageKey = "youtube_player_ex_logo",
-                                LargeImageText = "YouTube Player EX",
+                                LargeImageText = "NekoPlayer",
                             },
                         });
                     }

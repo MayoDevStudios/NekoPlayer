@@ -4,7 +4,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        # YouTube Player EX bug report
+        # NekoPlayer bug report
 
         Important to note that your issue may have already been reported before. Please check:
         - Pinned issues, at the top of https://github.com/BoomboxRapsody/YouTubePlayerEX/issues.

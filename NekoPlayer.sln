@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
 VisualStudioVersion = 18.2.11415.280
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NekoPlayer.Desktop", "YouTubePlayerEX.Desktop\NekoPlayer.Desktop.csproj", "{AEB3FC89-DC3E-4BC9-9EC7-03B72FC5D849}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NekoPlayer.Desktop", "NekoPlayer.Desktop\NekoPlayer.Desktop.csproj", "{AEB3FC89-DC3E-4BC9-9EC7-03B72FC5D849}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NekoPlayer.App", "YouTubePlayerEX.App\NekoPlayer.App.csproj", "{1ADACD09-7BE3-46A1-AEAB-C41E78E8700F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NekoPlayer.App", "NekoPlayer.App\NekoPlayer.App.csproj", "{1ADACD09-7BE3-46A1-AEAB-C41E78E8700F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NekoPlayer.App.Tests", "YouTubePlayerEX.App.Tests\NekoPlayer.App.Tests.csproj", "{0A9CA1A5-5147-4AA8-9B9D-87178DE5A78D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NekoPlayer.App.Tests", "NekoPlayer.App.Tests\NekoPlayer.App.Tests.csproj", "{0A9CA1A5-5147-4AA8-9B9D-87178DE5A78D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9AF9C164-2A9E-4958-BB12-0FEDC40F58EC}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		Directory.Build.props = Directory.Build.props
-		YouTubePlayerEX.sln.DotSettings = YouTubePlayerEX.sln.DotSettings
+		NekoPlayer.sln.DotSettings = NekoPlayer.sln.DotSettings
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osu.Framework", "YouTubePlayerEX-framework\osu.Framework\osu.Framework.csproj", "{F4375DB2-4D7E-D1DB-89EB-E1F65D6458AD}"
@@ -25,10 +25,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeAnalysis", "CodeAnalysis", "{FB156649-D457-4D1A-969C-D3A23FD31513}"
 	ProjectSection(SolutionItems) = preProject
 		CodeAnalysis\BannedSymbols.txt = CodeAnalysis\BannedSymbols.txt
-		CodeAnalysis\YouTubePlayerEX.globalconfig = CodeAnalysis\YouTubePlayerEX.globalconfig
+		CodeAnalysis\NekoPlayer.globalconfig = CodeAnalysis\NekoPlayer.globalconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NekoPlayer.Desktop.Windows", "YouTubePlayerEX.Desktop.Windows\NekoPlayer.Desktop.Windows.csproj", "{3CC84560-5BD7-FD04-160A-41E2025DA698}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NekoPlayer.Desktop.Windows", "NekoPlayer.Desktop.Windows\NekoPlayer.Desktop.Windows.csproj", "{3CC84560-5BD7-FD04-160A-41E2025DA698}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

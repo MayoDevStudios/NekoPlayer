@@ -12,7 +12,7 @@
     <PackageReference Include="Velopack" Version="0.0.1298" />
   </ItemGroup>
   <ItemGroup Label="Project References">
-    <ProjectReference Include="..\YouTubePlayerEX.App\YouTubePlayerEX.App.csproj" />
+    <ProjectReference Include="..\YouTubePlayerEX.App\NekoPlayer.App.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="bassloud.dll">

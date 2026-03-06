@@ -6,7 +6,7 @@
 using System;
 using osu.Framework.Input.Events;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     public partial class RoundedButtonContainer : AdaptiveClickableContainer
     {

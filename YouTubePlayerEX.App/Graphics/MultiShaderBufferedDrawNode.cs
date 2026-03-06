@@ -6,9 +6,9 @@ using System.Linq;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Rendering;
 using osuTK.Graphics;
-using YouTubePlayerEX.App.Graphics.Shaders;
+using NekoPlayer.App.Graphics.Shaders;
 
-namespace YouTubePlayerEX.App.Graphics
+namespace NekoPlayer.App.Graphics
 {
     public class MultiShaderBufferedDrawNode : CustomizedShaderBufferedDrawNode
     {

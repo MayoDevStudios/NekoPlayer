@@ -8,9 +8,9 @@ using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
-using YouTubePlayerEX.App.Graphics.Sprites;
+using NekoPlayer.App.Graphics.Sprites;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     public partial class AdaptiveTextFlowContainer : TextFlowContainer
     {

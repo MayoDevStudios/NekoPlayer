@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using osu.Framework.Utils;
 using osuTK.Graphics;
 
-namespace YouTubePlayerEX.App.Utils
+namespace NekoPlayer.App.Utils
 {
     public static class ColourUtils
     {

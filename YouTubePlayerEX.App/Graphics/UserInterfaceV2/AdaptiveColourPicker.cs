@@ -3,7 +3,7 @@
 
 using osu.Framework.Graphics.UserInterface;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterfaceV2
+namespace NekoPlayer.App.Graphics.UserInterfaceV2
 {
     public partial class AdaptiveColourPicker : ColourPicker
     {

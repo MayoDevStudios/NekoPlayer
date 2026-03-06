@@ -20,13 +20,13 @@ using osu.Framework.Input;
 using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
 using osuTK.Graphics;
-using YouTubePlayerEX.App.Extensions;
-using YouTubePlayerEX.App.Graphics.Sprites;
-using YouTubePlayerEX.App.Graphics.UserInterface;
-using YouTubePlayerEX.App.Localisation;
+using NekoPlayer.App.Extensions;
+using NekoPlayer.App.Graphics.Sprites;
+using NekoPlayer.App.Graphics.UserInterface;
+using NekoPlayer.App.Localisation;
 using Vector2 = osuTK.Vector2;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterfaceV2
+namespace NekoPlayer.App.Graphics.UserInterfaceV2
 {
     public partial class FormSliderBar<T> : CompositeDrawable, IHasCurrentValue<T>, IFormControl
         where T : struct, INumber<T>, IMinMaxValue<T>
@@ -196,7 +196,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterfaceV2
         }
 
         [BackgroundDependencyLoader]
-        private void load(AdaptiveColour colours, YouTubePlayerEXApp? game)
+        private void load(AdaptiveColour colours, NekoPlayerApp? game)
         {
             RelativeSizeAxes = Axes.X;
             AutoSizeAxes = Axes.Y;
@@ -478,7 +478,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterfaceV2
                     {
                         RelativeSizeAxes = Axes.Both,
                         Masking = true,
-                        CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS / 1.5f,
+                        CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS / 1.5f,
                         Children = new Drawable[]
                         {
                             leftBox = new Box

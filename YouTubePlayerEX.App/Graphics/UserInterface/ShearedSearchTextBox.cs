@@ -11,10 +11,10 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Localisation;
 using osu.Framework.Text;
 using osuTK;
-using YouTubePlayerEX.App.Graphics.Sprites;
-using YouTubePlayerEX.App.Localisation;
+using NekoPlayer.App.Graphics.Sprites;
+using NekoPlayer.App.Localisation;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     public partial class ShearedSearchTextBox : CompositeDrawable, IHasCurrentValue<string>
     {
@@ -115,8 +115,8 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                 BackgroundFocused = colourProvider.Background4;
                 BackgroundUnfocused = colourProvider.Background4;
 
-                Placeholder.Font = YouTubePlayerEXApp.DefaultFont.With(size: FontSize, weight: "SemiBold");
-                PlaceholderText = YTPlayerEXStrings.Search;
+                Placeholder.Font = NekoPlayerApp.DefaultFont.With(size: FontSize, weight: "SemiBold");
+                PlaceholderText = NekoPlayerStrings.Search;
 
                 CornerRadius = corner_radius;
                 TextContainer.Shear = new Vector2(-0.2f, 0);
@@ -144,7 +144,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
             protected override Drawable GetDrawableCharacter(Grapheme c) => new FallingDownContainer
             {
                 AutoSizeAxes = Axes.Both,
-                Child = new AdaptiveSpriteText { Text = c.ToString(), Font = YouTubePlayerEXApp.DefaultFont.With(size: 20, weight: "SemiBold") },
+                Child = new AdaptiveSpriteText { Text = c.ToString(), Font = NekoPlayerApp.DefaultFont.With(size: 20, weight: "SemiBold") },
             };
         }
     }

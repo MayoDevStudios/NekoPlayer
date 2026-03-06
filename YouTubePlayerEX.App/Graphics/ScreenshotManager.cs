@@ -22,14 +22,14 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using YouTubePlayerEX.App.Config;
-using YouTubePlayerEX.App.Extensions;
-using YouTubePlayerEX.App.Input.Binding;
-using YouTubePlayerEX.App.Localisation;
-using YouTubePlayerEX.App.Overlays;
-using YouTubePlayerEX.App.Overlays.OSD;
+using NekoPlayer.App.Config;
+using NekoPlayer.App.Extensions;
+using NekoPlayer.App.Input.Binding;
+using NekoPlayer.App.Localisation;
+using NekoPlayer.App.Overlays;
+using NekoPlayer.App.Overlays.OSD;
 
-namespace YouTubePlayerEX.App.Graphics
+namespace NekoPlayer.App.Graphics
 {
     public partial class ScreenshotManager : Component, IKeyBindingHandler<GlobalAction>, IHandleGlobalKeyboardInput
     {
@@ -90,8 +90,8 @@ namespace YouTubePlayerEX.App.Graphics
         {
             Interlocked.Increment(ref screenShotTasks);
 
-            ScreenshotFormat screenshotFormat = config.Get<ScreenshotFormat>(YTPlayerEXSetting.ScreenshotFormat);
-            bool captureMenuCursor = config.Get<bool>(YTPlayerEXSetting.ScreenshotCaptureMenuCursor);
+            ScreenshotFormat screenshotFormat = config.Get<ScreenshotFormat>(NekoPlayerSetting.ScreenshotFormat);
+            bool captureMenuCursor = config.Get<bool>(NekoPlayerSetting.ScreenshotCaptureMenuCursor);
 
             try
             {
@@ -123,12 +123,12 @@ namespace YouTubePlayerEX.App.Graphics
 
                 using (Image<Rgba32>? image = await host.TakeScreenshotAsync().ConfigureAwait(false))
                 {
-                    if (config.Get<ScalingMode>(YTPlayerEXSetting.Scaling) == ScalingMode.Everything)
+                    if (config.Get<ScalingMode>(NekoPlayerSetting.Scaling) == ScalingMode.Everything)
                     {
-                        float posX = config.Get<float>(YTPlayerEXSetting.ScalingPositionX);
-                        float posY = config.Get<float>(YTPlayerEXSetting.ScalingPositionY);
-                        float sizeX = config.Get<float>(YTPlayerEXSetting.ScalingSizeX);
-                        float sizeY = config.Get<float>(YTPlayerEXSetting.ScalingSizeY);
+                        float posX = config.Get<float>(NekoPlayerSetting.ScalingPositionX);
+                        float posY = config.Get<float>(NekoPlayerSetting.ScalingPositionY);
+                        float sizeX = config.Get<float>(NekoPlayerSetting.ScalingSizeX);
+                        float sizeY = config.Get<float>(NekoPlayerSetting.ScalingSizeY);
 
                         image.Mutate(m =>
                         {
@@ -184,7 +184,7 @@ namespace YouTubePlayerEX.App.Graphics
                     });
                     */
 
-                    Toast toast = new Toast(YTPlayerEXStrings.ScreenshotSaved, filename);
+                    Toast toast = new Toast(NekoPlayerStrings.ScreenshotSaved, filename);
 
                     onScreenDisplay.Display(toast);
 

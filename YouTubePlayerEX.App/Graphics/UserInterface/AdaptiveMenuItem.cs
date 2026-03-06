@@ -8,7 +8,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Localisation;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     public class AdaptiveMenuItem : MenuItem
     {

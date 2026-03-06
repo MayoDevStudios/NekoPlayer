@@ -3,7 +3,7 @@
 
 using System;
 
-namespace YouTubePlayerEX.App.Online
+namespace NekoPlayer.App.Online
 {
     public class Link : IComparable<Link>
     {

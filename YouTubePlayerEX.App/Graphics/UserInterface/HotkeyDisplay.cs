@@ -11,9 +11,9 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input;
 using osu.Framework.Platform;
 using osuTK;
-using YouTubePlayerEX.App.Graphics.Sprites;
+using NekoPlayer.App.Graphics.Sprites;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     public partial class HotkeyDisplay : CompositeDrawable
     {
@@ -97,7 +97,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                     {
                         Margin = new MarginPadding { Horizontal = 5, Bottom = 1, },
                         Text = hotkey.ToUpperInvariant(),
-                        Font = YouTubePlayerEXApp.DefaultFont.With(size: 12, weight: "Bold"),
+                        Font = NekoPlayerApp.DefaultFont.With(size: 12, weight: "Bold"),
                         Colour = colourProvider?.Light1 ?? colours.GrayA,
                     }
                 };

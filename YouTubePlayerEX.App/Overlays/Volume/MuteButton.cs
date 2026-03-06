@@ -12,10 +12,10 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osuTK;
-using YouTubePlayerEX.App.Graphics;
-using YouTubePlayerEX.App.Graphics.UserInterface;
+using NekoPlayer.App.Graphics;
+using NekoPlayer.App.Graphics.UserInterface;
 
-namespace YouTubePlayerEX.App.Overlays.Volume
+namespace NekoPlayer.App.Overlays.Volume
 {
     public partial class MuteButton : AdaptiveButton, IHasCurrentValue<bool>
     {

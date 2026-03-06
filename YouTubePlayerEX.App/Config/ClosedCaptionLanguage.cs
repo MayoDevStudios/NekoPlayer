@@ -3,13 +3,13 @@
 
 using System.ComponentModel;
 using osu.Framework.Localisation;
-using YouTubePlayerEX.App.Localisation;
+using NekoPlayer.App.Localisation;
 
-namespace YouTubePlayerEX.App.Config
+namespace NekoPlayer.App.Config
 {
     public enum ClosedCaptionLanguage
     {
-        [LocalisableDescription(typeof(YTPlayerEXStrings), nameof(YTPlayerEXStrings.CaptionDisabled))]
+        [LocalisableDescription(typeof(NekoPlayerStrings), nameof(NekoPlayerStrings.CaptionDisabled))]
         Disabled,
 
         [Description("English")]

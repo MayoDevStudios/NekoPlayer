@@ -3,7 +3,7 @@
 
 using osu.Framework.Input;
 
-namespace YouTubePlayerEX.App.Input
+namespace NekoPlayer.App.Input
 {
     public partial class AppIdleTracker : IdleTracker
     {

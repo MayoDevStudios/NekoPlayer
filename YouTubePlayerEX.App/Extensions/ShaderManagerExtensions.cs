@@ -2,9 +2,9 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Graphics.Shaders;
-using YouTubePlayerEX.App.Graphics.Shaders;
+using NekoPlayer.App.Graphics.Shaders;
 
-namespace YouTubePlayerEX.App.Extensions
+namespace NekoPlayer.App.Extensions
 {
     public static class ShaderManagerExtensions
     {

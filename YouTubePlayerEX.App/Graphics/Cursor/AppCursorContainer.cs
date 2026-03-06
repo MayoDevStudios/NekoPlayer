@@ -18,9 +18,9 @@ using osu.Framework.Input.Events;
 using osu.Framework.Platform;
 using osu.Framework.Utils;
 using osuTK;
-using YouTubePlayerEX.App.Config;
+using NekoPlayer.App.Config;
 
-namespace YouTubePlayerEX.App.Graphics.Cursor
+namespace NekoPlayer.App.Graphics.Cursor
 {
     public partial class AppCursorContainer : CursorContainer
     {
@@ -60,7 +60,7 @@ namespace YouTubePlayerEX.App.Graphics.Cursor
         [BackgroundDependencyLoader]
         private void load(AudioManager audio, YTPlayerEXConfigManager config, ScreenshotManager? screenshotManager)
         {
-            cursorRotate = config.GetBindable<bool>(YTPlayerEXSetting.CursorRotation);
+            cursorRotate = config.GetBindable<bool>(NekoPlayerSetting.CursorRotation);
 
             if (screenshotManager != null)
                 screenshotCursorVisibility.BindTo(screenshotManager.CursorVisibility);
@@ -71,7 +71,7 @@ namespace YouTubePlayerEX.App.Graphics.Cursor
         }
 
         [Resolved]
-        private YouTubePlayerEXAppBase? game { get; set; }
+        private NekoPlayerAppBase? game { get; set; }
 
         private readonly IBindable<bool> lastInputWasMouse = new BindableBool();
         private readonly IBindable<bool> gameActive = new BindableBool(true);

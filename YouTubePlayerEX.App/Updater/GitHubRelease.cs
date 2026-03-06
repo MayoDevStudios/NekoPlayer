@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 
-namespace YouTubePlayerEX.App.Updater
+namespace NekoPlayer.App.Updater
 {
     public class GitHubRelease
     {

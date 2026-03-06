@@ -12,10 +12,10 @@ using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
 using osuTK;
 using osuTK.Graphics;
-using YouTubePlayerEX.App.Graphics.Containers;
-using YouTubePlayerEX.App.Graphics.Sprites;
+using NekoPlayer.App.Graphics.Containers;
+using NekoPlayer.App.Graphics.Sprites;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     public partial class MenuButtonItem : AdaptiveTweakedClickableContainer
     {
@@ -79,7 +79,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                     {
                         buttonContent = new Container
                         {
-                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS,
                             Masking = true,
                             RelativeSizeAxes = Axes.Both,
                             Children = new Drawable[]
@@ -128,7 +128,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                                             {
                                                 titleText = new TruncatingSpriteText
                                                 {
-                                                    Font = YouTubePlayerEXApp.TorusAlternate.With(size: 20, weight: "Bold"),
+                                                    Font = NekoPlayerApp.TorusAlternate.With(size: 20, weight: "Bold"),
                                                     RelativeSizeAxes = Axes.X,
                                                     Text = text,
                                                     Colour = overlayColourProvider.Content2,

@@ -9,7 +9,7 @@ using osu.Framework;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     /// <summary>
     /// A FillFlowContainer that provides functionality to cycle selection between children

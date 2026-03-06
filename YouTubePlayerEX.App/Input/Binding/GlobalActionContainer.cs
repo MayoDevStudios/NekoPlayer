@@ -8,7 +8,7 @@ using osu.Framework.Input;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 
-namespace YouTubePlayerEX.App.Input.Binding
+namespace NekoPlayer.App.Input.Binding
 {
     public partial class GlobalActionContainer : KeyBindingContainer<GlobalAction>, IHandleGlobalKeyboardInput, IKeyBindingHandler<GlobalAction>
     {
@@ -16,7 +16,7 @@ namespace YouTubePlayerEX.App.Input.Binding
 
         private readonly IKeyBindingHandler<GlobalAction>? handler;
 
-        public GlobalActionContainer(YouTubePlayerEXAppBase? game)
+        public GlobalActionContainer(NekoPlayerAppBase? game)
             : base(matchingMode: KeyCombinationMatchingMode.Modifiers)
         {
             if (game is IKeyBindingHandler<GlobalAction> h)

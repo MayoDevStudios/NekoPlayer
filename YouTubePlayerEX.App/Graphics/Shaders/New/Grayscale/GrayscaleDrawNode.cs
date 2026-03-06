@@ -9,7 +9,7 @@ using osu.Framework.Graphics.Rendering;
 using osu.Framework.Graphics.Shaders.Types;
 using osuTK.Graphics;
 
-namespace YouTubePlayerEX.App.Graphics.Shaders.New.Grayscale
+namespace NekoPlayer.App.Graphics.Shaders.New.Grayscale
 {
     public partial class GrayscaleContainer
     {

@@ -16,7 +16,7 @@ using SharpCompress.Common;
 using SharpCompress.Readers;
 using SixLabors.ImageSharp.Memory;
 
-namespace YouTubePlayerEX.App.IO.Archives
+namespace NekoPlayer.App.IO.Archives
 {
     public sealed class ZipArchiveReader : ArchiveReader
     {

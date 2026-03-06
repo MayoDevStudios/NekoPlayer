@@ -5,7 +5,7 @@ using osu.Framework.Platform;
 using osu.Framework;
 using Velopack;
 
-namespace YouTubePlayerEX.Desktop.Windows
+namespace NekoPlayer.Desktop.Windows
 {
     public static class Program
     {
@@ -18,10 +18,10 @@ namespace YouTubePlayerEX.Desktop.Windows
                 FriendlyGameName = "NekoPlayer",
             };
 
-            using (GameHost host = Host.GetSuitableDesktopHost(@"YouTubePlayerEX", hostOptions))
+            using (GameHost host = Host.GetSuitableDesktopHost(@"NekoPlayer", hostOptions))
             {
                 host.AllowBenchmarkUnlimitedFrames = true;
-                host.Run(new YouTubePlayerEXAppWindowsDesktop());
+                host.Run(new NekoPlayerAppWindowsDesktop());
             }
         }
     }

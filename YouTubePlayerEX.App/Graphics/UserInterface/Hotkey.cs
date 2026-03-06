@@ -8,9 +8,9 @@ using System.Linq;
 using osu.Framework.Input;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Platform;
-using YouTubePlayerEX.App.Input.Binding;
+using NekoPlayer.App.Input.Binding;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     public readonly record struct Hotkey
     {

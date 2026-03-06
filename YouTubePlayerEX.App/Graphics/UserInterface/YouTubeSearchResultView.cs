@@ -20,13 +20,13 @@ using osu.Framework.Graphics.Textures;
 using osu.Framework.Input.Events;
 using osuTK;
 using osuTK.Graphics;
-using YouTubePlayerEX.App.Config;
-using YouTubePlayerEX.App.Extensions;
-using YouTubePlayerEX.App.Graphics.Sprites;
-using YouTubePlayerEX.App.Localisation;
-using YouTubePlayerEX.App.Online;
+using NekoPlayer.App.Config;
+using NekoPlayer.App.Extensions;
+using NekoPlayer.App.Graphics.Sprites;
+using NekoPlayer.App.Localisation;
+using NekoPlayer.App.Online;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     public partial class YouTubeSearchResultView : AdaptiveClickableContainer
     {
@@ -42,7 +42,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
         private YouTubeAPI api { get; set; } = null!;
 
         [Resolved]
-        private YouTubePlayerEXAppBase app { get; set; } = null!;
+        private NekoPlayerAppBase app { get; set; } = null!;
 
         [Resolved]
         private FrameworkConfigManager frameworkConfig { get; set; } = null!;
@@ -66,7 +66,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
         {
             localeBindable = frameworkConfig.GetBindable<string>(FrameworkSetting.Locale);
 
-            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS;
+            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS;
             Masking = true;
             base.Content.AddRange(new Drawable[]
             {
@@ -123,7 +123,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                             },
                             Children = new Drawable[]
                             {
-                                videoNameText = new AdaptiveTextFlowContainer(f => f.Font = YouTubePlayerEXApp.DefaultFont.With(size: 17, weight: "Regular"))
+                                videoNameText = new AdaptiveTextFlowContainer(f => f.Font = NekoPlayerApp.DefaultFont.With(size: 17, weight: "Regular"))
                                 {
                                     RelativeSizeAxes = Axes.X,
                                     Text = "[text]",
@@ -134,7 +134,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                                     RelativeSizeAxes = Axes.X,
                                     Position = new Vector2(0, 17),
                                     Text = "[channel name]",
-                                    Font = YouTubePlayerEXApp.DefaultFont.With(size: 13, weight: "SemiBold"),
+                                    Font = NekoPlayerApp.DefaultFont.With(size: 13, weight: "SemiBold"),
                                     Colour = overlayColourProvider.Background1,
                                 },
                                 viewsText = new TruncatingSpriteText
@@ -142,7 +142,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                                     RelativeSizeAxes = Axes.X,
                                     Position = new Vector2(0, (17 + 13)),
                                     Text = "0 views • 1 year ago",
-                                    Font = YouTubePlayerEXApp.DefaultFont.With(size: 13, weight: "SemiBold"),
+                                    Font = NekoPlayerApp.DefaultFont.With(size: 13, weight: "SemiBold"),
                                     Colour = overlayColourProvider.Background1,
                                 },
                             }
@@ -247,14 +247,14 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                             channelNameText.Text = api.GetLocalizedChannelTitle(channelData, true);
                             videoNameText.Text = api.GetLocalizedVideoTitle(videoData);
 #pragma warning disable CS8629 // Nullable 값 형식이 null일 수 있습니다.
-                            viewsText.Text = YTPlayerEXStrings.VideoMetadataDescWithoutChannelName(Convert.ToInt32(videoData.Statistics.ViewCount).ToStandardFormattedString(0), dateTime.Value.DateTime.Humanize(dateToCompareAgainst: now));
+                            viewsText.Text = NekoPlayerStrings.VideoMetadataDescWithoutChannelName(Convert.ToInt32(videoData.Statistics.ViewCount).ToStandardFormattedString(0), dateTime.Value.DateTime.Humanize(dateToCompareAgainst: now));
 #pragma warning restore CS8629 // Nullable 값 형식이 null일 수 있습니다.
 
                             localeBindable.BindValueChanged(locale =>
                             {
                                 channelNameText.Text = api.GetLocalizedChannelTitle(channelData, true);
                                 videoNameText.Text = api.GetLocalizedVideoTitle(videoData);
-                                viewsText.Text = YTPlayerEXStrings.VideoMetadataDescWithoutChannelName(Convert.ToInt32(videoData.Statistics.ViewCount).ToStandardFormattedString(0), dateTime.Value.DateTime.Humanize(dateToCompareAgainst: now));
+                                viewsText.Text = NekoPlayerStrings.VideoMetadataDescWithoutChannelName(Convert.ToInt32(videoData.Statistics.ViewCount).ToStandardFormattedString(0), dateTime.Value.DateTime.Humanize(dateToCompareAgainst: now));
                             });
                         });
                     }

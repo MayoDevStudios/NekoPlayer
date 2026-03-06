@@ -3,7 +3,7 @@
 
 using System.ComponentModel;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     public enum HoverSampleSet
     {

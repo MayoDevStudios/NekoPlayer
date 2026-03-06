@@ -26,22 +26,22 @@ using osu.Framework.Logging;
 using osu.Framework.Screens;
 using osu.Framework.Threading;
 using osuTK;
-using YouTubePlayerEX.App.Audio.Effects;
-using YouTubePlayerEX.App.Config;
-using YouTubePlayerEX.App.Extensions;
-using YouTubePlayerEX.App.Graphics;
-using YouTubePlayerEX.App.Graphics.Containers;
-using YouTubePlayerEX.App.Graphics.UserInterface;
-using YouTubePlayerEX.App.Localisation;
-using YouTubePlayerEX.App.Online;
-using YouTubePlayerEX.App.Overlays;
-using YouTubePlayerEX.App.Screens;
-using YouTubePlayerEX.App.Updater;
+using NekoPlayer.App.Audio.Effects;
+using NekoPlayer.App.Config;
+using NekoPlayer.App.Extensions;
+using NekoPlayer.App.Graphics;
+using NekoPlayer.App.Graphics.Containers;
+using NekoPlayer.App.Graphics.UserInterface;
+using NekoPlayer.App.Localisation;
+using NekoPlayer.App.Online;
+using NekoPlayer.App.Overlays;
+using NekoPlayer.App.Screens;
+using NekoPlayer.App.Updater;
 
-namespace YouTubePlayerEX.App
+namespace NekoPlayer.App
 {
-    [Cached(typeof(YouTubePlayerEXApp))]
-    public partial class YouTubePlayerEXApp : YouTubePlayerEXAppBase
+    [Cached(typeof(NekoPlayerApp))]
+    public partial class NekoPlayerApp : NekoPlayerAppBase
     {
         private ScreenStack screenStack;
 
@@ -122,7 +122,7 @@ namespace YouTubePlayerEX.App
                 }
             }).Where(m => m != null);
 
-            uiScale = LocalConfig.GetBindable<float>(Config.YTPlayerEXSetting.UIScale);
+            uiScale = LocalConfig.GetBindable<float>(Config.NekoPlayerSetting.UIScale);
 
             Localisation.AddLocaleMappings(mappings);
 
@@ -132,7 +132,7 @@ namespace YouTubePlayerEX.App
 
             if (UpdateManager is NoActionUpdateManager)
             {
-                UpdateManagerVersionText.Value = YTPlayerEXStrings.ViewLatestVersions;
+                UpdateManagerVersionText.Value = NekoPlayerStrings.ViewLatestVersions;
             }
 
             fetchCaptionLanguages();
@@ -175,7 +175,7 @@ namespace YouTubePlayerEX.App
                 Margin = new MarginPadding(5),
             }, topMostOverlayContent.Add);
 
-            applySafeAreaConsiderations = LocalConfig.GetBindable<bool>(YTPlayerEXSetting.SafeAreaConsiderations);
+            applySafeAreaConsiderations = LocalConfig.GetBindable<bool>(NekoPlayerSetting.SafeAreaConsiderations);
             applySafeAreaConsiderations.BindValueChanged(apply => SafeAreaContainer.SafeAreaOverrideEdges = apply.NewValue ? SafeAreaOverrideEdges : Edges.All, true);
         }
 

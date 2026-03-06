@@ -3,7 +3,7 @@
 
 using osu.Framework.Graphics;
 
-namespace YouTubePlayerEX.App.Graphics.Shaders.New.HueShift
+namespace NekoPlayer.App.Graphics.Shaders.New.HueShift
 {
     public partial class HueShiftContainer : VideoNewShaderContainer
     {

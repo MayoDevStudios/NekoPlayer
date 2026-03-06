@@ -24,24 +24,24 @@ using osu.Framework.Logging;
 using osu.Framework.Platform;
 using osuTK.Graphics;
 using YoutubeExplode;
-using YouTubePlayerEX.App.Audio;
-using YouTubePlayerEX.App.Config;
-using YouTubePlayerEX.App.Extensions;
-using YouTubePlayerEX.App.Graphics;
-using YouTubePlayerEX.App.Graphics.Cursor;
-using YouTubePlayerEX.App.Graphics.Sprites;
-using YouTubePlayerEX.App.Graphics.UserInterface;
-using YouTubePlayerEX.App.Input;
-using YouTubePlayerEX.App.Input.Binding;
-using YouTubePlayerEX.App.Localisation;
-using YouTubePlayerEX.App.Online;
-using YouTubePlayerEX.App.Resources;
-using YouTubePlayerEX.App.Utils;
+using NekoPlayer.App.Audio;
+using NekoPlayer.App.Config;
+using NekoPlayer.App.Extensions;
+using NekoPlayer.App.Graphics;
+using NekoPlayer.App.Graphics.Cursor;
+using NekoPlayer.App.Graphics.Sprites;
+using NekoPlayer.App.Graphics.UserInterface;
+using NekoPlayer.App.Input;
+using NekoPlayer.App.Input.Binding;
+using NekoPlayer.App.Localisation;
+using NekoPlayer.App.Online;
+using NekoPlayer.App.Resources;
+using NekoPlayer.App.Utils;
 
-namespace YouTubePlayerEX.App
+namespace NekoPlayer.App
 {
-    [Cached(typeof(YouTubePlayerEXAppBase))]
-    public partial class YouTubePlayerEXAppBase : osu.Framework.Game
+    [Cached(typeof(NekoPlayerAppBase))]
+    public partial class NekoPlayerAppBase : osu.Framework.Game
     {
         // Anything in this class is shared between the test browser and the game implementation.
         // It allows for caching global dependencies that should be accessible to tests, or changing
@@ -71,7 +71,7 @@ namespace YouTubePlayerEX.App
 
         private IBindable<LocalisationParameters> localisationParameters = null!;
 
-        protected YTPlayerEXConfigManager LocalConfig { get; private set; }
+        protected NekoPlayerConfigManager LocalConfig { get; private set; }
         protected AudioEffectsConfigManager AudioEffectsConfig { get; private set; }
 
         protected GlobalCursorDisplay GlobalCursorDisplay { get; private set; }
@@ -82,7 +82,7 @@ namespace YouTubePlayerEX.App
 
         protected AudioNormalizationManager AudioNormalizationManager { get; private set; }
 
-        protected YouTubePlayerEXAppBase()
+        protected NekoPlayerAppBase()
         {
             Name = "YouTube Player EX";
         }
@@ -119,9 +119,9 @@ namespace YouTubePlayerEX.App
             // may be non-null for certain tests
             Storage ??= host.Storage;
 
-            LocalConfig ??= new YTPlayerEXConfigManager(Storage);
+            LocalConfig ??= new NekoPlayerConfigManager(Storage);
 
-            UseSystemCursor = LocalConfig.GetBindable<bool>(YTPlayerEXSetting.UseSystemCursor);
+            UseSystemCursor = LocalConfig.GetBindable<bool>(NekoPlayerSetting.UseSystemCursor);
 
             UseSystemCursor.BindValueChanged(enabled =>
             {
@@ -148,7 +148,7 @@ namespace YouTubePlayerEX.App
 
         public string ParseVideoQuality()
         {
-            VideoQuality videoQuality = LocalConfig.Get<VideoQuality>(YTPlayerEXSetting.VideoQuality);
+            VideoQuality videoQuality = LocalConfig.Get<VideoQuality>(NekoPlayerSetting.VideoQuality);
 
             switch (videoQuality)
             {
@@ -244,14 +244,14 @@ namespace YouTubePlayerEX.App
         {
             try
             {
-                Logger.Log($"------------------------------------------------\nYouTube Player EX by BoomboxRapsody\n------------------------------------------------\nApp version is: {Version}\nApp version hash is: {VersionHash}\n------------------------------------------------\ngood luck ^^\n------------------------------------------------");
+                Logger.Log($"------------------------------------------------\nNekoPlayer by MayoDev Studios\n------------------------------------------------\nApp version is: {Version}\nApp version hash is: {VersionHash}\n------------------------------------------------\ngood luck ^^\n------------------------------------------------");
                 RestartRequired.Value = false;
                 UpdateManagerVersionText.Value = Version;
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
                 //Logger.Log(Host.CacheStorage.GetStorageForDirectory("videos").GetFullPath("videoId") + @"\video.mp4");
-                Resources.AddStore(new DllResourceStore(typeof(YouTubePlayerEXResources).Assembly));
-                Resources.AddStore(new NamespacedResourceStore<byte[]>(new DllResourceStore(typeof(YouTubePlayerEXAppBase).Assembly), "BuiltInResources"));
+                Resources.AddStore(new DllResourceStore(typeof(NekoPlayerResources).Assembly));
+                Resources.AddStore(new NamespacedResourceStore<byte[]>(new DllResourceStore(typeof(NekoPlayerAppBase).Assembly), "BuiltInResources"));
 
                 // For some atlases, its recommended to use LargeTextureStore. e.g: mipmapping, incorrect positioning due to the atlas scale adjust, etc
                 IResourceStore<TextureUpload> texUpload = Host.CreateTextureLoaderStore(Resources);
@@ -271,14 +271,14 @@ namespace YouTubePlayerEX.App
 
                 dependencies.Cache(LocalConfig);
 
-                dependencies.Cache(GoogleOAuth2 = new GoogleOAuth2(LocalConfig, !IsDeployedBuild));
+                dependencies.Cache(GoogleOAuth2 = new GoogleOAuth2(LocalConfig, false));
 
                 dependencies.Cache(AudioNormalizationManager = new AudioNormalizationManager(this, LocalConfig));
 
                 dependencies.Cache(sentry = new SentryClient(this, GoogleOAuth2));
 
                 dependencies.Cache(TranslateAPI = new GoogleTranslate(this, frameworkConfig));
-                dependencies.Cache(YouTubeService = new YouTubeAPI(frameworkConfig, TranslateAPI, LocalConfig, GoogleOAuth2, !IsDeployedBuild));
+                dependencies.Cache(YouTubeService = new YouTubeAPI(frameworkConfig, TranslateAPI, LocalConfig, GoogleOAuth2, false));
 
                 dependencies.Cache(AudioEffectsConfig = new AudioEffectsConfigManager(Storage));
                 dependencies.Cache(SessionStatics = new SessionStatics());

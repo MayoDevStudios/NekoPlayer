@@ -12,9 +12,9 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osuTK;
-using YouTubePlayerEX.App.Input.Binding;
+using NekoPlayer.App.Input.Binding;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterfaceV2
+namespace NekoPlayer.App.Graphics.UserInterfaceV2
 {
     public partial class AdaptivePopover : Popover, IKeyBindingHandler<GlobalAction>
     {

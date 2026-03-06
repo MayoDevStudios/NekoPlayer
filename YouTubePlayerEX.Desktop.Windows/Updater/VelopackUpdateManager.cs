@@ -9,16 +9,16 @@ using osu.Framework.Logging;
 using osu.Framework.Threading;
 using Velopack;
 using Velopack.Sources;
-using YouTubePlayerEX.App;
-using YouTubePlayerEX.App.Localisation;
-using UpdateManager = YouTubePlayerEX.App.Updater.UpdateManager;
+using NekoPlayer.App;
+using NekoPlayer.App.Localisation;
+using UpdateManager = NekoPlayer.App.Updater.UpdateManager;
 
-namespace YouTubePlayerEX.Desktop.Windows.Updater
+namespace NekoPlayer.Desktop.Windows.Updater
 {
     public partial class VelopackUpdateManager : UpdateManager
     {
         [Resolved]
-        private YouTubePlayerEXAppBase game { get; set; } = null!;
+        private NekoPlayerAppBase game { get; set; } = null!;
 
 #nullable enable
         private ScheduledDelegate? scheduledBackgroundCheck;
@@ -89,10 +89,10 @@ namespace YouTubePlayerEX.Desktop.Windows.Updater
             {
                 await updateManager.DownloadUpdatesAsync(update, p =>
                 {
-                    game.UpdateManagerVersionText.Value = YTPlayerEXStrings.DownloadingUpdate($"{p}");
+                    game.UpdateManagerVersionText.Value = NekoPlayerStrings.DownloadingUpdate($"{p}");
                     game.UpdateButtonEnabled.Value = false;
                 }, cancellationToken).ConfigureAwait(false);
-                game.UpdateManagerVersionText.Value = YTPlayerEXStrings.RestartRequired;
+                game.UpdateManagerVersionText.Value = NekoPlayerStrings.RestartRequired;
                 game.RestartRequired.Value = true;
                 game.RestartAction = () => restartToApplyUpdate(updateManager, update);
                 game.UpdateButtonEnabled.Value = true;
@@ -100,7 +100,7 @@ namespace YouTubePlayerEX.Desktop.Windows.Updater
             catch (Exception e)
             {
                 // In the case of an error, a separate notification will be displayed.
-                game.UpdateManagerVersionText.Value = YTPlayerEXStrings.UpdateFailed;
+                game.UpdateManagerVersionText.Value = NekoPlayerStrings.UpdateFailed;
                 game.UpdateButtonEnabled.Value = true;
                 Logger.Error(e, @"Update failed!");
             }

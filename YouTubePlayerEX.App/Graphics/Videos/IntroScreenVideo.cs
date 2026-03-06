@@ -13,7 +13,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Video;
 using osu.Framework.Timing;
 
-namespace YouTubePlayerEX.App.Graphics.Videos
+namespace NekoPlayer.App.Graphics.Videos
 {
     public partial class IntroScreenVideo : Container
     {

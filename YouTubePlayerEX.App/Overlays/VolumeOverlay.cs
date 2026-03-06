@@ -15,13 +15,13 @@ using osu.Framework.Input.Events;
 using osu.Framework.Threading;
 using osuTK;
 using osuTK.Graphics;
-using YouTubePlayerEX.App.Graphics;
-using YouTubePlayerEX.App.Graphics.UserInterface;
-using YouTubePlayerEX.App.Input.Binding;
-using YouTubePlayerEX.App.Localisation;
-using YouTubePlayerEX.App.Overlays.Volume;
+using NekoPlayer.App.Graphics;
+using NekoPlayer.App.Graphics.UserInterface;
+using NekoPlayer.App.Input.Binding;
+using NekoPlayer.App.Localisation;
+using NekoPlayer.App.Overlays.Volume;
 
-namespace YouTubePlayerEX.App.Overlays
+namespace NekoPlayer.App.Overlays
 {
     [Cached]
     public partial class VolumeOverlay : VisibilityContainer
@@ -69,9 +69,9 @@ namespace YouTubePlayerEX.App.Overlays
                             Spacing = new Vector2(0, offset),
                             Children = new[]
                             {
-                                volumeMeterEffect = new VolumeMeter(YTPlayerEXStrings.SFXVolume, 125, colours.BlueDarker),
-                                volumeMeterMaster = new MasterVolumeMeter(YTPlayerEXStrings.MasterVolume, 150, colours.PinkDarker) { IsMuted = { BindTarget = IsMuted }, },
-                                volumeMeterMusic = new VolumeMeter(YTPlayerEXStrings.VideoVolume, 125, colours.BlueDarker),
+                                volumeMeterEffect = new VolumeMeter(NekoPlayerStrings.SFXVolume, 125, colours.BlueDarker),
+                                volumeMeterMaster = new MasterVolumeMeter(NekoPlayerStrings.MasterVolume, 150, colours.PinkDarker) { IsMuted = { BindTarget = IsMuted }, },
+                                volumeMeterMusic = new VolumeMeter(NekoPlayerStrings.VideoVolume, 125, colours.BlueDarker),
                             }
                         },
                     },

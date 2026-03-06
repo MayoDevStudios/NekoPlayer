@@ -12,7 +12,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Localisation;
 using osu.Framework.Graphics.Containers;
 
-namespace YouTubePlayerEX.App.Graphics.Cursor
+namespace NekoPlayer.App.Graphics.Cursor
 {
     public partial class AdaptiveTooltipContainer : TooltipContainer
     {
@@ -74,7 +74,7 @@ namespace YouTubePlayerEX.App.Graphics.Cursor
                     },
                     text = new TextFlowContainer(f =>
                     {
-                        f.Font = YouTubePlayerEXApp.DefaultFont;
+                        f.Font = NekoPlayerApp.DefaultFont;
                     })
                     {
                         Margin = new MarginPadding(5),

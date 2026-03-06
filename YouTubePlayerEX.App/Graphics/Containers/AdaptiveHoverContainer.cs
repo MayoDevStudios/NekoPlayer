@@ -11,9 +11,9 @@ using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
 using osuTK.Graphics;
-using YouTubePlayerEX.App.Graphics.UserInterface;
+using NekoPlayer.App.Graphics.UserInterface;
 
-namespace YouTubePlayerEX.App.Graphics.Containers
+namespace NekoPlayer.App.Graphics.Containers
 {
     public partial class AdaptiveHoverContainer : AdaptiveClickableContainer
     {

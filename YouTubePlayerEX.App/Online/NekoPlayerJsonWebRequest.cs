@@ -3,19 +3,19 @@
 
 using osu.Framework.IO.Network;
 
-namespace YouTubePlayerEX.App.Online
+namespace NekoPlayer.App.Online
 {
-    public class YouTubePlayerEXJsonWebRequest<T> : JsonWebRequest<T>
+    public class NekoPlayerJsonWebRequest<T> : JsonWebRequest<T>
     {
-        public YouTubePlayerEXJsonWebRequest(string uri)
+        public NekoPlayerJsonWebRequest(string uri)
             : base(uri)
         {
         }
 
-        public YouTubePlayerEXJsonWebRequest()
+        public NekoPlayerJsonWebRequest()
         {
         }
 
-        protected override string UserAgent => "YouTube-Player-EX";
+        protected override string UserAgent => "NekoPlayer";
     }
 }

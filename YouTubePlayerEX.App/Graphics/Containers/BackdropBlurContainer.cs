@@ -14,7 +14,7 @@ using osu.Framework.Layout;
 using osuTK;
 using osuTK.Graphics;
 
-namespace YouTubePlayerEX.App.Graphics.Containers
+namespace NekoPlayer.App.Graphics.Containers
 {
     /// <summary>
     /// A container that blurs the content of its nearest parent <see cref="IBackbufferProvider"/> behind its children.

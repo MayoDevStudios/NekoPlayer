@@ -3,12 +3,12 @@
 
 using osu.Framework.Screens;
 
-namespace YouTubePlayerEX.App.Screens
+namespace NekoPlayer.App.Screens
 {
-    public interface IYouTubePlayerEXScreen : IScreen
+    public interface INekoPlayerScreen : IScreen
     {
         /// <summary>
-        /// Whether this <see cref="YouTubePlayerEXScreen"/> allows the cursor to be displayed.
+        /// Whether this <see cref="NekoPlayerScreen"/> allows the cursor to be displayed.
         /// </summary>
         bool CursorVisible { get; }
     }

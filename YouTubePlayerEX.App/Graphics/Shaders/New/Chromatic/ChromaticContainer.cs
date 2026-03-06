@@ -3,7 +3,7 @@
 
 using osu.Framework.Graphics;
 
-namespace YouTubePlayerEX.App.Graphics.Shaders.New.Chromatic
+namespace NekoPlayer.App.Graphics.Shaders.New.Chromatic
 {
     public partial class ChromaticContainer : VideoNewShaderContainer
     {

@@ -5,11 +5,11 @@
 
 using osu.Framework.Screens;
 
-namespace YouTubePlayerEX.App.Screens
+namespace NekoPlayer.App.Screens
 {
-    public abstract partial class YouTubePlayerEXScreen : Screen, IYouTubePlayerEXScreen
+    public abstract partial class NekoPlayerScreen : Screen, INekoPlayerScreen
     {
-        protected new YouTubePlayerEXAppBase Game => base.Game as YouTubePlayerEXAppBase;
+        protected new NekoPlayerAppBase Game => base.Game as NekoPlayerAppBase;
 
         public virtual bool CursorVisible => true;
     }

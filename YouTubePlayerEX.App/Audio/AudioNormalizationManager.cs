@@ -7,9 +7,9 @@ using osu.Framework.Audio.Track;
 using osu.Framework.Bindables;
 using osu.Framework.Logging;
 using osuTK;
-using YouTubePlayerEX.App.Config;
+using NekoPlayer.App.Config;
 
-namespace YouTubePlayerEX.App.Audio
+namespace NekoPlayer.App.Audio
 {
     /// <summary>
     /// Manages audio normalization.
@@ -27,16 +27,16 @@ namespace YouTubePlayerEX.App.Audio
         /// Samples assigned to hitobjects needs to bind to this bindable to normalize their volume in line with track.
         /// </summary>
         public readonly BindableDouble SampleNormalizeVolume = new BindableDouble(1.0);
-        private YouTubePlayerEXAppBase app;
+        private NekoPlayerAppBase app;
 
         /// <summary>
         /// Creates a new <see cref="AudioNormalizationManager"/>.
         /// </summary>
         /// <param name="app">The app.</param>
-        public AudioNormalizationManager(YouTubePlayerEXAppBase app, YTPlayerEXConfigManager config)
+        public AudioNormalizationManager(NekoPlayerAppBase app, NekoPlayerConfigManager config)
         {
             this.app = app;
-            audioNormalizationSetting = config.GetBindable<bool>(YTPlayerEXSetting.AudioNormalization);
+            audioNormalizationSetting = config.GetBindable<bool>(NekoPlayerSetting.AudioNormalization);
 
             updateNormalization(audioNormalizationSetting.Value);
             audioNormalizationSetting.BindValueChanged(change => updateNormalization(change.NewValue));

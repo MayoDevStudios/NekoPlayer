@@ -4,11 +4,11 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Screens;
-using YouTubePlayerEX.App.Graphics.Videos;
+using NekoPlayer.App.Graphics.Videos;
 
-namespace YouTubePlayerEX.App.Screens
+namespace NekoPlayer.App.Screens
 {
-    public partial class IntroScreen : YouTubePlayerEXScreen
+    public partial class IntroScreen : NekoPlayerScreen
     {
         private IntroScreenVideo intro;
 

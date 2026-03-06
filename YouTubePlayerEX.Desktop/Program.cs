@@ -18,10 +18,10 @@ namespace YouTubePlayerEX.Desktop
                 FriendlyGameName = "NekoPlayer",
             };
 
-            using (GameHost host = Host.GetSuitableDesktopHost(@"YouTubePlayerEX", hostOptions))
+            using (GameHost host = Host.GetSuitableDesktopHost(@"NekoPlayer", hostOptions))
             {
                 host.AllowBenchmarkUnlimitedFrames = true;
-                host.Run(new YouTubePlayerEXAppLinuxDesktop());
+                host.Run(new NekoPlayerAppDesktop());
             }
         }
     }

@@ -2,15 +2,15 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Localisation;
-using YouTubePlayerEX.App.Localisation;
+using NekoPlayer.App.Localisation;
 
-namespace YouTubePlayerEX.App.Config
+namespace NekoPlayer.App.Config
 {
     public enum VideoMetadataTranslateSource
     {
         YouTube,
 
-        [LocalisableDescription(typeof(YTPlayerEXStrings), nameof(YTPlayerEXStrings.GoogleTranslate))]
+        [LocalisableDescription(typeof(NekoPlayerStrings), nameof(NekoPlayerStrings.GoogleTranslate))]
         GoogleTranslate
     }
 }

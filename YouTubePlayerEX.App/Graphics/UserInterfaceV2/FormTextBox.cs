@@ -20,9 +20,9 @@ using osu.Framework.Input;
 using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
 using osuTK;
-using YouTubePlayerEX.App.Graphics.UserInterface;
+using NekoPlayer.App.Graphics.UserInterface;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterfaceV2
+namespace NekoPlayer.App.Graphics.UserInterfaceV2
 {
     public partial class FormTextBox : CompositeDrawable, IHasCurrentValue<string>, IFormControl
     {

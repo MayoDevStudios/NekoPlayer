@@ -10,11 +10,10 @@ using osu.Framework.Graphics.Colour;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Logging;
 using osuTK.Graphics;
-using YouTubePlayerEX.App.Graphics.Sprites;
+using NekoPlayer.App.Graphics.Sprites;
 
-namespace YouTubePlayerEX.App.Graphics.Videos
+namespace NekoPlayer.App.Graphics.Videos
 {
     public partial class YouTubeVideoPlayer
     {
@@ -123,7 +122,7 @@ namespace YouTubePlayerEX.App.Graphics.Videos
                                             {
                                                 Left = 30,
                                             },
-                                            Font = YouTubePlayerEXApp.DefaultFont.With(family: "Torus", size: 25),
+                                            Font = NekoPlayerApp.DefaultFont.With(family: "Torus", size: 25),
                                         },
                                     }
                                 }
@@ -166,7 +165,7 @@ namespace YouTubePlayerEX.App.Graphics.Videos
                                             {
                                                 Right = 45,
                                             },
-                                            Font = YouTubePlayerEXApp.DefaultFont.With(family: "Torus", size: 25),
+                                            Font = NekoPlayerApp.DefaultFont.With(family: "Torus", size: 25),
                                         },
                                     }
                                 }

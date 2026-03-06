@@ -5,7 +5,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 
-namespace YouTubePlayerEX.App.Graphics.Shaders.New
+namespace NekoPlayer.App.Graphics.Shaders.New
 {
     public partial class ShaderTransformHandler : CompositeComponent, IHasStrength
     {

@@ -15,10 +15,10 @@ using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
 using osuTK;
 using osuTK.Graphics;
-using YouTubePlayerEX.App.Graphics.Sprites;
-using YouTubePlayerEX.App.Graphics.UserInterfaceV2;
+using NekoPlayer.App.Graphics.Sprites;
+using NekoPlayer.App.Graphics.UserInterfaceV2;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     /// <summary>
     /// A button with added default sound effects.
@@ -218,7 +218,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
             Depth = -1,
             Origin = Anchor.Centre,
             Anchor = Anchor.Centre,
-            Font = YouTubePlayerEXApp.DefaultFont.With(weight: "Bold"),
+            Font = NekoPlayerApp.DefaultFont.With(weight: "Bold"),
         };
     }
 }

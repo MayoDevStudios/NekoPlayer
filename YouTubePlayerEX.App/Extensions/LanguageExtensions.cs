@@ -5,9 +5,9 @@ using System;
 using System.Globalization;
 using osu.Framework.Configuration;
 using osu.Framework.Localisation;
-using YouTubePlayerEX.App.Localisation;
+using NekoPlayer.App.Localisation;
 
-namespace YouTubePlayerEX.App.Extensions
+namespace NekoPlayer.App.Extensions
 {
     /// <summary>
     /// Conversion utilities for the <see cref="Language"/> enum.

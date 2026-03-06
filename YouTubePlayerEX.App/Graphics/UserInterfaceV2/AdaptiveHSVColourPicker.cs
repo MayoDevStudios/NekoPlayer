@@ -10,7 +10,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.UserInterface;
 using osuTK;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterfaceV2
+namespace NekoPlayer.App.Graphics.UserInterfaceV2
 {
     public partial class AdaptiveHSVColourPicker : HSVColourPicker
     {

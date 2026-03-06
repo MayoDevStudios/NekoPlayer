@@ -4,7 +4,7 @@
 using System;
 using osu.Framework.Configuration;
 
-namespace YouTubePlayerEX.App.Config
+namespace NekoPlayer.App.Config
 {
     public class InMemoryConfigManager<TLookup> : ConfigManager<TLookup>
         where TLookup : struct, Enum

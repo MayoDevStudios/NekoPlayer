@@ -49,33 +49,33 @@ using SharpCompress.Archives.Zip;
 using YoutubeExplode.Converter;
 using YoutubeExplode.Videos.ClosedCaptions;
 using YoutubeExplode.Videos.Streams;
-using YouTubePlayerEX.App.Audio;
-using YouTubePlayerEX.App.Config;
-using YouTubePlayerEX.App.Extensions;
-using YouTubePlayerEX.App.Graphics;
-using YouTubePlayerEX.App.Graphics.Containers;
-using YouTubePlayerEX.App.Graphics.Shaders;
-using YouTubePlayerEX.App.Graphics.Sprites;
-using YouTubePlayerEX.App.Graphics.UserInterface;
-using YouTubePlayerEX.App.Graphics.UserInterfaceV2;
-using YouTubePlayerEX.App.Graphics.Videos;
-using YouTubePlayerEX.App.Input;
-using YouTubePlayerEX.App.Input.Binding;
-using YouTubePlayerEX.App.Localisation;
-using YouTubePlayerEX.App.Online;
-using YouTubePlayerEX.App.Overlays;
-using YouTubePlayerEX.App.Overlays.OSD;
-using YouTubePlayerEX.App.Overlays.Volume;
-using YouTubePlayerEX.App.Updater;
-using YouTubePlayerEX.App.Utils;
-using static YouTubePlayerEX.App.YouTubePlayerEXApp;
+using NekoPlayer.App.Audio;
+using NekoPlayer.App.Config;
+using NekoPlayer.App.Extensions;
+using NekoPlayer.App.Graphics;
+using NekoPlayer.App.Graphics.Containers;
+using NekoPlayer.App.Graphics.Shaders;
+using NekoPlayer.App.Graphics.Sprites;
+using NekoPlayer.App.Graphics.UserInterface;
+using NekoPlayer.App.Graphics.UserInterfaceV2;
+using NekoPlayer.App.Graphics.Videos;
+using NekoPlayer.App.Input;
+using NekoPlayer.App.Input.Binding;
+using NekoPlayer.App.Localisation;
+using NekoPlayer.App.Online;
+using NekoPlayer.App.Overlays;
+using NekoPlayer.App.Overlays.OSD;
+using NekoPlayer.App.Overlays.Volume;
+using NekoPlayer.App.Updater;
+using NekoPlayer.App.Utils;
+using static NekoPlayer.App.NekoPlayerApp;
 using Container = osu.Framework.Graphics.Containers.Container;
-using Language = YouTubePlayerEX.App.Localisation.Language;
-using OverlayContainer = YouTubePlayerEX.App.Graphics.Containers.OverlayContainer;
+using Language = NekoPlayer.App.Localisation.Language;
+using OverlayContainer = NekoPlayer.App.Graphics.Containers.OverlayContainer;
 
-namespace YouTubePlayerEX.App.Screens
+namespace NekoPlayer.App.Screens
 {
-    public partial class MainAppView : YouTubePlayerEXScreen, IKeyBindingHandler<GlobalAction>
+    public partial class MainAppView : NekoPlayerScreen, IKeyBindingHandler<GlobalAction>
     {
         private BufferedContainer videoContainer;
         private AdaptiveButton loadBtn, commentSendButton, searchButton, loadPlaylistBtn, loadPlaylistOpenButton, prevVideoButton, nextVideoButton, declineButton, acceptButton, logoutButton, viewChannelButton;
@@ -273,7 +273,7 @@ namespace YouTubePlayerEX.App.Screens
             => shaderManager.LocalInternalShader<T>();
 
         [BackgroundDependencyLoader]
-        private void load(ISampleStore sampleStore, FrameworkConfigManager config, YTPlayerEXConfigManager appConfig, GameHost host, Storage storage, OverlayColourProvider overlayColourProvider, TextureStore textures, FrameworkDebugConfigManager debugConfig)
+        private void load(ISampleStore sampleStore, FrameworkConfigManager config, NekoPlayerConfigManager appConfig, GameHost host, Storage storage, OverlayColourProvider overlayColourProvider, TextureStore textures, FrameworkDebugConfigManager debugConfig)
         {
             speedTextRolling = new Bindable<double>(1);
             volumeTextRolling = new Bindable<double>(1);
@@ -288,7 +288,7 @@ namespace YouTubePlayerEX.App.Screens
             isAnyOverlayOpen = sessionStatics.GetBindable<bool>(Static.IsAnyOverlayOpen);
             videoPlaying = sessionStatics.GetBindable<bool>(Static.IsVideoPlaying);
 
-            usernameDisplayMode = appConfig.GetBindable<UsernameDisplayMode>(YTPlayerEXSetting.UsernameDisplayMode);
+            usernameDisplayMode = appConfig.GetBindable<UsernameDisplayMode>(NekoPlayerSetting.UsernameDisplayMode);
 
             var renderer = config.GetBindable<RendererType>(FrameworkSetting.Renderer);
             automaticRendererInUse = renderer.Value == RendererType.Automatic;
@@ -299,29 +299,29 @@ namespace YouTubePlayerEX.App.Screens
             distortionEnabled = audioEffectsConfig.GetBindable<bool>(AudioEffectsSetting.DistortionEnabled);
             karaokeEnabled = audioEffectsConfig.GetBindable<bool>(AudioEffectsSetting.KaraokeEnabled);
 
-            scalingMode = appConfig.GetBindable<ScalingMode>(YTPlayerEXSetting.Scaling);
-            scalingSizeX = appConfig.GetBindable<float>(YTPlayerEXSetting.ScalingSizeX);
-            scalingSizeY = appConfig.GetBindable<float>(YTPlayerEXSetting.ScalingSizeY);
-            scalingPositionX = appConfig.GetBindable<float>(YTPlayerEXSetting.ScalingPositionX);
-            scalingPositionY = appConfig.GetBindable<float>(YTPlayerEXSetting.ScalingPositionY);
-            scalingBackgroundDim = appConfig.GetBindable<float>(YTPlayerEXSetting.ScalingBackgroundDim);
-            alwaysUseOriginalAudio = appConfig.GetBindable<bool>(YTPlayerEXSetting.AlwaysUseOriginalAudio);
-            discordRichPresence = appConfig.GetBindable<DiscordRichPresenceMode>(YTPlayerEXSetting.DiscordRichPresence);
+            scalingMode = appConfig.GetBindable<ScalingMode>(NekoPlayerSetting.Scaling);
+            scalingSizeX = appConfig.GetBindable<float>(NekoPlayerSetting.ScalingSizeX);
+            scalingSizeY = appConfig.GetBindable<float>(NekoPlayerSetting.ScalingSizeY);
+            scalingPositionX = appConfig.GetBindable<float>(NekoPlayerSetting.ScalingPositionX);
+            scalingPositionY = appConfig.GetBindable<float>(NekoPlayerSetting.ScalingPositionY);
+            scalingBackgroundDim = appConfig.GetBindable<float>(NekoPlayerSetting.ScalingBackgroundDim);
+            alwaysUseOriginalAudio = appConfig.GetBindable<bool>(NekoPlayerSetting.AlwaysUseOriginalAudio);
+            discordRichPresence = appConfig.GetBindable<DiscordRichPresenceMode>(NekoPlayerSetting.DiscordRichPresence);
 
-            captionEnabled = appConfig.GetBindable<bool>(YTPlayerEXSetting.CaptionEnabled);
+            captionEnabled = appConfig.GetBindable<bool>(NekoPlayerSetting.CaptionEnabled);
 
             exportStorage = storage.GetStorageForDirectory(@"exports");
 
             localeBindable = config.GetBindable<string>(FrameworkSetting.Locale);
-            fpsDisplay = appConfig.GetBindable<bool>(YTPlayerEXSetting.ShowFpsDisplay);
+            fpsDisplay = appConfig.GetBindable<bool>(NekoPlayerSetting.ShowFpsDisplay);
             use_sdl3 = config.GetBindable<bool>(FrameworkSetting.UseExperimentalSDL3);
-            adjustPitch = appConfig.GetBindable<bool>(YTPlayerEXSetting.AdjustPitchOnSpeedChange);
-            videoQuality = appConfig.GetBindable<Config.VideoQuality>(YTPlayerEXSetting.VideoQuality);
-            audioLanguage = appConfig.GetBindable<Localisation.Language>(YTPlayerEXSetting.AudioLanguage);
+            adjustPitch = appConfig.GetBindable<bool>(NekoPlayerSetting.AdjustPitchOnSpeedChange);
+            videoQuality = appConfig.GetBindable<Config.VideoQuality>(NekoPlayerSetting.VideoQuality);
+            audioLanguage = appConfig.GetBindable<Localisation.Language>(NekoPlayerSetting.AudioLanguage);
             hardwareVideoDecoder = config.GetBindable<HardwareVideoDecoder>(FrameworkSetting.HardwareVideoDecoder);
             cursorInWindow = host.Window?.CursorInWindow.GetBoundCopy();
             windowMode = config.GetBindable<WindowMode>(FrameworkSetting.WindowMode);
-            captionLanguage = appConfig.GetBindable<ClosedCaptionLanguage>(YTPlayerEXSetting.ClosedCaptionLanguage);
+            captionLanguage = appConfig.GetBindable<ClosedCaptionLanguage>(NekoPlayerSetting.ClosedCaptionLanguage);
             sizeFullscreen = config.GetBindable<Size>(FrameworkSetting.SizeFullscreen);
             sizeWindowed = config.GetBindable<Size>(FrameworkSetting.WindowedSize);
             windowedPositionX = config.GetBindable<double>(FrameworkSetting.WindowedPositionX);
@@ -329,7 +329,7 @@ namespace YouTubePlayerEX.App.Screens
             updateInfomationText = game.UpdateManagerVersionText.GetBoundCopy();
             updateButtonEnabled = game.UpdateButtonEnabled.GetBoundCopy();
 
-            aspectRatioMethod = appConfig.GetBindable<AspectRatioMethod>(YTPlayerEXSetting.AspectRatioMethod);
+            aspectRatioMethod = appConfig.GetBindable<AspectRatioMethod>(NekoPlayerSetting.AspectRatioMethod);
 
             windowedResolution.Value = sizeWindowed.Value;
 
@@ -476,7 +476,7 @@ namespace YouTubePlayerEX.App.Screens
                                             Size = new Vector2(40, 40),
                                             Icon = FontAwesome.Solid.Bars,
                                             IconScale = new Vector2(1.2f),
-                                            TooltipText = YTPlayerEXStrings.Menu,
+                                            TooltipText = NekoPlayerStrings.Menu,
                                         },
                                     }
                                 },
@@ -486,7 +486,7 @@ namespace YouTubePlayerEX.App.Screens
                                     RelativeSizeAxes = Axes.X,
                                     Height = 100,
                                     Masking = true,
-                                    CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                                    CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS,
                                     EdgeEffect = new osu.Framework.Graphics.Effects.EdgeEffectParameters
                                     {
                                         Type = osu.Framework.Graphics.Effects.EdgeEffectType.Shadow,
@@ -547,7 +547,7 @@ namespace YouTubePlayerEX.App.Screens
                                                         {
                                                             Enabled = { Value = false },
                                                             Icon = FontAwesome.Solid.FastBackward,
-                                                            TooltipText = YTPlayerEXStrings.PreviousVideo,
+                                                            TooltipText = NekoPlayerStrings.PreviousVideo,
                                                             IconColour = overlayColourProvider.Content2,
                                                             ClickAction = async _ =>
                                                             {
@@ -564,7 +564,7 @@ namespace YouTubePlayerEX.App.Screens
                                                         {
                                                             Enabled = { Value = true },
                                                             Icon = FontAwesome.Solid.Play,
-                                                            TooltipText = YTPlayerEXStrings.Play,
+                                                            TooltipText = NekoPlayerStrings.Play,
                                                             IconColour = overlayColourProvider.Content2,
                                                             ClickAction = _ =>
                                                             {
@@ -581,7 +581,7 @@ namespace YouTubePlayerEX.App.Screens
                                                         {
                                                             Enabled = { Value = false },
                                                             Icon = FontAwesome.Solid.FastForward,
-                                                            TooltipText = YTPlayerEXStrings.NextVideo,
+                                                            TooltipText = NekoPlayerStrings.NextVideo,
                                                             IconColour = overlayColourProvider.Content2,
                                                             ClickAction = async _ =>
                                                             {
@@ -649,7 +649,7 @@ namespace YouTubePlayerEX.App.Screens
                                                                                 Top = 7
                                                                             },
                                                                             AlwaysPresent = true,
-                                                                            Font = YouTubePlayerEXApp.DefaultFont,
+                                                                            Font = NekoPlayerApp.DefaultFont,
                                                                             Colour = overlayColourProvider.Content2,
                                                                         },
                                                                     }
@@ -712,7 +712,7 @@ namespace YouTubePlayerEX.App.Screens
                                                                                 Top = 7
                                                                             },
                                                                             AlwaysPresent = true,
-                                                                            Font = YouTubePlayerEXApp.DefaultFont,
+                                                                            Font = NekoPlayerApp.DefaultFont,
                                                                             Colour = overlayColourProvider.Content2,
                                                                         },
                                                                     }
@@ -741,7 +741,7 @@ namespace YouTubePlayerEX.App.Screens
                         {
                             Width = 400,
                             Height = 200,
-                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS,
                             Masking = true,
                             Origin = Anchor.Centre,
                             Anchor = Anchor.Centre,
@@ -763,9 +763,9 @@ namespace YouTubePlayerEX.App.Screens
                                 {
                                     Origin = Anchor.TopLeft,
                                     Anchor = Anchor.TopLeft,
-                                    Text = YTPlayerEXStrings.LoadFromVideoId,
+                                    Text = NekoPlayerStrings.LoadFromVideoId,
                                     Margin = new MarginPadding(16),
-                                    Font = YouTubePlayerEXApp.TorusAlternate.With(size: 30, weight: "Bold"),
+                                    Font = NekoPlayerApp.TorusAlternate.With(size: 30, weight: "Bold"),
                                     Colour = overlayColourProvider.Content2,
                                 },
                                 loadBtn = new AdaptiveButton
@@ -773,7 +773,7 @@ namespace YouTubePlayerEX.App.Screens
                                     Enabled = { Value = true },
                                     Origin = Anchor.BottomRight,
                                     Anchor = Anchor.BottomRight,
-                                    Text = YTPlayerEXStrings.LoadVideo,
+                                    Text = NekoPlayerStrings.LoadVideo,
                                     Size = new Vector2(200, 60),
                                     Margin = new MarginPadding(8),
                                 },
@@ -792,7 +792,7 @@ namespace YouTubePlayerEX.App.Screens
                         {
                             Size = new Vector2(0.7f),
                             RelativeSizeAxes = Axes.Both,
-                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS,
                             Masking = true,
                             Origin = Anchor.Centre,
                             Anchor = Anchor.Centre,
@@ -814,9 +814,9 @@ namespace YouTubePlayerEX.App.Screens
                                 {
                                     Origin = Anchor.TopLeft,
                                     Anchor = Anchor.TopLeft,
-                                    Text = YTPlayerEXStrings.Settings,
+                                    Text = NekoPlayerStrings.Settings,
                                     Margin = new MarginPadding(16),
-                                    Font = YouTubePlayerEXApp.TorusAlternate.With(size: 30, weight: "Bold"),
+                                    Font = NekoPlayerApp.TorusAlternate.With(size: 30, weight: "Bold"),
                                     Colour = overlayColourProvider.Content2,
                                 },
                                 new Container
@@ -843,28 +843,28 @@ namespace YouTubePlayerEX.App.Screens
                                                     Children = new Drawable[] {
                                                         new AdaptiveSpriteText
                                                         {
-                                                            Font = YouTubePlayerEXApp.TorusAlternate.With(size: 30),
-                                                            Text = YTPlayerEXStrings.QuickAction,
+                                                            Font = NekoPlayerApp.TorusAlternate.With(size: 30),
+                                                            Text = NekoPlayerStrings.QuickAction,
                                                             Padding = new MarginPadding { Horizontal = 30, Bottom = 12 },
                                                             Colour = overlayColourProvider.Content2,
                                                         },
                                                         new SettingsButtonV2
                                                         {
-                                                            Text = YTPlayerEXStrings.ExportLogs,
+                                                            Text = NekoPlayerStrings.ExportLogs,
                                                             Padding = new MarginPadding { Horizontal = 30 },
                                                             BackgroundColour = colours.YellowDarker.Darken(0.5f),
                                                             Action = () => Task.Run(exportLogs),
                                                         },
                                                         new AdaptiveSpriteText
                                                         {
-                                                            Font = YouTubePlayerEXApp.TorusAlternate.With(size: 30),
-                                                            Text = YTPlayerEXStrings.General,
+                                                            Font = NekoPlayerApp.TorusAlternate.With(size: 30),
+                                                            Text = NekoPlayerStrings.General,
                                                             Padding = new MarginPadding { Horizontal = 30, Vertical = 12 },
                                                             Colour = overlayColourProvider.Content2,
                                                         },
                                                         new SettingsItemV2(new FormEnumDropdown<Language>
                                                         {
-                                                            Caption = YTPlayerEXStrings.Language,
+                                                            Caption = NekoPlayerStrings.Language,
                                                             Current = game.CurrentLanguage,
                                                             AlwaysShowSearchBar = true,
                                                         })
@@ -874,23 +874,23 @@ namespace YouTubePlayerEX.App.Screens
                                                         },
                                                         new SettingsItemV2(new FormEnumDropdown<DiscordRichPresenceMode>
                                                         {
-                                                            Caption = YTPlayerEXStrings.DiscordRichPresence,
+                                                            Caption = NekoPlayerStrings.DiscordRichPresence,
                                                             Current = discordRichPresence,
                                                         }),
                                                         new SettingsItemV2(new FormEnumDropdown<VideoMetadataTranslateSource>
                                                         {
-                                                            Caption = YTPlayerEXStrings.VideoMetadataTranslateSource,
-                                                            Current = appConfig.GetBindable<VideoMetadataTranslateSource>(YTPlayerEXSetting.VideoMetadataTranslateSource),
+                                                            Caption = NekoPlayerStrings.VideoMetadataTranslateSource,
+                                                            Current = appConfig.GetBindable<VideoMetadataTranslateSource>(NekoPlayerSetting.VideoMetadataTranslateSource),
                                                         }),
                                                         new SettingsItemV2(new FormEnumDropdown<UsernameDisplayMode>
                                                         {
-                                                            Caption = YTPlayerEXStrings.UsernameDisplayMode,
+                                                            Caption = NekoPlayerStrings.UsernameDisplayMode,
                                                             Current = usernameDisplayMode,
                                                         }),
                                                         new SettingsItemV2(login = new FormButton
                                                         {
-                                                            Caption = YTPlayerEXStrings.GoogleAccount,
-                                                            Text = YTPlayerEXStrings.SignedOut,
+                                                            Caption = NekoPlayerStrings.GoogleAccount,
+                                                            Text = NekoPlayerStrings.SignedOut,
                                                             Action = () => {
                                                                 if (!googleOAuth2.SignedIn.Value)
                                                                 {
@@ -905,7 +905,7 @@ namespace YouTubePlayerEX.App.Screens
                                                         }),
                                                         checkForUpdatesButtonCore = new SettingsItemV2(checkForUpdatesButton = new FormButton
                                                         {
-                                                            Caption = YTPlayerEXStrings.CheckUpdate,
+                                                            Caption = NekoPlayerStrings.CheckUpdate,
                                                             Text = app.Version,
                                                             ButtonIcon = FontAwesome.Solid.Sync,
                                                             Action = () => {
@@ -924,39 +924,39 @@ namespace YouTubePlayerEX.App.Screens
                                                         }),
                                                         new AdaptiveSpriteText
                                                         {
-                                                            Font = YouTubePlayerEXApp.TorusAlternate.With(size: 30),
-                                                            Text = YTPlayerEXStrings.Graphics,
+                                                            Font = NekoPlayerApp.TorusAlternate.With(size: 30),
+                                                            Text = NekoPlayerStrings.Graphics,
                                                             Padding = new MarginPadding { Horizontal = 30, Vertical = 12 },
                                                             Colour = overlayColourProvider.Content2,
                                                         },
                                                         new SettingsItemV2(new FormEnumDropdown<AspectRatioMethod>
                                                         {
-                                                            Caption = YTPlayerEXStrings.AspectRatioMethod,
+                                                            Caption = NekoPlayerStrings.AspectRatioMethod,
                                                             Current = aspectRatioMethod,
                                                             Hotkey = new Hotkey(GlobalAction.CycleAspectRatio),
                                                         }),
                                                         new SettingsItemV2(new FormSliderBar<double>
                                                         {
-                                                            Caption = YTPlayerEXStrings.VideoDimLevel,
-                                                            Current = appConfig.GetBindable<double>(YTPlayerEXSetting.VideoDimLevel),
+                                                            Caption = NekoPlayerStrings.VideoDimLevel,
+                                                            Current = appConfig.GetBindable<double>(NekoPlayerSetting.VideoDimLevel),
                                                             DisplayAsPercentage = true,
                                                         }),
                                                         new SettingsItemV2(new FormSliderBar<float>
                                                         {
-                                                            Caption = YTPlayerEXStrings.UIScaling,
+                                                            Caption = NekoPlayerStrings.UIScaling,
                                                             TransferValueOnCommit = true,
-                                                            Current = appConfig.GetBindable<float>(YTPlayerEXSetting.UIScale),
+                                                            Current = appConfig.GetBindable<float>(NekoPlayerSetting.UIScale),
                                                             KeyboardStep = 0.01f,
                                                             LabelFormat = v => $@"{v:0.##}x",
                                                         }),
                                                         new SettingsItemV2(new FrameSyncDropdown
                                                         {
-                                                            Caption = YTPlayerEXStrings.FrameLimiter,
+                                                            Caption = NekoPlayerStrings.FrameLimiter,
                                                             Current = config.GetBindable<FrameSync>(FrameworkSetting.FrameSync),
                                                         }),
                                                         windowModeDropdownSettings = new SettingsItemV2(windowModeDropdown = new WindowModeDropdown
                                                         {
-                                                            Caption = YTPlayerEXStrings.ScreenMode,
+                                                            Caption = NekoPlayerStrings.ScreenMode,
                                                             Items = window?.SupportedWindowModes,
                                                             Current = windowMode,
                                                         })
@@ -965,7 +965,7 @@ namespace YouTubePlayerEX.App.Screens
                                                         },
                                                         displayDropdownCore = new SettingsItemV2(displayDropdown = new DisplaySettingsDropdown
                                                         {
-                                                            Caption = YTPlayerEXStrings.Display,
+                                                            Caption = NekoPlayerStrings.Display,
                                                             Items = window?.Displays,
                                                             Current = currentDisplay,
                                                         })
@@ -974,7 +974,7 @@ namespace YouTubePlayerEX.App.Screens
                                                         },
                                                         resolutionFullscreenDropdownCore = new SettingsItemV2(resolutionFullscreenDropdown = new ResolutionSettingsDropdown
                                                         {
-                                                            Caption = YTPlayerEXStrings.ScreenResolution,
+                                                            Caption = NekoPlayerStrings.ScreenResolution,
                                                             ItemSource = resolutionsFullscreen,
                                                             Current = sizeFullscreen
                                                         })
@@ -984,7 +984,7 @@ namespace YouTubePlayerEX.App.Screens
                                                         },
                                                         resolutionWindowedDropdownCore = new SettingsItemV2(resolutionWindowedDropdown = new ResolutionSettingsDropdown
                                                         {
-                                                            Caption = YTPlayerEXStrings.ScreenResolution,
+                                                            Caption = NekoPlayerStrings.ScreenResolution,
                                                             ItemSource = resolutionsWindowed,
                                                             Current = windowedResolution
                                                         })
@@ -994,12 +994,12 @@ namespace YouTubePlayerEX.App.Screens
                                                         },
                                                         minimiseOnFocusLossCheckboxCore = new SettingsItemV2(new FormCheckBox
                                                         {
-                                                            Caption = YTPlayerEXStrings.MinimiseOnFocusLoss,
+                                                            Caption = NekoPlayerStrings.MinimiseOnFocusLoss,
                                                             Current = config.GetBindable<bool>(FrameworkSetting.MinimiseOnFocusLossInFullscreen),
                                                         }),
                                                         new SettingsItemV2(new RendererSettingsDropdown
                                                         {
-                                                            Caption = YTPlayerEXStrings.Renderer,
+                                                            Caption = NekoPlayerStrings.Renderer,
                                                             Current = renderer,
                                                             Items = host.GetPreferredRenderersForCurrentPlatform().Order()
                                                             #pragma warning disable CS0612 // Type or member is obsolete
@@ -1008,29 +1008,29 @@ namespace YouTubePlayerEX.App.Screens
                                                         }),
                                                         new SettingsItemV2(new FormCheckBox
                                                         {
-                                                            Caption = YTPlayerEXStrings.ShowFPS,
+                                                            Caption = NekoPlayerStrings.ShowFPS,
                                                             Current = fpsDisplay,
                                                             Hotkey = new Hotkey(GlobalAction.ToggleFPSDisplay),
                                                         }),
                                                         new SettingsItemV2(new FormCheckBox
                                                         {
-                                                            Caption = YTPlayerEXStrings.UseSDL3,
+                                                            Caption = NekoPlayerStrings.UseSDL3,
                                                             Current = use_sdl3,
                                                         }),
                                                         new SettingsItemV2(new FormCheckBox
                                                         {
-                                                            Caption = YTPlayerEXStrings.UseSystemCursor,
-                                                            Current = appConfig.GetBindable<bool>(YTPlayerEXSetting.UseSystemCursor),
+                                                            Caption = NekoPlayerStrings.UseSystemCursor,
+                                                            Current = appConfig.GetBindable<bool>(NekoPlayerSetting.UseSystemCursor),
                                                         }),
                                                         safeAreaConsiderationsCanBeShown = new SettingsItemV2(new FormCheckBox
                                                         {
-                                                            Caption = YTPlayerEXStrings.ShrinkGameToSafeArea,
-                                                            Current = appConfig.GetBindable<bool>(YTPlayerEXSetting.SafeAreaConsiderations),
+                                                            Caption = NekoPlayerStrings.ShrinkGameToSafeArea,
+                                                            Current = appConfig.GetBindable<bool>(NekoPlayerSetting.SafeAreaConsiderations),
                                                         }),
                                                         new SettingsItemV2(new FormEnumDropdown<ScalingMode>
                                                         {
-                                                            Caption = YTPlayerEXStrings.ScreenScaling,
-                                                            Current = appConfig.GetBindable<ScalingMode>(YTPlayerEXSetting.Scaling),
+                                                            Caption = NekoPlayerStrings.ScreenScaling,
+                                                            Current = appConfig.GetBindable<ScalingMode>(NekoPlayerSetting.Scaling),
                                                             Hotkey = new Hotkey(GlobalAction.CycleScalingMode),
                                                         })
                                                         {
@@ -1047,7 +1047,7 @@ namespace YouTubePlayerEX.App.Screens
                                                             {
                                                                 new SettingsItemV2(new FormSliderBar<float>
                                                                 {
-                                                                    Caption = YTPlayerEXStrings.HorizontalPosition,
+                                                                    Caption = NekoPlayerStrings.HorizontalPosition,
                                                                     Current = scalingPositionX,
                                                                     KeyboardStep = 0.01f,
                                                                     DisplayAsPercentage = true,
@@ -1057,7 +1057,7 @@ namespace YouTubePlayerEX.App.Screens
                                                                 },
                                                                 new SettingsItemV2(new FormSliderBar<float>
                                                                 {
-                                                                    Caption = YTPlayerEXStrings.VerticalPosition,
+                                                                    Caption = NekoPlayerStrings.VerticalPosition,
                                                                     Current = scalingPositionY,
                                                                     KeyboardStep = 0.01f,
                                                                     DisplayAsPercentage = true,
@@ -1067,7 +1067,7 @@ namespace YouTubePlayerEX.App.Screens
                                                                 },
                                                                 new SettingsItemV2(new FormSliderBar<float>
                                                                 {
-                                                                    Caption = YTPlayerEXStrings.HorizontalScale,
+                                                                    Caption = NekoPlayerStrings.HorizontalScale,
                                                                     Current = scalingSizeX,
                                                                     KeyboardStep = 0.01f,
                                                                     DisplayAsPercentage = true,
@@ -1077,7 +1077,7 @@ namespace YouTubePlayerEX.App.Screens
                                                                 },
                                                                 new SettingsItemV2(new FormSliderBar<float>
                                                                 {
-                                                                    Caption = YTPlayerEXStrings.VerticalScale,
+                                                                    Caption = NekoPlayerStrings.VerticalScale,
                                                                     Current = scalingSizeY,
                                                                     KeyboardStep = 0.01f,
                                                                     DisplayAsPercentage = true,
@@ -1087,7 +1087,7 @@ namespace YouTubePlayerEX.App.Screens
                                                                 },
                                                                 new SettingsItemV2(dimSlider = new FormSliderBar<float>
                                                                 {
-                                                                    Caption = YTPlayerEXStrings.ThumbnailDim,
+                                                                    Caption = NekoPlayerStrings.ThumbnailDim,
                                                                     Current = scalingBackgroundDim,
                                                                     KeyboardStep = 0.01f,
                                                                     DisplayAsPercentage = true,
@@ -1096,48 +1096,48 @@ namespace YouTubePlayerEX.App.Screens
                                                         },
                                                         new AdaptiveSpriteText
                                                         {
-                                                            Font = YouTubePlayerEXApp.TorusAlternate.With(size: 30),
-                                                            Text = YTPlayerEXStrings.Screenshot,
+                                                            Font = NekoPlayerApp.TorusAlternate.With(size: 30),
+                                                            Text = NekoPlayerStrings.Screenshot,
                                                             Padding = new MarginPadding { Horizontal = 30, Vertical = 12 },
                                                             Colour = overlayColourProvider.Content2,
                                                         },
                                                         new SettingsItemV2(new FormEnumDropdown<Config.ScreenshotFormat>
                                                         {
-                                                            Caption = YTPlayerEXStrings.ScreenshotFormat,
-                                                            Current = appConfig.GetBindable<ScreenshotFormat>(YTPlayerEXSetting.ScreenshotFormat)
+                                                            Caption = NekoPlayerStrings.ScreenshotFormat,
+                                                            Current = appConfig.GetBindable<ScreenshotFormat>(NekoPlayerSetting.ScreenshotFormat)
                                                         }),
                                                         new SettingsItemV2(new FormCheckBox
                                                         {
-                                                            Caption = YTPlayerEXStrings.ShowCursorInScreenshots,
-                                                            Current = appConfig.GetBindable<bool>(YTPlayerEXSetting.ScreenshotCaptureMenuCursor)
+                                                            Caption = NekoPlayerStrings.ShowCursorInScreenshots,
+                                                            Current = appConfig.GetBindable<bool>(NekoPlayerSetting.ScreenshotCaptureMenuCursor)
                                                         }),
                                                         new AdaptiveSpriteText
                                                         {
-                                                            Font = YouTubePlayerEXApp.TorusAlternate.With(size: 30),
-                                                            Text = YTPlayerEXStrings.Video,
+                                                            Font = NekoPlayerApp.TorusAlternate.With(size: 30),
+                                                            Text = NekoPlayerStrings.Video,
                                                             Padding = new MarginPadding { Horizontal = 30, Vertical = 12 },
                                                             Colour = overlayColourProvider.Content2,
                                                         },
                                                         new SettingsItemV2(hwAccelCheckbox = new FormCheckBox
                                                         {
-                                                            Caption = YTPlayerEXStrings.UseHardwareAcceleration,
+                                                            Caption = NekoPlayerStrings.UseHardwareAcceleration,
                                                         })
                                                         {
                                                             Note = { BindTarget = hwAccelNote },
                                                         },
                                                         new SettingsItemV2(new FormEnumDropdown<Config.VideoQuality>
                                                         {
-                                                            Caption = YTPlayerEXStrings.VideoQuality,
+                                                            Caption = NekoPlayerStrings.VideoQuality,
                                                             Current = videoQuality,
                                                         }),
                                                         new SettingsItemV2(new FormCheckBox
                                                         {
-                                                            Caption = YTPlayerEXStrings.AlwaysUseOriginalAudio,
+                                                            Caption = NekoPlayerStrings.AlwaysUseOriginalAudio,
                                                             Current = alwaysUseOriginalAudio,
                                                         }),
                                                         audioLanguageItem = new SettingsItemV2(new FormEnumDropdown<Localisation.Language>
                                                         {
-                                                            Caption = YTPlayerEXStrings.AudioLanguage,
+                                                            Caption = NekoPlayerStrings.AudioLanguage,
                                                             Current = audioLanguage,
                                                         })
                                                         {
@@ -1145,131 +1145,131 @@ namespace YouTubePlayerEX.App.Screens
                                                         },
                                                         new SettingsItemV2(new FormCheckBox
                                                         {
-                                                            Caption = YTPlayerEXStrings.ClosedCaptions,
+                                                            Caption = NekoPlayerStrings.ClosedCaptions,
                                                             Current = captionEnabled,
                                                             Hotkey = new Hotkey(GlobalAction.CycleCaptionLanguage),
                                                         }),
                                                         captionLangOptions = new SettingsItemV2(captionLangDropdown = new YouTubeI18nLangDropdown
                                                         {
-                                                            Caption = YTPlayerEXStrings.CaptionLanguage,
+                                                            Caption = NekoPlayerStrings.CaptionLanguage,
                                                         })
                                                         {
                                                             ShowRevertToDefaultButton = false,
                                                         },
                                                         new SettingsItemV2(new FormEnumDropdown<UIFont>
                                                         {
-                                                            Caption = YTPlayerEXStrings.CaptionFont,
-                                                            Current = appConfig.GetBindable<UIFont>(YTPlayerEXSetting.UIFont),
+                                                            Caption = NekoPlayerStrings.CaptionFont,
+                                                            Current = appConfig.GetBindable<UIFont>(NekoPlayerSetting.UIFont),
                                                         }),
                                                         new AdaptiveSpriteText
                                                         {
-                                                            Font = YouTubePlayerEXApp.TorusAlternate.With(size: 30),
-                                                            Text = YTPlayerEXStrings.VisualEffects,
+                                                            Font = NekoPlayerApp.TorusAlternate.With(size: 30),
+                                                            Text = NekoPlayerStrings.VisualEffects,
                                                             Padding = new MarginPadding { Horizontal = 30, Vertical = 12 },
                                                             Colour = overlayColourProvider.Content2,
                                                         },
                                                         new SettingsItemV2(new FormSliderBar<float>
                                                         {
-                                                            Caption = YTPlayerEXStrings.VideoBloomLevel,
-                                                            Current = appConfig.GetBindable<float>(YTPlayerEXSetting.VideoBloomLevel),
+                                                            Caption = NekoPlayerStrings.VideoBloomLevel,
+                                                            Current = appConfig.GetBindable<float>(NekoPlayerSetting.VideoBloomLevel),
                                                             DisplayAsPercentage = true,
                                                         }),
                                                         new SettingsItemV2(new FormSliderBar<float>
                                                         {
-                                                            Caption = YTPlayerEXStrings.ChromaticAberration,
-                                                            Current = appConfig.GetBindable<float>(YTPlayerEXSetting.ChromaticAberrationStrength),
+                                                            Caption = NekoPlayerStrings.ChromaticAberration,
+                                                            Current = appConfig.GetBindable<float>(NekoPlayerSetting.ChromaticAberrationStrength),
                                                             DisplayAsPercentage = true,
                                                         }),
                                                         new SettingsItemV2(new FormSliderBar<float>
                                                         {
-                                                            Caption = YTPlayerEXStrings.VideoGrayscaleLevel,
-                                                            Current = appConfig.GetBindable<float>(YTPlayerEXSetting.VideoGrayscaleLevel),
+                                                            Caption = NekoPlayerStrings.VideoGrayscaleLevel,
+                                                            Current = appConfig.GetBindable<float>(NekoPlayerSetting.VideoGrayscaleLevel),
                                                             DisplayAsPercentage = true,
                                                         }),
                                                         new SettingsItemV2(new FormSliderBar<float>
                                                         {
-                                                            Caption = YTPlayerEXStrings.VideoHueShift,
-                                                            Current = appConfig.GetBindable<float>(YTPlayerEXSetting.VideoHueShift),
+                                                            Caption = NekoPlayerStrings.VideoHueShift,
+                                                            Current = appConfig.GetBindable<float>(NekoPlayerSetting.VideoHueShift),
                                                             KeyboardStep = 1,
                                                             LabelFormat = value => $"{value:N0}°"
                                                         }),
                                                         new AdaptiveSpriteText
                                                         {
-                                                            Font = YouTubePlayerEXApp.TorusAlternate.With(size: 30),
-                                                            Text = YTPlayerEXStrings.Audio,
+                                                            Font = NekoPlayerApp.TorusAlternate.With(size: 30),
+                                                            Text = NekoPlayerStrings.Audio,
                                                             Padding = new MarginPadding { Horizontal = 30, Vertical = 12 },
                                                             Colour = overlayColourProvider.Content2,
                                                         },
                                                         new SettingsItemV2(audioDeviceDropdown = new AudioDeviceDropdown
                                                         {
-                                                            Caption = YTPlayerEXStrings.OutputDevice,
+                                                            Caption = NekoPlayerStrings.OutputDevice,
                                                         }),
                                                         wasapiExperimentalItem = new SettingsItemV2(wasapiExperimental = new FormCheckBox
                                                         {
-                                                            Caption = YTPlayerEXStrings.WasapiLabel,
-                                                            HintText = YTPlayerEXStrings.WasapiTooltip,
+                                                            Caption = NekoPlayerStrings.WasapiLabel,
+                                                            HintText = NekoPlayerStrings.WasapiTooltip,
                                                             Current = audio.UseExperimentalWasapi,
                                                         }),
                                                         new SettingsItemV2(new FormCheckBox
                                                         {
-                                                            Caption = YTPlayerEXStrings.AdjustPitchOnSpeedChange,
+                                                            Caption = NekoPlayerStrings.AdjustPitchOnSpeedChange,
                                                             Current = adjustPitch,
                                                             Hotkey = new Hotkey(GlobalAction.ToggleAdjustPitchOnSpeedChange),
                                                         }),
                                                         new AdaptiveSpriteText
                                                         {
-                                                            Font = YouTubePlayerEXApp.TorusAlternate.With(size: 30),
-                                                            Text = YTPlayerEXStrings.Volume,
+                                                            Font = NekoPlayerApp.TorusAlternate.With(size: 30),
+                                                            Text = NekoPlayerStrings.Volume,
                                                             Padding = new MarginPadding { Horizontal = 30, Vertical = 12 },
                                                             Colour = overlayColourProvider.Content2,
                                                         },
                                                         new SettingsItemV2(new FormSliderBar<double>
                                                         {
-                                                            Caption = YTPlayerEXStrings.MasterVolume,
+                                                            Caption = NekoPlayerStrings.MasterVolume,
                                                             Current = config.GetBindable<double>(FrameworkSetting.VolumeUniversal),
                                                             DisplayAsPercentage = true,
                                                         }),
                                                         new SettingsItemV2(new FormSliderBar<double>
                                                         {
-                                                            Caption = YTPlayerEXStrings.VideoVolume,
+                                                            Caption = NekoPlayerStrings.VideoVolume,
                                                             Current = videoVolume,
                                                             DisplayAsPercentage = true,
                                                         }),
                                                         new SettingsItemV2(new FormSliderBar<double>
                                                         {
-                                                            Caption = YTPlayerEXStrings.SFXVolume,
+                                                            Caption = NekoPlayerStrings.SFXVolume,
                                                             Current = config.GetBindable<double>(FrameworkSetting.VolumeEffect),
                                                             DisplayAsPercentage = true,
                                                         }),
                                                         new SettingsItemV2(new FormCheckBox
                                                         {
-                                                            Caption = YTPlayerEXStrings.AudioNormalization,
-                                                            Current = appConfig.GetBindable<bool>(YTPlayerEXSetting.AudioNormalization)
+                                                            Caption = NekoPlayerStrings.AudioNormalization,
+                                                            Current = appConfig.GetBindable<bool>(NekoPlayerSetting.AudioNormalization)
                                                         }),
                                                         new AdaptiveSpriteText
                                                         {
-                                                            Font = YouTubePlayerEXApp.TorusAlternate.With(size: 30),
-                                                            Text = YTPlayerEXStrings.Debug,
+                                                            Font = NekoPlayerApp.TorusAlternate.With(size: 30),
+                                                            Text = NekoPlayerStrings.Debug,
                                                             Padding = new MarginPadding { Horizontal = 30, Vertical = 12 },
                                                             Colour = overlayColourProvider.Content2,
                                                         },
                                                         new SettingsItemV2(new FormCheckBox
                                                         {
-                                                            Caption = YTPlayerEXStrings.ShowLogOverlay,
+                                                            Caption = NekoPlayerStrings.ShowLogOverlay,
                                                             Current = config.GetBindable<bool>(FrameworkSetting.ShowLogOverlay)
                                                         }),
                                                         new SettingsItemV2(new FormCheckBox
                                                         {
-                                                            Caption = YTPlayerEXStrings.BypassFTBRenderPass,
+                                                            Caption = NekoPlayerStrings.BypassFTBRenderPass,
                                                             Current = debugConfig.GetBindable<bool>(DebugSetting.BypassFrontToBackPass)
                                                         }),
                                                         new SettingsItemV2(latencyModeDropdown = new FormEnumDropdown<GCLatencyMode>
                                                         {
-                                                            Caption = YTPlayerEXStrings.GC_Mode,
+                                                            Caption = NekoPlayerStrings.GC_Mode,
                                                         }),
                                                         new SettingsButtonV2
                                                         {
-                                                            Text = YTPlayerEXStrings.ClearAllCaches,
+                                                            Text = NekoPlayerStrings.ClearAllCaches,
                                                             Padding = new MarginPadding { Horizontal = 30 },
                                                             Action = () =>
                                                             {
@@ -1298,7 +1298,7 @@ namespace YouTubePlayerEX.App.Screens
                                                                 }
                                                             },
                                                         },
-                                                        new AdaptiveTextFlowContainer(f => f.Font = YouTubePlayerEXApp.TorusAlternate.With(size: 30, weight: "Bold"))
+                                                        new AdaptiveTextFlowContainer(f => f.Font = NekoPlayerApp.TorusAlternate.With(size: 30, weight: "Bold"))
                                                         {
                                                             RelativeSizeAxes = Axes.X,
                                                             AutoSizeAxes = Axes.Y,
@@ -1308,7 +1308,7 @@ namespace YouTubePlayerEX.App.Screens
                                                         },
                                                         gameVersion = new LinkFlowContainer(f =>
                                                         {
-                                                            f.Font = YouTubePlayerEXApp.DefaultFont.With(size: 15);
+                                                            f.Font = NekoPlayerApp.DefaultFont.With(size: 15);
                                                             f.Colour = overlayColourProvider.Content2;
                                                         })
                                                         {
@@ -1318,7 +1318,7 @@ namespace YouTubePlayerEX.App.Screens
                                                         },
                                                         madeByText = new LinkFlowContainer(f =>
                                                         {
-                                                            f.Font = YouTubePlayerEXApp.DefaultFont.With(size: 15);
+                                                            f.Font = NekoPlayerApp.DefaultFont.With(size: 15);
                                                             f.Colour = overlayColourProvider.Content2;
                                                         })
                                                         {
@@ -1328,7 +1328,7 @@ namespace YouTubePlayerEX.App.Screens
                                                         },
                                                         dislikeCounterCredits = new LinkFlowContainer(f =>
                                                         {
-                                                            f.Font = YouTubePlayerEXApp.DefaultFont.With(size: 15);
+                                                            f.Font = NekoPlayerApp.DefaultFont.With(size: 15);
                                                             f.Colour = overlayColourProvider.Content2;
                                                         })
                                                         {
@@ -1349,7 +1349,7 @@ namespace YouTubePlayerEX.App.Screens
                         {
                             Size = new Vector2(0.7f),
                             RelativeSizeAxes = Axes.Both,
-                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS,
                             Masking = true,
                             Origin = Anchor.Centre,
                             Anchor = Anchor.Centre,
@@ -1395,7 +1395,7 @@ namespace YouTubePlayerEX.App.Screens
                                                 {
                                                     AutoSizeAxes = Axes.X,
                                                     Height = 32,
-                                                    CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS / 1.5f,
+                                                    CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS / 1.5f,
                                                     Masking = true,
                                                     AlwaysPresent = true,
                                                     Children = new Drawable[]
@@ -1403,7 +1403,7 @@ namespace YouTubePlayerEX.App.Screens
                                                         new Container
                                                         {
                                                             RelativeSizeAxes = Axes.Both,
-                                                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS / 1.5f,
+                                                            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS / 1.5f,
                                                             Children = new Drawable[] {
                                                                 likeButtonBackground = new Box
                                                                 {
@@ -1447,7 +1447,7 @@ namespace YouTubePlayerEX.App.Screens
                                                 {
                                                     AutoSizeAxes = Axes.X,
                                                     Height = 32,
-                                                    CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS / 1.5f,
+                                                    CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS / 1.5f,
                                                     Masking = true,
                                                     AlwaysPresent = true,
                                                     Children = new Drawable[]
@@ -1455,7 +1455,7 @@ namespace YouTubePlayerEX.App.Screens
                                                         new Container
                                                         {
                                                             RelativeSizeAxes = Axes.Both,
-                                                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS / 1.5f,
+                                                            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS / 1.5f,
                                                             Children = new Drawable[] {
                                                                 dislikeButtonBackground = new Box
                                                                 {
@@ -1499,7 +1499,7 @@ namespace YouTubePlayerEX.App.Screens
                                                 {
                                                     AutoSizeAxes = Axes.X,
                                                     Height = 32,
-                                                    CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS / 1.5f,
+                                                    CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS / 1.5f,
                                                     Masking = true,
                                                     AlwaysPresent = true,
                                                     ClickAction = f =>
@@ -1514,7 +1514,7 @@ namespace YouTubePlayerEX.App.Screens
                                                         new Container
                                                         {
                                                             RelativeSizeAxes = Axes.Both,
-                                                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS / 1.5f,
+                                                            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS / 1.5f,
                                                             Child = new Box
                                                             {
                                                                 RelativeSizeAxes = Axes.Both,
@@ -1552,7 +1552,7 @@ namespace YouTubePlayerEX.App.Screens
                                                     Enabled = { Value = true },
                                                     AutoSizeAxes = Axes.X,
                                                     Height = 32,
-                                                    CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS / 1.5f,
+                                                    CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS / 1.5f,
                                                     Masking = true,
                                                     AlwaysPresent = true,
                                                     ClickAction = f =>
@@ -1560,7 +1560,7 @@ namespace YouTubePlayerEX.App.Screens
                                                         if (string.IsNullOrEmpty(videoUrl))
                                                             return;
 
-                                                        LocalisableString prompt = YTPlayerEXStrings.GPTSummarizePrompt(videoUrl);
+                                                        LocalisableString prompt = NekoPlayerStrings.GPTSummarizePrompt(videoUrl);
 
                                                         host.OpenUrlExternally($"https://chat.openai.com/?q={prompt}");
                                                     },
@@ -1569,7 +1569,7 @@ namespace YouTubePlayerEX.App.Screens
                                                         new Container
                                                         {
                                                             RelativeSizeAxes = Axes.Both,
-                                                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS / 1.5f,
+                                                            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS / 1.5f,
                                                             Child = new Box
                                                             {
                                                                 RelativeSizeAxes = Axes.Both,
@@ -1595,7 +1595,7 @@ namespace YouTubePlayerEX.App.Screens
                                                                 },
                                                                 new AdaptiveSpriteText
                                                                 {
-                                                                    Text = YTPlayerEXStrings.SummarizeViaGPT,
+                                                                    Text = NekoPlayerStrings.SummarizeViaGPT,
                                                                     Colour = overlayColourProvider.Content2,
                                                                 },
                                                             }
@@ -1614,7 +1614,7 @@ namespace YouTubePlayerEX.App.Screens
                                                     Bottom = 102,
                                                 },
                                                 RelativeSizeAxes = Axes.Both,
-                                                CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                                                CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS,
                                                 Masking = true,
                                                 ScrollbarVisible = false,
                                                 Children = new Drawable[]
@@ -1622,7 +1622,7 @@ namespace YouTubePlayerEX.App.Screens
                                                     new Container
                                                     {
                                                         RelativeSizeAxes = Axes.Both,
-                                                        CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                                                        CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS,
                                                         Masking = true,
                                                         Child = new Box
                                                         {
@@ -1635,7 +1635,7 @@ namespace YouTubePlayerEX.App.Screens
                                                     {
                                                         RelativeSizeAxes = Axes.X,
                                                         AutoSizeAxes = Axes.Y,
-                                                        CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                                                        CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS,
                                                         Spacing = new Vector2(0, 8),
                                                         Padding = new MarginPadding(12),
                                                         Masking = true,
@@ -1644,11 +1644,11 @@ namespace YouTubePlayerEX.App.Screens
                                                             videoInfoDetails = new AdaptiveSpriteText
                                                             {
                                                                 RelativeSizeAxes = Axes.X,
-                                                                Font = YouTubePlayerEXApp.DefaultFont.With(weight: "Black"),
+                                                                Font = NekoPlayerApp.DefaultFont.With(weight: "Black"),
                                                                 Colour = overlayColourProvider.Content2,
                                                                 AlwaysPresent = true,
                                                             },
-                                                            videoDescription = new LinkFlowContainer(f => f.Font = YouTubePlayerEXApp.DefaultFont)
+                                                            videoDescription = new LinkFlowContainer(f => f.Font = NekoPlayerApp.DefaultFont)
                                                             {
                                                                 RelativeSizeAxes = Axes.X,
                                                                 AutoSizeAxes = Axes.Y,
@@ -1668,7 +1668,7 @@ namespace YouTubePlayerEX.App.Screens
                         {
                             Size = new Vector2(0.7f),
                             RelativeSizeAxes = Axes.Both,
-                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS,
                             Masking = true,
                             Origin = Anchor.Centre,
                             Anchor = Anchor.Centre,
@@ -1690,9 +1690,9 @@ namespace YouTubePlayerEX.App.Screens
                                 {
                                     Origin = Anchor.TopLeft,
                                     Anchor = Anchor.TopLeft,
-                                    Text = YTPlayerEXStrings.Comments("0"),
+                                    Text = NekoPlayerStrings.Comments("0"),
                                     Margin = new MarginPadding(16),
-                                    Font = YouTubePlayerEXApp.TorusAlternate.With(size: 30, weight: "Bold"),
+                                    Font = NekoPlayerApp.TorusAlternate.With(size: 30, weight: "Bold"),
                                     Colour = overlayColourProvider.Content2,
                                 },
                                 new GridContainer
@@ -1771,7 +1771,7 @@ namespace YouTubePlayerEX.App.Screens
                         {
                             Size = new Vector2(0.7f),
                             RelativeSizeAxes = Axes.Both,
-                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS,
                             Masking = true,
                             Origin = Anchor.Centre,
                             Anchor = Anchor.Centre,
@@ -1795,7 +1795,7 @@ namespace YouTubePlayerEX.App.Screens
                                     Anchor = Anchor.TopLeft,
                                     Text = "Video info (Expert)",
                                     Margin = new MarginPadding(16),
-                                    Font = YouTubePlayerEXApp.TorusAlternate.With(size: 30, weight: "Bold"),
+                                    Font = NekoPlayerApp.TorusAlternate.With(size: 30, weight: "Bold"),
                                     Colour = overlayColourProvider.Content2,
                                 },
                                 new Container
@@ -1831,7 +1831,7 @@ namespace YouTubePlayerEX.App.Screens
                         {
                             Size = new Vector2(0.7f),
                             RelativeSizeAxes = Axes.Both,
-                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS,
                             Masking = true,
                             Origin = Anchor.Centre,
                             Anchor = Anchor.Centre,
@@ -1853,9 +1853,9 @@ namespace YouTubePlayerEX.App.Screens
                                 {
                                     Origin = Anchor.TopLeft,
                                     Anchor = Anchor.TopLeft,
-                                    Text = YTPlayerEXStrings.Search,
+                                    Text = NekoPlayerStrings.Search,
                                     Margin = new MarginPadding(16),
-                                    Font = YouTubePlayerEXApp.TorusAlternate.With(size: 30, weight: "Bold"),
+                                    Font = NekoPlayerApp.TorusAlternate.With(size: 30, weight: "Bold"),
                                     Colour = overlayColourProvider.Content2,
                                 },
                                 new GridContainer
@@ -1884,7 +1884,7 @@ namespace YouTubePlayerEX.App.Screens
                                                 RelativeSizeAxes = Axes.X,
                                                 Size = new Vector2(0.97f, 1f),
                                                 Text = "",
-                                                PlaceholderText = YTPlayerEXStrings.SearchPlaceholder,
+                                                PlaceholderText = NekoPlayerStrings.SearchPlaceholder,
                                                 FontSize = 20,
                                                 Height = 45,
                                             },
@@ -1935,7 +1935,7 @@ namespace YouTubePlayerEX.App.Screens
                             Size = new Vector2(0.7f, 1f),
                             Height = 276,
                             RelativeSizeAxes = Axes.X,
-                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS,
                             Masking = true,
                             Origin = Anchor.Centre,
                             Anchor = Anchor.Centre,
@@ -1957,9 +1957,9 @@ namespace YouTubePlayerEX.App.Screens
                                 {
                                     Origin = Anchor.TopLeft,
                                     Anchor = Anchor.TopLeft,
-                                    Text = YTPlayerEXStrings.Report,
+                                    Text = NekoPlayerStrings.Report,
                                     Margin = new MarginPadding(16),
-                                    Font = YouTubePlayerEXApp.TorusAlternate.With(size: 30, weight: "Bold"),
+                                    Font = NekoPlayerApp.TorusAlternate.With(size: 30, weight: "Bold"),
                                     Colour = overlayColourProvider.Content2,
                                 },
                                 new Container
@@ -1988,37 +1988,37 @@ namespace YouTubePlayerEX.App.Screens
                                                     {
                                                         new TruncatingSpriteText
                                                         {
-                                                            Text = YTPlayerEXStrings.WhatsGoingOn,
-                                                            Font = YouTubePlayerEXApp.TorusAlternate.With(size: 27, weight: "Bold"),
+                                                            Text = NekoPlayerStrings.WhatsGoingOn,
+                                                            Font = NekoPlayerApp.TorusAlternate.With(size: 27, weight: "Bold"),
                                                             Colour = overlayColourProvider.Content2,
                                                         },
-                                                        new AdaptiveTextFlowContainer(f => f.Font = YouTubePlayerEXApp.DefaultFont.With(size: 17, weight: "Regular"))
+                                                        new AdaptiveTextFlowContainer(f => f.Font = NekoPlayerApp.DefaultFont.With(size: 17, weight: "Regular"))
                                                         {
                                                             RelativeSizeAxes = Axes.X,
                                                             AutoSizeAxes = Axes.Y,
-                                                            Text = YTPlayerEXStrings.ReportDesc,
+                                                            Text = NekoPlayerStrings.ReportDesc,
                                                             Colour = overlayColourProvider.Background1,
                                                         },
                                                         reportReason = new ReportDropdown
                                                         {
                                                             RelativeSizeAxes = Axes.X,
-                                                            Caption = YTPlayerEXStrings.ReportReason,
+                                                            Caption = NekoPlayerStrings.ReportReason,
                                                         },
                                                         reportSubReason = new ReportDropdown
                                                         {
                                                             RelativeSizeAxes = Axes.X,
-                                                            Caption = YTPlayerEXStrings.ReportSubReason,
+                                                            Caption = NekoPlayerStrings.ReportSubReason,
                                                         },
                                                         reportComment = new FormTextBox
                                                         {
                                                             RelativeSizeAxes = Axes.X,
                                                             Height = 50,
-                                                            Caption = YTPlayerEXStrings.Description,
+                                                            Caption = NekoPlayerStrings.Description,
                                                         },
                                                         reportButton = new SettingsButtonV2
                                                         {
                                                             Height = 40,
-                                                            Text = YTPlayerEXStrings.Submit,
+                                                            Text = NekoPlayerStrings.Submit,
                                                             BackgroundColour = colours.Yellow,
                                                         },
                                                     }
@@ -2034,7 +2034,7 @@ namespace YouTubePlayerEX.App.Screens
                             Size = new Vector2(1f, .95f),
                             Width = 400,
                             RelativeSizeAxes = Axes.Y,
-                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS,
                             Masking = true,
                             Origin = Anchor.CentreRight,
                             Anchor = Anchor.CentreRight,
@@ -2060,9 +2060,9 @@ namespace YouTubePlayerEX.App.Screens
                                 {
                                     Origin = Anchor.TopLeft,
                                     Anchor = Anchor.TopLeft,
-                                    Text = YTPlayerEXStrings.Playlists,
+                                    Text = NekoPlayerStrings.Playlists,
                                     Margin = new MarginPadding(16),
-                                    Font = YouTubePlayerEXApp.TorusAlternate.With(size: 30, weight: "Bold"),
+                                    Font = NekoPlayerApp.TorusAlternate.With(size: 30, weight: "Bold"),
                                     Colour = overlayColourProvider.Content2,
                                 },
                                 loadPlaylistOpenButton = new IconButton
@@ -2074,7 +2074,7 @@ namespace YouTubePlayerEX.App.Screens
                                     Icon = FontAwesome.Regular.FolderOpen,
                                     Margin = new MarginPadding(16),
                                     IconScale = new Vector2(1.2f),
-                                    TooltipText = YTPlayerEXStrings.LoadFromPlaylistId,
+                                    TooltipText = NekoPlayerStrings.LoadFromPlaylistId,
                                 },
                                 new Container
                                 {
@@ -2106,12 +2106,12 @@ namespace YouTubePlayerEX.App.Screens
                                                             Anchor = Anchor.TopLeft,
                                                             Text = "[playlist name]",
                                                             RelativeSizeAxes = Axes.X,
-                                                            Font = YouTubePlayerEXApp.TorusAlternate.With(size: 30, weight: "Bold"),
+                                                            Font = NekoPlayerApp.TorusAlternate.With(size: 30, weight: "Bold"),
                                                             Colour = overlayColourProvider.Content2,
                                                         },
                                                         playlistAuthor = new LinkFlowContainer(f =>
                                                         {
-                                                            f.Font = YouTubePlayerEXApp.TorusAlternate.With(size: 16, weight: "SemiBold");
+                                                            f.Font = NekoPlayerApp.TorusAlternate.With(size: 16, weight: "SemiBold");
                                                             f.Colour = overlayColourProvider.Background1;
                                                         })
                                                         {
@@ -2143,7 +2143,7 @@ namespace YouTubePlayerEX.App.Screens
                         {
                             Width = 400,
                             Height = 200,
-                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS,
                             Masking = true,
                             Origin = Anchor.Centre,
                             Anchor = Anchor.Centre,
@@ -2165,9 +2165,9 @@ namespace YouTubePlayerEX.App.Screens
                                 {
                                     Origin = Anchor.TopLeft,
                                     Anchor = Anchor.TopLeft,
-                                    Text = YTPlayerEXStrings.LoadFromPlaylistId,
+                                    Text = NekoPlayerStrings.LoadFromPlaylistId,
                                     Margin = new MarginPadding(16),
-                                    Font = YouTubePlayerEXApp.TorusAlternate.With(size: 30, weight: "Bold"),
+                                    Font = NekoPlayerApp.TorusAlternate.With(size: 30, weight: "Bold"),
                                     Colour = overlayColourProvider.Content2,
                                 },
                                 loadPlaylistBtn = new AdaptiveButton
@@ -2175,7 +2175,7 @@ namespace YouTubePlayerEX.App.Screens
                                     Enabled = { Value = true },
                                     Origin = Anchor.BottomRight,
                                     Anchor = Anchor.BottomRight,
-                                    Text = YTPlayerEXStrings.LoadPlaylist,
+                                    Text = NekoPlayerStrings.LoadPlaylist,
                                     Size = new Vector2(200, 60),
                                     Margin = new MarginPadding(8),
                                 },
@@ -2195,7 +2195,7 @@ namespace YouTubePlayerEX.App.Screens
                             Size = new Vector2(1f, .95f),
                             Width = 400,
                             RelativeSizeAxes = Axes.Y,
-                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS,
                             Masking = true,
                             Origin = Anchor.CentreRight,
                             Anchor = Anchor.CentreRight,
@@ -2221,9 +2221,9 @@ namespace YouTubePlayerEX.App.Screens
                                 {
                                     Origin = Anchor.TopLeft,
                                     Anchor = Anchor.TopLeft,
-                                    Text = YTPlayerEXStrings.AudioEffects,
+                                    Text = NekoPlayerStrings.AudioEffects,
                                     Margin = new MarginPadding(16),
-                                    Font = YouTubePlayerEXApp.TorusAlternate.With(size: 30, weight: "Bold"),
+                                    Font = NekoPlayerApp.TorusAlternate.With(size: 30, weight: "Bold"),
                                     Colour = overlayColourProvider.Content2,
                                 },
                                 new Container
@@ -2252,7 +2252,7 @@ namespace YouTubePlayerEX.App.Screens
                                                     {
                                                         new SettingsItemV2(new FormCheckBox
                                                         {
-                                                            Caption = YTPlayerEXStrings.ReverbEffect,
+                                                            Caption = NekoPlayerStrings.ReverbEffect,
                                                             Current = reverbEnabled,
                                                         }),
                                                         reverbSettings = new FillFlowContainer
@@ -2266,23 +2266,23 @@ namespace YouTubePlayerEX.App.Screens
                                                             {
                                                                 new SettingsItemV2(new FormSliderBar<float>
                                                                 {
-                                                                    Caption = YTPlayerEXStrings.WetMix,
+                                                                    Caption = NekoPlayerStrings.WetMix,
                                                                     Current = audioEffectsConfig.GetBindable<float>(AudioEffectsSetting.ReverbWetMix),
                                                                 }),
                                                                 new SettingsItemV2(new FormSliderBar<float>
                                                                 {
-                                                                    Caption = YTPlayerEXStrings.StereoWidth,
+                                                                    Caption = NekoPlayerStrings.StereoWidth,
                                                                     Current = audioEffectsConfig.GetBindable<float>(AudioEffectsSetting.ReverbStereoWidth),
                                                                     DisplayAsPercentage = true,
                                                                 }),
                                                                 new SettingsItemV2(new FormSliderBar<float>
                                                                 {
-                                                                    Caption = YTPlayerEXStrings.HighFreqDamp,
+                                                                    Caption = NekoPlayerStrings.HighFreqDamp,
                                                                     Current = audioEffectsConfig.GetBindable<float>(AudioEffectsSetting.ReverbDamp),
                                                                 }),
                                                                 new SettingsItemV2(new FormSliderBar<float>
                                                                 {
-                                                                    Caption = YTPlayerEXStrings.RoomSize,
+                                                                    Caption = NekoPlayerStrings.RoomSize,
                                                                     Current = audioEffectsConfig.GetBindable<float>(AudioEffectsSetting.ReverbRoomSize),
                                                                     DisplayAsPercentage = true,
                                                                 }),
@@ -2290,7 +2290,7 @@ namespace YouTubePlayerEX.App.Screens
                                                         },
                                                         new SettingsItemV2(new FormCheckBox
                                                         {
-                                                            Caption = YTPlayerEXStrings.RotateParameters_Enabled,
+                                                            Caption = NekoPlayerStrings.RotateParameters_Enabled,
                                                             Current = rotateEnabled,
                                                         }),
                                                         rotateSettings = new FillFlowContainer
@@ -2304,7 +2304,7 @@ namespace YouTubePlayerEX.App.Screens
                                                             {
                                                                 new SettingsItemV2(new FormSliderBar<float>
                                                                 {
-                                                                    Caption = YTPlayerEXStrings.RotateParameters_fRate,
+                                                                    Caption = NekoPlayerStrings.RotateParameters_fRate,
                                                                     Current = audioEffectsConfig.GetBindable<float>(AudioEffectsSetting.RotateRate),
                                                                     DisplayAsPercentage = true,
                                                                 }),
@@ -2312,7 +2312,7 @@ namespace YouTubePlayerEX.App.Screens
                                                         },
                                                         new SettingsItemV2(new FormCheckBox
                                                         {
-                                                            Caption = YTPlayerEXStrings.EchoEffect,
+                                                            Caption = NekoPlayerStrings.EchoEffect,
                                                             Current = echoEnabled,
                                                         }),
                                                         echoSettings = new FillFlowContainer
@@ -2326,32 +2326,32 @@ namespace YouTubePlayerEX.App.Screens
                                                             {
                                                                 new SettingsItemV2(new FormSliderBar<float>
                                                                 {
-                                                                    Caption = YTPlayerEXStrings.DryMix,
+                                                                    Caption = NekoPlayerStrings.DryMix,
                                                                     Current = audioEffectsConfig.GetBindable<float>(AudioEffectsSetting.EchoDryMix),
                                                                     LabelFormat = f => $"{f - 2}",
                                                                 }),
                                                                 new SettingsItemV2(new FormSliderBar<float>
                                                                 {
-                                                                    Caption = YTPlayerEXStrings.EchoWetMix,
+                                                                    Caption = NekoPlayerStrings.EchoWetMix,
                                                                     Current = audioEffectsConfig.GetBindable<float>(AudioEffectsSetting.EchoWetMix),
                                                                     LabelFormat = f => $"{f - 2}",
                                                                 }),
                                                                 new SettingsItemV2(new FormSliderBar<float>
                                                                 {
-                                                                    Caption = YTPlayerEXStrings.EchoFeedback,
+                                                                    Caption = NekoPlayerStrings.EchoFeedback,
                                                                     Current = audioEffectsConfig.GetBindable<float>(AudioEffectsSetting.EchoFeedback),
                                                                     LabelFormat = f => $"{f - 1}",
                                                                 }),
                                                                 new SettingsItemV2(new FormSliderBar<float>
                                                                 {
-                                                                    Caption = YTPlayerEXStrings.EchoDelay,
+                                                                    Caption = NekoPlayerStrings.EchoDelay,
                                                                     Current = audioEffectsConfig.GetBindable<float>(AudioEffectsSetting.EchoDelay),
                                                                 }),
                                                             }
                                                         },
                                                         new SettingsItemV2(new FormCheckBox
                                                         {
-                                                            Caption = YTPlayerEXStrings.DistortionEffect,
+                                                            Caption = NekoPlayerStrings.DistortionEffect,
                                                             Current = distortionEnabled,
                                                         }),
                                                         distortionSettings = new FillFlowContainer
@@ -2365,7 +2365,7 @@ namespace YouTubePlayerEX.App.Screens
                                                             {
                                                                 new SettingsItemV2(new FormSliderBar<float>
                                                                 {
-                                                                    Caption = YTPlayerEXStrings.DistortionVolume,
+                                                                    Caption = NekoPlayerStrings.DistortionVolume,
                                                                     Current = audioEffectsConfig.GetBindable<float>(AudioEffectsSetting.DistortionVolume),
                                                                     DisplayAsPercentage = true,
                                                                 }),
@@ -2383,7 +2383,7 @@ namespace YouTubePlayerEX.App.Screens
                         {
                             Width = 450,
                             Height = 200,
-                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS,
                             Masking = true,
                             Origin = Anchor.Centre,
                             Anchor = Anchor.Centre,
@@ -2411,7 +2411,7 @@ namespace YouTubePlayerEX.App.Screens
                                     Anchor = Anchor.TopLeft,
                                     AlwaysPresent = true,
                                 },
-                                new AdaptiveTextFlowContainer(f => f.Font = YouTubePlayerEXApp.DefaultFont.With(size: 20))
+                                new AdaptiveTextFlowContainer(f => f.Font = NekoPlayerApp.DefaultFont.With(size: 20))
                                 {
                                     RelativeSizeAxes = Axes.X,
                                     AutoSizeAxes = Axes.Y,
@@ -2419,7 +2419,7 @@ namespace YouTubePlayerEX.App.Screens
                                     Anchor = Anchor.Centre,
                                     TextAnchor = Anchor.Centre,
                                     AlwaysPresent = true,
-                                    Text = YTPlayerEXStrings.UnsubscribeDesc,
+                                    Text = NekoPlayerStrings.UnsubscribeDesc,
                                     Colour = overlayColourProvider.Content2,
                                 },
                                 declineButton = new AdaptiveButton
@@ -2427,7 +2427,7 @@ namespace YouTubePlayerEX.App.Screens
                                     Enabled = { Value = true },
                                     Origin = Anchor.BottomLeft,
                                     Anchor = Anchor.BottomLeft,
-                                    Text = YTPlayerEXStrings.Cancel,
+                                    Text = NekoPlayerStrings.Cancel,
                                     Size = new Vector2(200, 60),
                                     Margin = new MarginPadding(8),
                                 },
@@ -2436,7 +2436,7 @@ namespace YouTubePlayerEX.App.Screens
                                     Enabled = { Value = true },
                                     Origin = Anchor.BottomRight,
                                     Anchor = Anchor.BottomRight,
-                                    Text = YTPlayerEXStrings.Yes,
+                                    Text = NekoPlayerStrings.Yes,
                                     Size = new Vector2(200, 60),
                                     BackgroundColour = colours.RedDark,
                                     Margin = new MarginPadding(8),
@@ -2448,7 +2448,7 @@ namespace YouTubePlayerEX.App.Screens
                             Size = new Vector2(1f, 1f),
                             Width = 450,
                             Height = 250,
-                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS,
                             Masking = true,
                             Origin = Anchor.Centre,
                             Anchor = Anchor.Centre,
@@ -2470,9 +2470,9 @@ namespace YouTubePlayerEX.App.Screens
                                 {
                                     Origin = Anchor.TopLeft,
                                     Anchor = Anchor.TopLeft,
-                                    Text = YTPlayerEXStrings.SaveLocation,
+                                    Text = NekoPlayerStrings.SaveLocation,
                                     Margin = new MarginPadding(16),
-                                    Font = YouTubePlayerEXApp.TorusAlternate.With(size: 30, weight: "Bold"),
+                                    Font = NekoPlayerApp.TorusAlternate.With(size: 30, weight: "Bold"),
                                     Colour = overlayColourProvider.Content2,
                                 },
                                 new Container
@@ -2503,12 +2503,12 @@ namespace YouTubePlayerEX.App.Screens
                                                         {
                                                             RelativeSizeAxes = Axes.X,
                                                             Height = 50,
-                                                            Caption = YTPlayerEXStrings.Playlists,
+                                                            Caption = NekoPlayerStrings.Playlists,
                                                         },
                                                         new AdaptiveButton
                                                         {
                                                             Enabled = { Value = true },
-                                                            Text = YTPlayerEXStrings.AddNewPlaylist,
+                                                            Text = NekoPlayerStrings.AddNewPlaylist,
                                                             RelativeSizeAxes = Axes.X,
                                                             Size = new Vector2(1, 40),
                                                             Margin = new MarginPadding(4),
@@ -2528,7 +2528,7 @@ namespace YouTubePlayerEX.App.Screens
                                                                 new AdaptiveButton
                                                                 {
                                                                     Enabled = { Value = true },
-                                                                    Text = YTPlayerEXStrings.Cancel,
+                                                                    Text = NekoPlayerStrings.Cancel,
                                                                     Size = new Vector2(200, 60),
                                                                     Margin = new MarginPadding(4),
                                                                     Action = () =>
@@ -2539,7 +2539,7 @@ namespace YouTubePlayerEX.App.Screens
                                                                 new AdaptiveButton
                                                                 {
                                                                     Enabled = { Value = true },
-                                                                    Text = YTPlayerEXStrings.SaveOrRemove,
+                                                                    Text = NekoPlayerStrings.SaveOrRemove,
                                                                     Size = new Vector2(200, 60),
                                                                     Margin = new MarginPadding(4),
                                                                     Action = async () =>
@@ -2571,7 +2571,7 @@ namespace YouTubePlayerEX.App.Screens
                             Size = new Vector2(1f, 1f),
                             Width = 450,
                             Height = 250,
-                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS,
                             Masking = true,
                             Origin = Anchor.Centre,
                             Anchor = Anchor.Centre,
@@ -2593,9 +2593,9 @@ namespace YouTubePlayerEX.App.Screens
                                 {
                                     Origin = Anchor.TopLeft,
                                     Anchor = Anchor.TopLeft,
-                                    Text = YTPlayerEXStrings.AddNewPlaylist,
+                                    Text = NekoPlayerStrings.AddNewPlaylist,
                                     Margin = new MarginPadding(16),
-                                    Font = YouTubePlayerEXApp.TorusAlternate.With(size: 30, weight: "Bold"),
+                                    Font = NekoPlayerApp.TorusAlternate.With(size: 30, weight: "Bold"),
                                     Colour = overlayColourProvider.Content2,
                                 },
                                 new Container
@@ -2626,14 +2626,14 @@ namespace YouTubePlayerEX.App.Screens
                                                         {
                                                             RelativeSizeAxes = Axes.X,
                                                             Height = 50,
-                                                            Caption = YTPlayerEXStrings.Title,
-                                                            PlaceholderText = YTPlayerEXStrings.TitlePlaceholder,
+                                                            Caption = NekoPlayerStrings.Title,
+                                                            PlaceholderText = NekoPlayerStrings.TitlePlaceholder,
                                                         },
                                                         playlistPrivacyStatusDropdown = new FormEnumDropdown<PrivacyStatus>
                                                         {
                                                             RelativeSizeAxes = Axes.X,
                                                             Height = 50,
-                                                            Caption = YTPlayerEXStrings.PrivacyStatus,
+                                                            Caption = NekoPlayerStrings.PrivacyStatus,
                                                         },
                                                         new FillFlowContainer
                                                         {
@@ -2645,7 +2645,7 @@ namespace YouTubePlayerEX.App.Screens
                                                                 new AdaptiveButton
                                                                 {
                                                                     Enabled = { Value = true },
-                                                                    Text = YTPlayerEXStrings.Cancel,
+                                                                    Text = NekoPlayerStrings.Cancel,
                                                                     Size = new Vector2(200, 60),
                                                                     Margin = new MarginPadding(4),
                                                                     Action = () =>
@@ -2656,7 +2656,7 @@ namespace YouTubePlayerEX.App.Screens
                                                                 new AdaptiveButton
                                                                 {
                                                                     Enabled = { Value = true },
-                                                                    Text = YTPlayerEXStrings.Create,
+                                                                    Text = NekoPlayerStrings.Create,
                                                                     Size = new Vector2(200, 60),
                                                                     Margin = new MarginPadding(4),
                                                                     Action = async () =>
@@ -2680,7 +2680,7 @@ namespace YouTubePlayerEX.App.Screens
                             Size = new Vector2(1f, .95f),
                             Width = 400,
                             RelativeSizeAxes = Axes.Y,
-                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS,
                             Masking = true,
                             Origin = Anchor.CentreRight,
                             Anchor = Anchor.CentreRight,
@@ -2706,9 +2706,9 @@ namespace YouTubePlayerEX.App.Screens
                                 {
                                     Origin = Anchor.TopLeft,
                                     Anchor = Anchor.TopLeft,
-                                    Text = YTPlayerEXStrings.Menu,
+                                    Text = NekoPlayerStrings.Menu,
                                     Margin = new MarginPadding(16),
-                                    Font = YouTubePlayerEXApp.TorusAlternate.With(size: 30, weight: "Bold"),
+                                    Font = NekoPlayerApp.TorusAlternate.With(size: 30, weight: "Bold"),
                                     Colour = overlayColourProvider.Content2,
                                 },
                                 new Container
@@ -2744,7 +2744,7 @@ namespace YouTubePlayerEX.App.Screens
                                                             RelativeSizeAxes = Axes.X,
                                                             Icon = FontAwesome.Regular.FolderOpen,
                                                             IconScale = new Vector2(1.2f),
-                                                            Text = YTPlayerEXStrings.LoadVideo,
+                                                            Text = NekoPlayerStrings.LoadVideo,
                                                         },
                                                         settingsOverlayShowBtn = new MenuButtonItem
                                                         {
@@ -2755,7 +2755,7 @@ namespace YouTubePlayerEX.App.Screens
                                                             RelativeSizeAxes = Axes.X,
                                                             Icon = FontAwesome.Solid.Cog,
                                                             IconScale = new Vector2(1.2f),
-                                                            Text = YTPlayerEXStrings.Settings,
+                                                            Text = NekoPlayerStrings.Settings,
                                                         },
                                                         commentOpenButton = new MenuButtonItem
                                                         {
@@ -2766,7 +2766,7 @@ namespace YouTubePlayerEX.App.Screens
                                                             RelativeSizeAxes = Axes.X,
                                                             Icon = FontAwesome.Regular.CommentAlt,
                                                             IconScale = new Vector2(1.2f),
-                                                            Text = YTPlayerEXStrings.CommentsWithoutCount,
+                                                            Text = NekoPlayerStrings.CommentsWithoutCount,
                                                         },
                                                         searchOpenButton = new MenuButtonItem
                                                         {
@@ -2777,7 +2777,7 @@ namespace YouTubePlayerEX.App.Screens
                                                             RelativeSizeAxes = Axes.X,
                                                             Icon = FontAwesome.Solid.Search,
                                                             IconScale = new Vector2(1.2f),
-                                                            Text = YTPlayerEXStrings.Search,
+                                                            Text = NekoPlayerStrings.Search,
                                                         },
                                                         reportOpenButton = new MenuButtonItem
                                                         {
@@ -2788,7 +2788,7 @@ namespace YouTubePlayerEX.App.Screens
                                                             RelativeSizeAxes = Axes.X,
                                                             Icon = FontAwesome.Solid.Flag,
                                                             IconScale = new Vector2(1.2f),
-                                                            Text = YTPlayerEXStrings.Report,
+                                                            Text = NekoPlayerStrings.Report,
                                                         },
                                                         playlistOpenButton = new MenuButtonItem
                                                         {
@@ -2799,7 +2799,7 @@ namespace YouTubePlayerEX.App.Screens
                                                             RelativeSizeAxes = Axes.X,
                                                             Icon = FontAwesome.Solid.List,
                                                             IconScale = new Vector2(1.2f),
-                                                            Text = YTPlayerEXStrings.Playlists,
+                                                            Text = NekoPlayerStrings.Playlists,
                                                         },
                                                         audioEffectsOpenButton = new MenuButtonItem
                                                         {
@@ -2810,7 +2810,7 @@ namespace YouTubePlayerEX.App.Screens
                                                             RelativeSizeAxes = Axes.X,
                                                             Icon = FontAwesome.Solid.VolumeUp,
                                                             IconScale = new Vector2(1.2f),
-                                                            Text = YTPlayerEXStrings.AudioEffects,
+                                                            Text = NekoPlayerStrings.AudioEffects,
                                                         },
                                                         saveVideoOpenButton = new MenuButtonItem
                                                         {
@@ -2821,7 +2821,7 @@ namespace YouTubePlayerEX.App.Screens
                                                             RelativeSizeAxes = Axes.X,
                                                             Icon = FontAwesome.Regular.Bookmark,
                                                             IconScale = new Vector2(1.2f),
-                                                            Text = YTPlayerEXStrings.Save,
+                                                            Text = NekoPlayerStrings.Save,
                                                         },
                                                         new MenuButtonItem
                                                         {
@@ -2832,7 +2832,7 @@ namespace YouTubePlayerEX.App.Screens
                                                             RelativeSizeAxes = Axes.X,
                                                             Icon = FontAwesome.Solid.SignOutAlt,
                                                             IconScale = new Vector2(1.2f),
-                                                            Text = YTPlayerEXStrings.Exit,
+                                                            Text = NekoPlayerStrings.Exit,
                                                             Action = () =>
                                                             {
                                                                 hideOverlays();
@@ -2851,7 +2851,7 @@ namespace YouTubePlayerEX.App.Screens
                         {
                             Width = 450,
                             Height = 185,
-                            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS,
                             Masking = true,
                             Origin = Anchor.Centre,
                             Anchor = Anchor.Centre,
@@ -2873,9 +2873,9 @@ namespace YouTubePlayerEX.App.Screens
                                 {
                                     Origin = Anchor.TopLeft,
                                     Anchor = Anchor.TopLeft,
-                                    Text = YTPlayerEXStrings.GoogleAccount,
+                                    Text = NekoPlayerStrings.GoogleAccount,
                                     Margin = new MarginPadding(16),
-                                    Font = YouTubePlayerEXApp.TorusAlternate.With(size: 30, weight: "Bold"),
+                                    Font = NekoPlayerApp.TorusAlternate.With(size: 30, weight: "Bold"),
                                     Colour = overlayColourProvider.Content2,
                                 },
                                 youtubeChannelMetadataDisplay2 = new YouTubeChannelMetadataDisplay
@@ -2893,7 +2893,7 @@ namespace YouTubePlayerEX.App.Screens
                                     Enabled = { Value = true },
                                     Origin = Anchor.BottomLeft,
                                     Anchor = Anchor.BottomLeft,
-                                    Text = YTPlayerEXStrings.Logout,
+                                    Text = NekoPlayerStrings.Logout,
                                     Size = new Vector2(200, 45),
                                     Margin = new MarginPadding(8),
                                     ClickAction = _ =>
@@ -2910,7 +2910,7 @@ namespace YouTubePlayerEX.App.Screens
                                     Enabled = { Value = true },
                                     Origin = Anchor.BottomRight,
                                     Anchor = Anchor.BottomRight,
-                                    Text = YTPlayerEXStrings.ViewChannel,
+                                    Text = NekoPlayerStrings.ViewChannel,
                                     Size = new Vector2(200, 45),
                                     BackgroundColour = colours.RedDark,
                                     Margin = new MarginPadding(8),
@@ -2957,7 +2957,7 @@ namespace YouTubePlayerEX.App.Screens
             };
 
             madeByText.AddText("made by ");
-            madeByText.AddLink("MayoDev Studios", "https://boomboxrapsody.github.io/youtube-player-ex.html");
+            madeByText.AddLink("MayoDev Studios", "https://boomboxrapsody.github.io/");
 
             latencyModeDropdown.Current.BindValueChanged(mode =>
             {
@@ -3003,7 +3003,7 @@ namespace YouTubePlayerEX.App.Screens
 
                     Schedule(() => commentSendButton.Enabled.Value = true);
                     Channel wth = api.GetMineChannel();
-                    login.Text = YTPlayerEXStrings.SignedIn(api.GetLocalizedChannelTitle(wth, true));
+                    login.Text = NekoPlayerStrings.SignedIn(api.GetLocalizedChannelTitle(wth, true));
 
                     youtubeChannelMetadataDisplay2.UpdateUser(wth);
 
@@ -3019,12 +3019,12 @@ namespace YouTubePlayerEX.App.Screens
                     };
 
                     if (api.TryToGetMineChannel() != null)
-                        commentTextBox.PlaceholderText = YTPlayerEXStrings.CommentWith(api.GetLocalizedChannelTitle(api.GetMineChannel()));
+                        commentTextBox.PlaceholderText = NekoPlayerStrings.CommentWith(api.GetLocalizedChannelTitle(api.GetMineChannel()));
                 }
                 else
                 {
                     Schedule(() => commentSendButton.Enabled.Value = false);
-                    login.Text = YTPlayerEXStrings.SignedOut;
+                    login.Text = NekoPlayerStrings.SignedOut;
 
                     commentTextBox.PlaceholderText = string.Empty;
                 }
@@ -3070,7 +3070,7 @@ namespace YouTubePlayerEX.App.Screens
 
             hwAccelCheckbox.Current.BindValueChanged(val =>
             {
-                hwAccelNote.Value = val.NewValue ? new SettingsNote.Data(YTPlayerEXStrings.HardwareAccelerationEnabledNote, SettingsNote.Type.Informational) : null;
+                hwAccelNote.Value = val.NewValue ? new SettingsNote.Data(NekoPlayerStrings.HardwareAccelerationEnabledNote, SettingsNote.Type.Informational) : null;
                 hardwareVideoDecoder.Value = val.NewValue ? HardwareVideoDecoder.Any : HardwareVideoDecoder.None;
             }, true);
 
@@ -3099,15 +3099,15 @@ namespace YouTubePlayerEX.App.Screens
             playlistAuthor.Text = "[no metadata available]";
 
             infoForNerds.AddText("Codec: ");
-            infoForNerds.AddText("[unknown]", f => f.Font = YouTubePlayerEXApp.DefaultFont.With(weight: "Bold"));
+            infoForNerds.AddText("[unknown]", f => f.Font = NekoPlayerApp.DefaultFont.With(weight: "Bold"));
             infoForNerds.AddText("\nWidth: ");
-            infoForNerds.AddText("[unknown]", f => f.Font = YouTubePlayerEXApp.DefaultFont.With(weight: "Bold"));
+            infoForNerds.AddText("[unknown]", f => f.Font = NekoPlayerApp.DefaultFont.With(weight: "Bold"));
             infoForNerds.AddText("\nHeight: ");
-            infoForNerds.AddText("[unknown]", f => f.Font = YouTubePlayerEXApp.DefaultFont.With(weight: "Bold"));
+            infoForNerds.AddText("[unknown]", f => f.Font = NekoPlayerApp.DefaultFont.With(weight: "Bold"));
             infoForNerds.AddText("\nFPS: ");
-            infoForNerds.AddText("[unknown]", f => f.Font = YouTubePlayerEXApp.DefaultFont.With(weight: "Bold"));
+            infoForNerds.AddText("[unknown]", f => f.Font = NekoPlayerApp.DefaultFont.With(weight: "Bold"));
             infoForNerds.AddText("\nBitrate: ");
-            infoForNerds.AddText("[unknown]", f => f.Font = YouTubePlayerEXApp.DefaultFont.With(weight: "Bold"));
+            infoForNerds.AddText("[unknown]", f => f.Font = NekoPlayerApp.DefaultFont.With(weight: "Bold"));
 
             audio.OnNewDevice += onAudioDeviceChanged;
             audio.OnLostDevice += onAudioDeviceChanged;
@@ -3117,7 +3117,7 @@ namespace YouTubePlayerEX.App.Screens
 
             videoQuality.BindValueChanged(quality =>
             {
-                videoQualityWarning.Value = (quality.NewValue == Config.VideoQuality.Quality_8K) ? new SettingsNote.Data(YTPlayerEXStrings.VideoQuality8KWarning, SettingsNote.Type.Warning) : null;
+                videoQualityWarning.Value = (quality.NewValue == Config.VideoQuality.Quality_8K) ? new SettingsNote.Data(NekoPlayerStrings.VideoQuality8KWarning, SettingsNote.Type.Warning) : null;
                 if (currentVideoSource != null)
                 {
                     Task.Run(async () =>
@@ -3177,9 +3177,9 @@ namespace YouTubePlayerEX.App.Screens
                 currentVideoSource?.UpdatePreservePitch(value.NewValue);
             });
 
-            dislikeCounterCredits.AddText(YTPlayerEXStrings.DislikeCounterCredits_1);
+            dislikeCounterCredits.AddText(NekoPlayerStrings.DislikeCounterCredits_1);
             dislikeCounterCredits.AddLink("Return YouTube Dislike API", "https://returnyoutubedislike.com/");
-            dislikeCounterCredits.AddText(YTPlayerEXStrings.DislikeCounterCredits_2);
+            dislikeCounterCredits.AddText(NekoPlayerStrings.DislikeCounterCredits_2);
 
             audioLanguage.BindValueChanged(_ =>
             {
@@ -3210,7 +3210,7 @@ namespace YouTubePlayerEX.App.Screens
                             {
                                 Schedule(() =>
                                 {
-                                    Toast toast = new Toast(YTPlayerEXStrings.CaptionLanguage, lang.NewValue.Name);
+                                    Toast toast = new Toast(NekoPlayerStrings.CaptionLanguage, lang.NewValue.Name);
 
                                     onScreenDisplay.Display(toast);
                                 });
@@ -3246,7 +3246,7 @@ namespace YouTubePlayerEX.App.Screens
                             {
                                 Schedule(() =>
                                 {
-                                    Toast toast = new Toast(YTPlayerEXStrings.CaptionLanguage, captionLangDropdown.Current.Value.Name);
+                                    Toast toast = new Toast(NekoPlayerStrings.CaptionLanguage, captionLangDropdown.Current.Value.Name);
 
                                     onScreenDisplay.Display(toast);
                                 });
@@ -3374,7 +3374,7 @@ namespace YouTubePlayerEX.App.Screens
 
             if (game.IsDeployedBuild)
             {
-                gameVersion.AddLink(game.Version, $"https://github.com/BoomboxRapsody/YouTubePlayerEX/releases/{game.Version}", tooltipText: YTPlayerEXStrings.ViewChangelog(game.Version));
+                gameVersion.AddLink(game.Version, $"https://github.com/BoomboxRapsody/YouTubePlayerEX/releases/{game.Version}", tooltipText: NekoPlayerStrings.ViewChangelog(game.Version));
             }
             else
             {
@@ -3478,7 +3478,7 @@ namespace YouTubePlayerEX.App.Screens
 
                 saveVideoOpenButton.Icon = FontAwesome.Solid.Bookmark;
 
-                Toast toast = new Toast(YTPlayerEXStrings.Playlists, YTPlayerEXStrings.VideoSavedToPlaylist(videoId, myPlaylistsDropdown.Current.Value.Snippet.Title));
+                Toast toast = new Toast(NekoPlayerStrings.Playlists, NekoPlayerStrings.VideoSavedToPlaylist(videoId, myPlaylistsDropdown.Current.Value.Snippet.Title));
 
                 Schedule(() => onScreenDisplay.Display(toast));
             });
@@ -3495,7 +3495,7 @@ namespace YouTubePlayerEX.App.Screens
 
                 saveVideoOpenButton.Icon = FontAwesome.Regular.Bookmark;
 
-                Toast toast = new Toast(YTPlayerEXStrings.Playlists, YTPlayerEXStrings.VideoRemovedFromPlaylist(videoId, myPlaylistsDropdown.Current.Value.Snippet.Title));
+                Toast toast = new Toast(NekoPlayerStrings.Playlists, NekoPlayerStrings.VideoRemovedFromPlaylist(videoId, myPlaylistsDropdown.Current.Value.Snippet.Title));
 
                 Schedule(() => onScreenDisplay.Display(toast));
             });
@@ -3554,7 +3554,7 @@ namespace YouTubePlayerEX.App.Screens
 
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
-            game.UpdateManagerVersionText.Value = YTPlayerEXStrings.CheckingUpdate;
+            game.UpdateManagerVersionText.Value = NekoPlayerStrings.CheckingUpdate;
 
             checkForUpdatesButton.Enabled.Value = false;
 
@@ -3565,10 +3565,10 @@ namespace YouTubePlayerEX.App.Screens
                 if (!foundUpdate)
                 {
                     /*
-                    alert.Text = YTPlayerEXStrings.RunningLatestRelease(game.Version);
+                    alert.Text = NekoPlayerStrings.RunningLatestRelease(game.Version);
                     alert.Show();
                     */
-                    Toast toast = new Toast(YTPlayerEXStrings.General, YTPlayerEXStrings.RunningLatestRelease(game.Version));
+                    Toast toast = new Toast(NekoPlayerStrings.General, NekoPlayerStrings.RunningLatestRelease(game.Version));
 
                     onScreenDisplay.Display(toast);
 
@@ -3713,7 +3713,7 @@ namespace YouTubePlayerEX.App.Screens
             protected override LocalisableString GenerateItemText(Size item)
             {
                 if (item == new Size(9999, 9999))
-                    return YTPlayerEXStrings.Default;
+                    return NekoPlayerStrings.Default;
 
                 return $"{item.Width}x{item.Height}";
             }
@@ -3794,7 +3794,7 @@ namespace YouTubePlayerEX.App.Screens
         private readonly Bindable<Display> currentDisplay = new Bindable<Display>();
 
         [Resolved]
-        private YouTubePlayerEXAppBase app { get; set; }
+        private NekoPlayerAppBase app { get; set; }
 
         [Resolved(canBeNull: true)]
         private UpdateManager updateManager { get; set; }
@@ -3949,7 +3949,7 @@ namespace YouTubePlayerEX.App.Screens
             if (game.IsDeployedBuild)
                 checkForUpdates().FireAndForget();
 
-            if (appGlobalConfig.Get<bool>(YTPlayerEXSetting.FinalLoginState) == true)
+            if (appGlobalConfig.Get<bool>(NekoPlayerSetting.FinalLoginState) == true)
             {
                 Task.Run(async () => await googleOAuth2.SignIn());
             }
@@ -4539,7 +4539,7 @@ namespace YouTubePlayerEX.App.Screens
             if (currentVideoSource != null)
             {
                 playPause.Icon = (currentVideoSource.IsPlaying() ? FontAwesome.Solid.Pause : FontAwesome.Solid.Play);
-                playPause.TooltipText = (currentVideoSource.IsPlaying() ? YTPlayerEXStrings.Pause : YTPlayerEXStrings.Play);
+                playPause.TooltipText = (currentVideoSource.IsPlaying() ? NekoPlayerStrings.Pause : NekoPlayerStrings.Play);
                 videoProgress.MaxValue = currentVideoSource.VideoProgress.MaxValue;
 
                 videoPlaying.Value = currentVideoSource.IsPlaying();
@@ -4598,7 +4598,7 @@ namespace YouTubePlayerEX.App.Screens
 
         private partial class PlaybackSpeedSliderBar : RoundedSliderBar<double>
         {
-            public override LocalisableString TooltipText => YTPlayerEXStrings.PlaybackSpeed(Current.Value);
+            public override LocalisableString TooltipText => NekoPlayerStrings.PlaybackSpeed(Current.Value);
         }
 
         private void updateRatingButtons(string videoId, bool ratingButtonsEnabled)
@@ -4798,18 +4798,18 @@ namespace YouTubePlayerEX.App.Screens
                 }
                 else
                 {
-                    Schedule(() => videoDescription.AddText(YTPlayerEXStrings.NoDescription, text =>
+                    Schedule(() => videoDescription.AddText(NekoPlayerStrings.NoDescription, text =>
                     {
-                        text.Font = YouTubePlayerEXApp.DefaultFont.With(weight: "SemiBold");
+                        text.Font = NekoPlayerApp.DefaultFont.With(weight: "SemiBold");
                         text.Colour = overlayColourProvider1.Background1;
                     }));
                 }
                 sessionStatics.GetBindable<string>(Static.CurrentThumbnailUrl).Value = videoData.Snippet.Thumbnails.High.Url;
-                commentCount.Text = videoData.Statistics.CommentCount != null ? Convert.ToInt32(videoData.Statistics.CommentCount).ToStandardFormattedString(0) : YTPlayerEXStrings.DisabledByUploader;
+                commentCount.Text = videoData.Statistics.CommentCount != null ? Convert.ToInt32(videoData.Statistics.CommentCount).ToStandardFormattedString(0) : NekoPlayerStrings.DisabledByUploader;
                 try
                 {
                     dislikeCount.Text = ReturnYouTubeDislike.GetDislikes(videoId).Dislikes > 0 ? Convert.ToDouble(ReturnYouTubeDislike.GetDislikes(videoId).Dislikes).ToMetric(decimals: 2) : Convert.ToDouble(ReturnYouTubeDislike.GetDislikes(videoId).RawDislikes).ToMetric(decimals: 2);
-                    dislikeButton.TooltipText = YTPlayerEXStrings.DislikeCountTooltip(ReturnYouTubeDislike.GetDislikes(videoId).Dislikes.ToStandardFormattedString(0), ReturnYouTubeDislike.GetDislikes(videoId).RawDislikes.ToStandardFormattedString(0));
+                    dislikeButton.TooltipText = NekoPlayerStrings.DislikeCountTooltip(ReturnYouTubeDislike.GetDislikes(videoId).Dislikes.ToStandardFormattedString(0), ReturnYouTubeDislike.GetDislikes(videoId).RawDislikes.ToStandardFormattedString(0));
                 }
                 catch
                 {
@@ -4821,8 +4821,8 @@ namespace YouTubePlayerEX.App.Screens
                 DateTime.TryParseExact(uploadDateRaw, @"yyyy-MM-dd\THH:mm:ss\Z", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out var uploadDate);
 
                 likeCount.Text = videoData.Statistics.LikeCount != null ? Convert.ToDouble(videoData.Statistics.LikeCount).ToMetric(decimals: 2) : Convert.ToDouble(ReturnYouTubeDislike.GetDislikes(videoId).RawLikes).ToMetric(decimals: 2);
-                commentsContainerTitle.Text = YTPlayerEXStrings.Comments(videoData.Statistics.CommentCount != null ? Convert.ToInt32(videoData.Statistics.CommentCount).ToStandardFormattedString(0) : YTPlayerEXStrings.Disabled);
-                videoInfoDetails.Text = YTPlayerEXStrings.VideoMetadataDescWithoutChannelName(Convert.ToInt32(videoData.Statistics.ViewCount).ToStandardFormattedString(0), uploadDate.ToString());
+                commentsContainerTitle.Text = NekoPlayerStrings.Comments(videoData.Statistics.CommentCount != null ? Convert.ToInt32(videoData.Statistics.CommentCount).ToStandardFormattedString(0) : NekoPlayerStrings.Disabled);
+                videoInfoDetails.Text = NekoPlayerStrings.VideoMetadataDescWithoutChannelName(Convert.ToInt32(videoData.Statistics.ViewCount).ToStandardFormattedString(0), uploadDate.ToString());
 
                 Schedule(() =>
                 {
@@ -4852,7 +4852,7 @@ namespace YouTubePlayerEX.App.Screens
 
                                     Logger.Log("UnsubscribeChannel()");
 
-                                    Toast toast = new Toast(YTPlayerEXStrings.General, YTPlayerEXStrings.SubscriptionRemoved);
+                                    Toast toast = new Toast(NekoPlayerStrings.General, NekoPlayerStrings.SubscriptionRemoved);
 
                                     Schedule(() => onScreenDisplay.Display(toast));
                                     Schedule(() => videoMetadataDisplayDetails.UpdateChannelSubscribeState(videoData.Snippet.ChannelId));
@@ -4870,7 +4870,7 @@ namespace YouTubePlayerEX.App.Screens
 
                                 Logger.Log("SubscribeChannel()");
 
-                                Toast toast = new Toast(YTPlayerEXStrings.General, YTPlayerEXStrings.SubscriptionAdded);
+                                Toast toast = new Toast(NekoPlayerStrings.General, NekoPlayerStrings.SubscriptionAdded);
 
                                 Schedule(() => onScreenDisplay.Display(toast));
                                 Schedule(() => videoMetadataDisplayDetails.UpdateChannelSubscribeState(videoData.Snippet.ChannelId));
@@ -4883,7 +4883,7 @@ namespace YouTubePlayerEX.App.Screens
                         if (!googleOAuth2.SignedIn.Value)
                             return;
 
-                        Toast toast = new Toast(YTPlayerEXStrings.Report, YTPlayerEXStrings.ReportSuccess);
+                        Toast toast = new Toast(NekoPlayerStrings.Report, NekoPlayerStrings.ReportSuccess);
                         api.ReportAbuse(videoId, reportReason.Current.Value.Id, (reportReason.Current.Value.ContainsSecondaryReasons ? reportSubReason.Current.Value.Id : null), (!string.IsNullOrEmpty(reportComment.Current.Value) ? reportComment.Current.Value : null));
                         Schedule(() => onScreenDisplay.Display(toast));
                         reportComment.Current.Value = string.Empty;
@@ -4897,7 +4897,7 @@ namespace YouTubePlayerEX.App.Screens
                         if (!googleOAuth2.SignedIn.Value)
                             return;
 
-                        Toast toast = new Toast(YTPlayerEXStrings.General, YTPlayerEXStrings.CommentAdded);
+                        Toast toast = new Toast(NekoPlayerStrings.General, NekoPlayerStrings.CommentAdded);
                         api.SendComment(videoId, commentTextBox.Text);
 
                         Task.Run(async () =>
@@ -4958,7 +4958,7 @@ namespace YouTubePlayerEX.App.Screens
                     Schedule(() =>
                     {
                         if (api.TryToGetMineChannel() != null)
-                            commentTextBox.PlaceholderText = YTPlayerEXStrings.CommentWith(api.GetLocalizedChannelTitle(api.GetMineChannel()));
+                            commentTextBox.PlaceholderText = NekoPlayerStrings.CommentWith(api.GetLocalizedChannelTitle(api.GetMineChannel()));
                     });
                 }, true);
 
@@ -4967,7 +4967,7 @@ namespace YouTubePlayerEX.App.Screens
                     Task.Run(async () =>
                     {
                         Schedule(() => videoDescription.Text = api.GetLocalizedVideoDescription(videoData));
-                        videoInfoDetails.Text = YTPlayerEXStrings.VideoMetadataDescWithoutChannelName(Convert.ToInt32(videoData.Statistics.ViewCount).ToStandardFormattedString(0), uploadDate.ToString());
+                        videoInfoDetails.Text = NekoPlayerStrings.VideoMetadataDescWithoutChannelName(Convert.ToInt32(videoData.Statistics.ViewCount).ToStandardFormattedString(0), uploadDate.ToString());
                     });
                 });
 
@@ -5060,7 +5060,7 @@ namespace YouTubePlayerEX.App.Screens
         private double pausedTime = 0;
 
         [Resolved]
-        private YTPlayerEXConfigManager appGlobalConfig { get; set; }
+        private NekoPlayerConfigManager appGlobalConfig { get; set; }
 
         public async Task SetVideoSource(string videoId, bool clearCache = false, LoadType loadType = LoadType.Full)
         {
@@ -5161,7 +5161,7 @@ namespace YouTubePlayerEX.App.Screens
                 {
                     Schedule(() =>
                     {
-                        Toast toast = new Toast(YTPlayerEXStrings.General, YTPlayerEXStrings.CannotPlayPrivateVideos);
+                        Toast toast = new Toast(NekoPlayerStrings.General, NekoPlayerStrings.CannotPlayPrivateVideos);
 
                         onScreenDisplay.Display(toast);
                     });
@@ -5206,11 +5206,11 @@ namespace YouTubePlayerEX.App.Screens
                         }
                         else
                         {
-                            Logger.Log($"Preferred audio language is: {appGlobalConfig.Get<Language>(YTPlayerEXSetting.AudioLanguage).ToString()}");
+                            Logger.Log($"Preferred audio language is: {appGlobalConfig.Get<Language>(NekoPlayerSetting.AudioLanguage).ToString()}");
                             // Select best audio stream (highest bitrate)
                             audioStreamInfo = streamManifest
                                 .GetAudioOnlyStreams()
-                                .Where(s => s.AudioLanguage.Value.Code.Contains(appGlobalConfig.Get<Language>(YTPlayerEXSetting.AudioLanguage).ToString()))
+                                .Where(s => s.AudioLanguage.Value.Code.Contains(appGlobalConfig.Get<Language>(NekoPlayerSetting.AudioLanguage).ToString()))
                                 .TryGetWithHighestBitrate();
                         }
                     }
@@ -5246,7 +5246,7 @@ namespace YouTubePlayerEX.App.Screens
                             .Where(s => s.Container == YoutubeExplode.Videos.Streams.Container.Mp4)
                             .TryGetWithHighestVideoQuality();
 
-                        Toast toast = new Toast(YTPlayerEXStrings.VideoQuality, videoStreamInfo.VideoQuality.Label);
+                        Toast toast = new Toast(NekoPlayerStrings.VideoQuality, videoStreamInfo.VideoQuality.Label);
 
                         onScreenDisplay.Display(toast);
                     }
@@ -5259,7 +5259,7 @@ namespace YouTubePlayerEX.App.Screens
                             .Where(s => s.VideoQuality.Label.Contains(app.ParseVideoQuality()))
                             .TryGetWithHighestVideoQuality();
 
-                        Toast toast = new Toast(YTPlayerEXStrings.VideoQuality, videoStreamInfo.VideoQuality.Label);
+                        Toast toast = new Toast(NekoPlayerStrings.VideoQuality, videoStreamInfo.VideoQuality.Label);
 
                         onScreenDisplay.Display(toast);
                     }
@@ -5286,12 +5286,12 @@ namespace YouTubePlayerEX.App.Screens
                                     Schedule(() =>
                                     {
                                         /*
-                                        alert.Text = captionLanguage.Value != ClosedCaptionLanguage.Disabled ? (trackInfo.IsAutoGenerated ? YTPlayerEXStrings.SelectedCaptionAutoGen(captionLanguage.Value.GetLocalisableDescription()) : YTPlayerEXStrings.SelectedCaption(captionLanguage.Value.GetLocalisableDescription())) : YTPlayerEXStrings.SelectedCaption(captionLanguage.Value.GetLocalisableDescription());
+                                        alert.Text = captionLanguage.Value != ClosedCaptionLanguage.Disabled ? (trackInfo.IsAutoGenerated ? NekoPlayerStrings.SelectedCaptionAutoGen(captionLanguage.Value.GetLocalisableDescription()) : NekoPlayerStrings.SelectedCaption(captionLanguage.Value.GetLocalisableDescription())) : NekoPlayerStrings.SelectedCaption(captionLanguage.Value.GetLocalisableDescription());
                                         alert.Show();
                                         spinnerShow = Scheduler.AddDelayed(alert.Hide, 3000);
                                         */
 
-                                        Toast toast = new Toast(YTPlayerEXStrings.CaptionLanguage, captionLangDropdown.Current.Value.Name);
+                                        Toast toast = new Toast(NekoPlayerStrings.CaptionLanguage, captionLangDropdown.Current.Value.Name);
 
                                         onScreenDisplay.Display(toast);
                                     });
@@ -5359,7 +5359,7 @@ namespace YouTubePlayerEX.App.Screens
                             .Where(s => s.Container == YoutubeExplode.Videos.Streams.Container.Mp4)
                             .TryGetWithHighestVideoQuality();
 
-                        Toast toast = new Toast(YTPlayerEXStrings.VideoQuality, videoStreamInfo.VideoQuality.Label);
+                        Toast toast = new Toast(NekoPlayerStrings.VideoQuality, videoStreamInfo.VideoQuality.Label);
 
                         onScreenDisplay.Display(toast);
                     }
@@ -5374,7 +5374,7 @@ namespace YouTubePlayerEX.App.Screens
                                 .Where(s => s.VideoQuality.Label.Contains(app.ParseVideoQuality()))
                                 .TryGetWithHighestVideoQuality();
 
-                            Toast toast = new Toast(YTPlayerEXStrings.VideoQuality, videoStreamInfo.VideoQuality.Label);
+                            Toast toast = new Toast(NekoPlayerStrings.VideoQuality, videoStreamInfo.VideoQuality.Label);
 
                             onScreenDisplay.Display(toast);
                         }
@@ -5386,7 +5386,7 @@ namespace YouTubePlayerEX.App.Screens
                                 .Where(s => s.Container == YoutubeExplode.Videos.Streams.Container.Mp4)
                                 .TryGetWithHighestVideoQuality();
 
-                            Toast toast = new Toast(YTPlayerEXStrings.VideoQuality, videoStreamInfo.VideoQuality.Label);
+                            Toast toast = new Toast(NekoPlayerStrings.VideoQuality, videoStreamInfo.VideoQuality.Label);
 
                             onScreenDisplay.Display(toast);
                         }
@@ -5413,7 +5413,7 @@ namespace YouTubePlayerEX.App.Screens
                                 {
                                     Schedule(() =>
                                     {
-                                        Toast toast = new Toast(YTPlayerEXStrings.CaptionLanguage, captionLangDropdown.Current.Value.Name);
+                                        Toast toast = new Toast(NekoPlayerStrings.CaptionLanguage, captionLangDropdown.Current.Value.Name);
 
                                         onScreenDisplay.Display(toast);
                                     });
@@ -5448,7 +5448,7 @@ namespace YouTubePlayerEX.App.Screens
             }
             else
             {
-                Toast toast = new Toast(YTPlayerEXStrings.General, YTPlayerEXStrings.NoVideoIdError);
+                Toast toast = new Toast(NekoPlayerStrings.General, NekoPlayerStrings.NoVideoIdError);
 
                 onScreenDisplay.Display(toast);
             }
@@ -5489,7 +5489,7 @@ namespace YouTubePlayerEX.App.Screens
 
             Schedule(() =>
             {
-                Toast toast = new Toast(YTPlayerEXStrings.General, YTPlayerEXStrings.LogsExportFinished);
+                Toast toast = new Toast(NekoPlayerStrings.General, NekoPlayerStrings.LogsExportFinished);
 
                 onScreenDisplay.Display(toast);
                 exportStorage.PresentFileExternally(archive_filename);
@@ -5498,7 +5498,7 @@ namespace YouTubePlayerEX.App.Screens
 #nullable disable
 
         [Resolved]
-        private YouTubePlayerEXApp game { get; set; }
+        private NekoPlayerApp game { get; set; }
 
         private enum GCLatencyMode
         {
@@ -5566,11 +5566,11 @@ namespace YouTubePlayerEX.App.Screens
             protected override LocalisableString GenerateItemText(RendererType item)
             {
                 if (item == RendererType.Automatic && automaticRendererInUse)
-                    return YTPlayerEXStrings.RenderTypeAutomaticIsUse(hostResolvedRenderer.GetDescription());
+                    return NekoPlayerStrings.RenderTypeAutomaticIsUse(hostResolvedRenderer.GetDescription());
 
                 if (item == RendererType.Automatic)
                 {
-                    return YTPlayerEXStrings.RenderTypeAutomatic;
+                    return NekoPlayerStrings.RenderTypeAutomatic;
                 }
 
                 return base.GenerateItemText(item);
@@ -5590,13 +5590,13 @@ namespace YouTubePlayerEX.App.Screens
                 switch (item)
                 {
                     case WindowMode.Windowed:
-                        return YTPlayerEXStrings.Windowed;
+                        return NekoPlayerStrings.Windowed;
 
                     case WindowMode.Borderless:
-                        return YTPlayerEXStrings.Borderless;
+                        return NekoPlayerStrings.Borderless;
 
                     case WindowMode.Fullscreen:
-                        return YTPlayerEXStrings.Fullscreen;
+                        return NekoPlayerStrings.Fullscreen;
                 }
                 return base.GenerateItemText(item);
             }
@@ -5605,7 +5605,7 @@ namespace YouTubePlayerEX.App.Screens
         private partial class AudioDeviceDropdown : FormDropdown<string>
         {
             protected override LocalisableString GenerateItemText(string item)
-                => string.IsNullOrEmpty(item) ? YTPlayerEXStrings.Default : base.GenerateItemText(item);
+                => string.IsNullOrEmpty(item) ? NekoPlayerStrings.Default : base.GenerateItemText(item);
         }
 
         private partial class PlaylistDropdown : FormDropdown<Playlist>
@@ -5621,19 +5621,19 @@ namespace YouTubePlayerEX.App.Screens
                 switch (item)
                 {
                     case FrameSync.VSync:
-                        return YTPlayerEXStrings.VSync;
+                        return NekoPlayerStrings.VSync;
 
                     case FrameSync.Limit2x:
-                        return YTPlayerEXStrings.RefreshRate2X;
+                        return NekoPlayerStrings.RefreshRate2X;
 
                     case FrameSync.Limit4x:
-                        return YTPlayerEXStrings.RefreshRate4X;
+                        return NekoPlayerStrings.RefreshRate4X;
 
                     case FrameSync.Limit8x:
-                        return YTPlayerEXStrings.RefreshRate8X;
+                        return NekoPlayerStrings.RefreshRate8X;
 
                     case FrameSync.Unlimited:
-                        return YTPlayerEXStrings.Unlimited;
+                        return NekoPlayerStrings.Unlimited;
                 }
                 return base.GenerateItemText(item);
             }
@@ -5642,10 +5642,10 @@ namespace YouTubePlayerEX.App.Screens
         private partial class YouTubeI18nLangDropdown : FormDropdown<YouTubeI18nLangItem>
         {
             [Resolved]
-            private YouTubePlayerEXApp app { get; set; }
+            private NekoPlayerApp app { get; set; }
 
             [Resolved]
-            private YTPlayerEXConfigManager config { get; set; }
+            private NekoPlayerConfigManager config { get; set; }
 
             [Resolved]
             private YoutubeExplode.YoutubeClient youtubeService { get; set; }

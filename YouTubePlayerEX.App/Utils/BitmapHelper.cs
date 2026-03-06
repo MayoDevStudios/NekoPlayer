@@ -7,7 +7,7 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 
-namespace YouTubePlayerEX.App.Utils
+namespace NekoPlayer.App.Utils
 {
     // ported to SixLabors.ImageSharp
     public class BitmapHelper : IBitmapHelper

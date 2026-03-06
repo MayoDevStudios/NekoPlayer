@@ -2,16 +2,16 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Localisation;
-using YouTubePlayerEX.App.Localisation;
+using NekoPlayer.App.Localisation;
 
-namespace YouTubePlayerEX.App.Config
+namespace NekoPlayer.App.Config
 {
     public enum AspectRatioMethod
-    {
-        [LocalisableDescription(typeof(YTPlayerEXStrings), nameof(YTPlayerEXStrings.Letterbox))]
+    { 
+        [LocalisableDescription(typeof(NekoPlayerStrings), nameof(NekoPlayerStrings.Letterbox))]
         Letterbox,
 
-        [LocalisableDescription(typeof(YTPlayerEXStrings), nameof(YTPlayerEXStrings.Fill))]
+        [LocalisableDescription(typeof(NekoPlayerStrings), nameof(NekoPlayerStrings.Fill))]
         Fill,
     }
 }

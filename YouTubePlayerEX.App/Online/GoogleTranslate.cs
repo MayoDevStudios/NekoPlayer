@@ -14,19 +14,19 @@ using Newtonsoft.Json;
 using osu.Framework.Configuration;
 using osu.Framework.Extensions;
 using osu.Framework.Logging;
-using YouTubePlayerEX.App.Localisation;
+using NekoPlayer.App.Localisation;
 
-namespace YouTubePlayerEX.App.Online
+namespace NekoPlayer.App.Online
 {
     public class GoogleTranslate
     {
         private FrameworkConfigManager frameworkConfig;
-        private YouTubePlayerEXAppBase app;
+        private NekoPlayerAppBase app;
         private const string utf8charset = "utf-8";
 
         private static readonly HttpClient http_client = new HttpClient();
 
-        public GoogleTranslate(YouTubePlayerEXAppBase app, FrameworkConfigManager frameworkConfig)
+        public GoogleTranslate(NekoPlayerAppBase app, FrameworkConfigManager frameworkConfig)
         {
             this.frameworkConfig = frameworkConfig;
             this.app = app;

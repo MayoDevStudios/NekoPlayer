@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace YouTubePlayerEX.App.Extensions
+namespace NekoPlayer.App.Extensions
 {
     public static class CollectionExtensions
     {

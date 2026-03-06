@@ -2,16 +2,16 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Localisation;
-using YouTubePlayerEX.App.Localisation;
+using NekoPlayer.App.Localisation;
 
-namespace YouTubePlayerEX.App.Config
+namespace NekoPlayer.App.Config
 {
     public enum ScreenshotFormat
     {
-        [LocalisableDescription(typeof(YTPlayerEXStrings), nameof(YTPlayerEXStrings.Jpg))]
+        [LocalisableDescription(typeof(NekoPlayerStrings), nameof(NekoPlayerStrings.Jpg))]
         Jpg = 1,
 
-        [LocalisableDescription(typeof(YTPlayerEXStrings), nameof(YTPlayerEXStrings.Png))]
+        [LocalisableDescription(typeof(NekoPlayerStrings), nameof(NekoPlayerStrings.Png))]
         Png = 2
     }
 }

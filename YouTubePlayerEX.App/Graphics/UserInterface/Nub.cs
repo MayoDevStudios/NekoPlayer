@@ -15,7 +15,7 @@ using osu.Framework.Layout;
 using osuTK;
 using osuTK.Graphics;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     public partial class Nub : Container, IHasCurrentValue<bool>
     {

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using osu.Framework.Extensions;
 using osu.Framework.IO.Stores;
 
-namespace YouTubePlayerEX.App.IO.Archives
+namespace NekoPlayer.App.IO.Archives
 {
     public abstract class ArchiveReader : IResourceStore<byte[]>
     {

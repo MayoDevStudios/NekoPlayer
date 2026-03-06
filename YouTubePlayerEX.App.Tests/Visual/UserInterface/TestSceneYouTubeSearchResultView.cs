@@ -2,12 +2,12 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using NUnit.Framework;
-using YouTubePlayerEX.App.Graphics.UserInterface;
+using NekoPlayer.App.Graphics.UserInterface;
 
-namespace YouTubePlayerEX.App.Tests.Visual.UserInterface
+namespace NekoPlayer.App.Tests.Visual.UserInterface
 {
     [TestFixture]
-    public partial class TestSceneYouTubeSearchResultView : YouTubePlayerEXTestScene
+    public partial class TestSceneYouTubeSearchResultView : NekoPlayerTestScene
     {
         // Add visual tests to ensure correct behaviour of your game: https://github.com/ppy/osu-framework/wiki/Development-and-Testing
         // You can make changes to classes associated with the tests and they will recompile and update immediately.

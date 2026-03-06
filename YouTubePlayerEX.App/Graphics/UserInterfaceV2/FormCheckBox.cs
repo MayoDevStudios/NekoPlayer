@@ -13,9 +13,9 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
-using YouTubePlayerEX.App.Graphics.UserInterface;
+using NekoPlayer.App.Graphics.UserInterface;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterfaceV2
+namespace NekoPlayer.App.Graphics.UserInterfaceV2
 {
     public partial class FormCheckBox : CompositeDrawable, IHasCurrentValue<bool>, IFormControl
     {

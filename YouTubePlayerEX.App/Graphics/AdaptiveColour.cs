@@ -4,9 +4,9 @@
 using System;
 using osu.Framework.Extensions.Color4Extensions;
 using osuTK.Graphics;
-using YouTubePlayerEX.App.Utils;
+using NekoPlayer.App.Utils;
 
-namespace YouTubePlayerEX.App.Graphics
+namespace NekoPlayer.App.Graphics
 {
     public class AdaptiveColour
     {

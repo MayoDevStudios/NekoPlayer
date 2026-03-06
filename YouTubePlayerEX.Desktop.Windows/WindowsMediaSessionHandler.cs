@@ -13,10 +13,10 @@ using Windows.Media;
 using Windows.Media.Core;
 using Windows.Media.Playback;
 using Windows.Storage.Streams;
-using YouTubePlayerEX.App;
-using YouTubePlayerEX.App.Online;
+using NekoPlayer.App;
+using NekoPlayer.App.Online;
 
-namespace YouTubePlayerEX.Desktop.Windows.MediaSessionHandler
+namespace NekoPlayer.Desktop.Windows.MediaSessionHandler
 {
     public partial class WindowsMediaSessionHandler : MediaSession
     {

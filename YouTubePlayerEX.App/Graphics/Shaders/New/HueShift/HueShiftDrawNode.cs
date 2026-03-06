@@ -9,7 +9,7 @@ using osu.Framework.Graphics.Rendering;
 using osu.Framework.Graphics.Shaders.Types;
 using osuTK.Graphics;
 
-namespace YouTubePlayerEX.App.Graphics.Shaders.New.HueShift
+namespace NekoPlayer.App.Graphics.Shaders.New.HueShift
 {
     public partial class HueShiftContainer
     {

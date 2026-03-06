@@ -9,7 +9,7 @@ using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Framework.Platform;
 
-namespace YouTubePlayerEX.App.Input
+namespace NekoPlayer.App.Input
 {
     /// <summary>
     /// Track whether the end-user is in an idle state, based on their last interaction with the game.

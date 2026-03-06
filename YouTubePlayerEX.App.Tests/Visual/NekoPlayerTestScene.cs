@@ -3,13 +3,13 @@
 
 using osu.Framework.Testing;
 
-namespace YouTubePlayerEX.App.Tests.Visual
+namespace NekoPlayer.App.Tests.Visual
 {
-    public abstract partial class YouTubePlayerEXTestScene : TestScene
+    public abstract partial class NekoPlayerTestScene : TestScene
     {
         protected override ITestSceneTestRunner CreateRunner() => new YouTubePlayerEXTestSceneTestRunner();
 
-        private partial class YouTubePlayerEXTestSceneTestRunner : YouTubePlayerEXAppBase, ITestSceneTestRunner
+        private partial class YouTubePlayerEXTestSceneTestRunner : NekoPlayerAppBase, ITestSceneTestRunner
         {
             private TestSceneTestRunner.TestRunner runner;
 

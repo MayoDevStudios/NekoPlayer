@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 using osu.Framework.Extensions;
 using osu.Framework.Logging;
 
-namespace YouTubePlayerEX.App.Online
+namespace NekoPlayer.App.Online
 {
     /**
      * Handles fetching and creation/replacing of RYD dislike text spans.

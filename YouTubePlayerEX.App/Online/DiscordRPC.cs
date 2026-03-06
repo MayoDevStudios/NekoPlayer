@@ -6,7 +6,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Logging;
 
-namespace YouTubePlayerEX.App.Online
+namespace NekoPlayer.App.Online
 {
     public partial class DiscordRPC : CompositeDrawable
     {

@@ -3,7 +3,7 @@
 
 using osu.Framework.Graphics;
 
-namespace YouTubePlayerEX.App.Graphics.Shaders.New.Grayscale
+namespace NekoPlayer.App.Graphics.Shaders.New.Grayscale
 {
     public partial class GrayscaleContainer : VideoNewShaderContainer
     {

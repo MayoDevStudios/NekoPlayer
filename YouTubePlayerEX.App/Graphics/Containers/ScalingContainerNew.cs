@@ -15,9 +15,9 @@ using osu.Framework.Platform;
 using osu.Framework.Screens;
 using osuTK;
 using osuTK.Graphics;
-using YouTubePlayerEX.App.Config;
+using NekoPlayer.App.Config;
 
-namespace YouTubePlayerEX.App.Graphics.Containers
+namespace NekoPlayer.App.Graphics.Containers
 {
     /// <summary>
     /// Handles user-defined scaling, allowing application at multiple levels defined by <see cref="ScalingMode"/>.
@@ -111,14 +111,14 @@ namespace YouTubePlayerEX.App.Graphics.Containers
             }
 
             [Resolved]
-            private YouTubePlayerEXApp? game { get; set; }
+            private NekoPlayerApp? game { get; set; }
 
             [BackgroundDependencyLoader]
-            private void load(YTPlayerEXConfigManager osuConfig)
+            private void load(NekoPlayerConfigManager osuConfig)
             {
                 if (applyUIScale)
                 {
-                    uiScale = osuConfig.GetBindable<float>(YTPlayerEXSetting.UIScale);
+                    uiScale = osuConfig.GetBindable<float>(NekoPlayerSetting.UIScale);
                     uiScale.BindValueChanged(args => this.TransformTo(nameof(CurrentScale), args.NewValue, TRANSITION_DURATION, Easing.OutQuart), true);
                 }
             }
@@ -135,30 +135,30 @@ namespace YouTubePlayerEX.App.Graphics.Containers
         }
 
         [BackgroundDependencyLoader]
-        private void load(GameHost host, YTPlayerEXConfigManager config, ISafeArea safeArea)
+        private void load(GameHost host, NekoPlayerConfigManager config, ISafeArea safeArea)
         {
-            scalingMode = config.GetBindable<ScalingMode>(YTPlayerEXSetting.Scaling);
+            scalingMode = config.GetBindable<ScalingMode>(NekoPlayerSetting.Scaling);
             scalingMode.ValueChanged += _ => Scheduler.AddOnce(updateSize);
 
-            sizeX = config.GetBindable<float>(YTPlayerEXSetting.ScalingSizeX);
+            sizeX = config.GetBindable<float>(NekoPlayerSetting.ScalingSizeX);
             sizeX.ValueChanged += _ => Scheduler.AddOnce(updateSize);
 
-            sizeY = config.GetBindable<float>(YTPlayerEXSetting.ScalingSizeY);
+            sizeY = config.GetBindable<float>(NekoPlayerSetting.ScalingSizeY);
             sizeY.ValueChanged += _ => Scheduler.AddOnce(updateSize);
 
-            posX = config.GetBindable<float>(YTPlayerEXSetting.ScalingPositionX);
+            posX = config.GetBindable<float>(NekoPlayerSetting.ScalingPositionX);
             posX.ValueChanged += _ => Scheduler.AddOnce(updateSize);
 
-            posY = config.GetBindable<float>(YTPlayerEXSetting.ScalingPositionY);
+            posY = config.GetBindable<float>(NekoPlayerSetting.ScalingPositionY);
             posY.ValueChanged += _ => Scheduler.AddOnce(updateSize);
 
-            applySafeAreaPadding = config.GetBindable<bool>(YTPlayerEXSetting.SafeAreaConsiderations);
+            applySafeAreaPadding = config.GetBindable<bool>(NekoPlayerSetting.SafeAreaConsiderations);
             applySafeAreaPadding.BindValueChanged(_ => Scheduler.AddOnce(updateSize));
 
             safeAreaPadding = safeArea.SafeAreaPadding.GetBoundCopy();
             safeAreaPadding.BindValueChanged(_ => Scheduler.AddOnce(updateSize));
 
-            scalingMenuBackgroundDim = config.GetBindable<float>(YTPlayerEXSetting.ScalingBackgroundDim);
+            scalingMenuBackgroundDim = config.GetBindable<float>(NekoPlayerSetting.ScalingBackgroundDim);
             scalingMenuBackgroundDim.ValueChanged += _ => Scheduler.AddOnce(updateSize);
 
             tabletHandler = host.AvailableInputHandlers.OfType<ITabletHandler>().SingleOrDefault();
@@ -257,7 +257,7 @@ namespace YouTubePlayerEX.App.Graphics.Containers
             private ISafeArea safeArea { get; set; } = null!;
 
             [Resolved]
-            private YTPlayerEXConfigManager config { get; set; } = null!;
+            private NekoPlayerConfigManager config { get; set; } = null!;
 
             private readonly bool confineHostCursor;
             private readonly LayoutValue cursorRectCache = new LayoutValue(Invalidation.RequiredParentSizeToFit);
@@ -292,7 +292,7 @@ namespace YouTubePlayerEX.App.Graphics.Containers
             {
                 if (host.Window == null) return;
 
-                bool coversWholeScreen = Size == Vector2.One && (!config.Get<bool>(YTPlayerEXSetting.SafeAreaConsiderations) || safeArea.SafeAreaPadding.Value.Total == Vector2.Zero);
+                bool coversWholeScreen = Size == Vector2.One && (!config.Get<bool>(NekoPlayerSetting.SafeAreaConsiderations) || safeArea.SafeAreaPadding.Value.Total == Vector2.Zero);
                 host.Window.CursorConfineRect = coversWholeScreen ? null : ToScreenSpace(DrawRectangle).AABBFloat;
             }
         }

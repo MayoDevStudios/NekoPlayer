@@ -3,7 +3,7 @@
 
 using osu.Framework.Input;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterfaceV2
+namespace NekoPlayer.App.Graphics.UserInterfaceV2
 {
     public partial class FormNumberBox : FormTextBox
     {

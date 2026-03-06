@@ -3,15 +3,15 @@
 
 using System;
 using System.Threading.Tasks;
-using YouTubePlayerEX.App;
-using YouTubePlayerEX.App.Extensions;
-using YouTubePlayerEX.App.Updater;
-using YouTubePlayerEX.Desktop.Windows.Updater;
-using YouTubePlayerEX.Desktop.Windows.MediaSessionHandler;
+using NekoPlayer.App;
+using NekoPlayer.App.Extensions;
+using NekoPlayer.App.Updater;
+using NekoPlayer.Desktop.Windows.Updater;
+using NekoPlayer.Desktop.Windows.MediaSessionHandler;
 
-namespace YouTubePlayerEX.Desktop.Windows
+namespace NekoPlayer.Desktop.Windows
 {
-    internal partial class YouTubePlayerEXAppWindowsDesktop : YouTubePlayerEXApp
+    internal partial class NekoPlayerAppWindowsDesktop : NekoPlayerApp
     {
         protected override UpdateManager CreateUpdateManager() => new VelopackUpdateManager();
 

@@ -7,9 +7,9 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osuTK.Graphics;
-using YouTubePlayerEX.App.Config;
+using NekoPlayer.App.Config;
 
-namespace YouTubePlayerEX.App.Graphics.Containers
+namespace NekoPlayer.App.Graphics.Containers
 {
     public partial class DimmableContainer : Container
     {
@@ -29,7 +29,7 @@ namespace YouTubePlayerEX.App.Graphics.Containers
         [BackgroundDependencyLoader]
         private void load(YTPlayerEXConfigManager config)
         {
-            UserDimLevel = config.GetBindable<double>(YTPlayerEXSetting.VideoDimLevel);
+            UserDimLevel = config.GetBindable<double>(NekoPlayerSetting.VideoDimLevel);
 
             UserDimLevel.ValueChanged += _ => UpdateVisuals();
         }

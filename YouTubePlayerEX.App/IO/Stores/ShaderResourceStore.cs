@@ -4,9 +4,9 @@
 using System;
 using System.Reflection;
 using osu.Framework.IO.Stores;
-using YouTubePlayerEX.App.Graphics.Sprites;
+using NekoPlayer.App.Graphics.Sprites;
 
-namespace YouTubePlayerEX.App.IO.Stores
+namespace NekoPlayer.App.IO.Stores
 {
     public class ShaderResourceStore : DllResourceStore
     {

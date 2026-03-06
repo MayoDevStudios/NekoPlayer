@@ -2,13 +2,13 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Localisation;
-using YouTubePlayerEX.App.Extensions;
+using NekoPlayer.App.Extensions;
 
-namespace YouTubePlayerEX.App.Localisation
+namespace NekoPlayer.App.Localisation
 {
-    public static class YTPlayerEXStrings
+    public static class NekoPlayerStrings
     {
-        private const string prefix = @"YouTubePlayerEX.App.Resources.Localisation.YTPlayerEX";
+        private const string prefix = @"NekoPlayer.App.Resources.Localisation.YTPlayerEX";
 
         /// <summary>
         /// "{0} • {1} views • {2}"

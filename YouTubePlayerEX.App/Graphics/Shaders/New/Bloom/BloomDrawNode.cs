@@ -15,7 +15,7 @@ using osu.Framework.Utils;
 using osuTK;
 using osuTK.Graphics;
 
-namespace YouTubePlayerEX.App.Graphics.Shaders.New.Bloom
+namespace NekoPlayer.App.Graphics.Shaders.New.Bloom
 {
     public partial class BloomContainer
     {

@@ -13,12 +13,12 @@ using osu.Framework.Graphics.Rendering;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osu.Framework.Text;
-using YouTubePlayerEX.App.IO.Archives;
+using NekoPlayer.App.IO.Archives;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Memory;
 using SixLabors.ImageSharp.PixelFormats;
 
-namespace YouTubePlayerEX.App.Graphics
+namespace NekoPlayer.App.Graphics
 {
     public class EmojiStore : TextureStore, ITexturedGlyphLookupStore
     {

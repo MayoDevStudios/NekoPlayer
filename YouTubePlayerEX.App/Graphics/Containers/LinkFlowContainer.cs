@@ -13,10 +13,10 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Localisation;
 using osu.Framework.Logging;
 using osu.Framework.Platform;
-using YouTubePlayerEX.App.Graphics.UserInterface;
-using YouTubePlayerEX.App.Online;
+using NekoPlayer.App.Graphics.UserInterface;
+using NekoPlayer.App.Online;
 
-namespace YouTubePlayerEX.App.Graphics.Containers
+namespace NekoPlayer.App.Graphics.Containers
 {
     public partial class LinkFlowContainer : AdaptiveTextFlowContainer
     {

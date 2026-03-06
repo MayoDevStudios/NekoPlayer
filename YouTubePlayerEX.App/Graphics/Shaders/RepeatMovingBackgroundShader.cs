@@ -9,7 +9,7 @@ using osu.Framework.Graphics.Textures;
 using osuTK;
 using osuTK.Graphics.ES30;
 
-namespace YouTubePlayerEX.App.Graphics.Shaders
+namespace NekoPlayer.App.Graphics.Shaders
 {
     public class RepeatMovingBackgroundShader : InternalShader, IHasCurrentTime, IHasTextureSize
     {

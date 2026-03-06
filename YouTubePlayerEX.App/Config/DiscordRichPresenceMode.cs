@@ -2,19 +2,19 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Localisation;
-using YouTubePlayerEX.App.Localisation;
+using NekoPlayer.App.Localisation;
 
-namespace YouTubePlayerEX.App.Config
+namespace NekoPlayer.App.Config
 {
     public enum DiscordRichPresenceMode
     {
-        [LocalisableDescription(typeof(YTPlayerEXStrings), nameof(YTPlayerEXStrings.DiscordPresenceOff))]
+        [LocalisableDescription(typeof(NekoPlayerStrings), nameof(NekoPlayerStrings.DiscordPresenceOff))]
         Off,
 
-        [LocalisableDescription(typeof(YTPlayerEXStrings), nameof(YTPlayerEXStrings.HideIdentifiableInformation))]
+        [LocalisableDescription(typeof(NekoPlayerStrings), nameof(NekoPlayerStrings.HideIdentifiableInformation))]
         Limited,
 
-        [LocalisableDescription(typeof(YTPlayerEXStrings), nameof(YTPlayerEXStrings.DiscordPresenceFull))]
+        [LocalisableDescription(typeof(NekoPlayerStrings), nameof(NekoPlayerStrings.DiscordPresenceFull))]
         Full
     }
 }

@@ -18,10 +18,10 @@ using osu.Framework.Graphics.Transforms;
 using osu.Framework.Threading;
 using osuTK;
 using osuTK.Graphics;
-using YouTubePlayerEX.App.Config;
-using YouTubePlayerEX.App.Overlays.OSD;
+using NekoPlayer.App.Config;
+using NekoPlayer.App.Overlays.OSD;
 
-namespace YouTubePlayerEX.App.Overlays
+namespace NekoPlayer.App.Overlays
 {
     /// <summary>
     /// An on-screen display which automatically tracks and displays toast notifications for <seealso cref="TrackedSettings"/>.

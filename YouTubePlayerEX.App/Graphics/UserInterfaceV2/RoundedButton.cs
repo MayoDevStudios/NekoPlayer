@@ -14,9 +14,9 @@ using osu.Framework.Graphics.Cursor;
 using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
 using osuTK.Graphics;
-using YouTubePlayerEX.App.Graphics.UserInterface;
+using NekoPlayer.App.Graphics.UserInterface;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterfaceV2
+namespace NekoPlayer.App.Graphics.UserInterfaceV2
 {
     public partial class RoundedButton : AdaptiveButtonV2, IFilterable, IHasTooltip
     {
@@ -51,7 +51,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterfaceV2
 
             // This doesn't match the latest design spec (should be 5) but is an in-between that feels right to the eye
             // until we move everything over to Form controls.
-            Content.CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS / 1.5f;
+            Content.CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS / 1.5f;
             Content.CornerExponent = 2.5f;
 
             Add(Triangles = new TrianglesV2

@@ -18,17 +18,17 @@ using osu.Framework.Graphics.Video;
 using osu.Framework.Timing;
 using osuTK.Graphics;
 using YoutubeExplode.Videos.ClosedCaptions;
-using YouTubePlayerEX.App.Config;
-using YouTubePlayerEX.App.Graphics.Caption;
-using YouTubePlayerEX.App.Graphics.Containers;
-using YouTubePlayerEX.App.Graphics.Shaders.New;
-using YouTubePlayerEX.App.Graphics.Shaders.New.Bloom;
-using YouTubePlayerEX.App.Graphics.Shaders.New.Chromatic;
-using YouTubePlayerEX.App.Graphics.Shaders.New.Grayscale;
-using YouTubePlayerEX.App.Graphics.Shaders.New.HueShift;
-using YouTubePlayerEX.App.Online;
+using NekoPlayer.App.Config;
+using NekoPlayer.App.Graphics.Caption;
+using NekoPlayer.App.Graphics.Containers;
+using NekoPlayer.App.Graphics.Shaders.New;
+using NekoPlayer.App.Graphics.Shaders.New.Bloom;
+using NekoPlayer.App.Graphics.Shaders.New.Chromatic;
+using NekoPlayer.App.Graphics.Shaders.New.Grayscale;
+using NekoPlayer.App.Graphics.Shaders.New.HueShift;
+using NekoPlayer.App.Online;
 
-namespace YouTubePlayerEX.App.Graphics.Videos
+namespace NekoPlayer.App.Graphics.Videos
 {
     public partial class YouTubeVideoPlayer : Container
     {
@@ -92,11 +92,11 @@ namespace YouTubePlayerEX.App.Graphics.Videos
         private void load(ITrackStore tracks, YTPlayerEXConfigManager config, ScreenshotManager screenshotManager)
         {
             uiVisible = screenshotManager.CursorVisibility.GetBoundCopy();
-            aspectRatioMethod = config.GetBindable<AspectRatioMethod>(YTPlayerEXSetting.AspectRatioMethod);
-            videoBloomLevel = config.GetBindable<float>(YTPlayerEXSetting.VideoBloomLevel);
-            videoGrayscaleLevel = config.GetBindable<float>(YTPlayerEXSetting.VideoGrayscaleLevel);
-            videoHueShift = config.GetBindable<float>(YTPlayerEXSetting.VideoHueShift);
-            chromaticAberrationStrength = config.GetBindable<float>(YTPlayerEXSetting.ChromaticAberrationStrength);
+            aspectRatioMethod = config.GetBindable<AspectRatioMethod>(NekoPlayerSetting.AspectRatioMethod);
+            videoBloomLevel = config.GetBindable<float>(NekoPlayerSetting.VideoBloomLevel);
+            videoGrayscaleLevel = config.GetBindable<float>(NekoPlayerSetting.VideoGrayscaleLevel);
+            videoHueShift = config.GetBindable<float>(NekoPlayerSetting.VideoHueShift);
+            chromaticAberrationStrength = config.GetBindable<float>(NekoPlayerSetting.ChromaticAberrationStrength);
             track = tracks.GetFromStream(File.OpenRead(fileName_Audio), fileName_Audio);
             playbackSpeed = new Bindable<double>(1);
 
@@ -180,7 +180,7 @@ namespace YouTubePlayerEX.App.Graphics.Videos
                 mediaSession?.UpdatePlaybackSpeed(v.NewValue);
             });
 
-            UpdatePreservePitch(config.Get<bool>(YTPlayerEXSetting.AdjustPitchOnSpeedChange));
+            UpdatePreservePitch(config.Get<bool>(NekoPlayerSetting.AdjustPitchOnSpeedChange));
 
             SeekTo(resumeFromTime * 1000);
             Play();

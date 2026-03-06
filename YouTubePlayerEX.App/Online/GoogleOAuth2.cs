@@ -13,15 +13,15 @@ using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using osu.Framework.Bindables;
 using osu.Framework.Logging;
-using YouTubePlayerEX.App.Config;
+using NekoPlayer.App.Config;
 
-namespace YouTubePlayerEX.App.Online
+namespace NekoPlayer.App.Online
 {
     public partial class GoogleOAuth2
     {
         private static bool isTestClient_static;
 
-        private YTPlayerEXConfigManager appConfig;
+        private NekoPlayerConfigManager appConfig;
 
         private bool isTestClient
         {
@@ -29,7 +29,7 @@ namespace YouTubePlayerEX.App.Online
             set => isTestClient_static = value;
         }
 
-        public GoogleOAuth2(YTPlayerEXConfigManager appConfig, bool isTestClient)
+        public GoogleOAuth2(NekoPlayerConfigManager appConfig, bool isTestClient)
         {
             this.appConfig = appConfig;
             this.isTestClient = isTestClient;
@@ -57,7 +57,7 @@ namespace YouTubePlayerEX.App.Online
             Logger.Log("signed in to google");
 
             SignedIn.Value = true;
-            appConfig.SetValue<bool>(YTPlayerEXSetting.FinalLoginState, true);
+            appConfig.SetValue<bool>(NekoPlayerSetting.FinalLoginState, true);
 
             return userInfo;
         }
@@ -71,7 +71,7 @@ namespace YouTubePlayerEX.App.Online
                 Logger.Log("signed out to google");
 
                 SignedIn.Value = false;
-                appConfig.SetValue<bool>(YTPlayerEXSetting.FinalLoginState, false);
+                appConfig.SetValue<bool>(NekoPlayerSetting.FinalLoginState, false);
             }
         }
 
@@ -113,10 +113,11 @@ namespace YouTubePlayerEX.App.Online
             string credPath = isTestClient_static ? @"YouTubePlayerEX/OAuth2_Dev" : @"YouTubePlayerEX/OAuth2";
             credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
                 getAuthConfig(),
-                new[] { "https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/youtube.readonly", "https://www.googleapis.com/auth/youtube.force-ssl" },
+                new[] { "https://www.googleapis.com/auth/youtube.force-ssl" },
                 "user",
                 CancellationToken.None,
-                new FileDataStore(credPath, false)
+                new FileDataStore(credPath, false),
+                new LocalServerCodeReceiver()
             );
 
             return credential;

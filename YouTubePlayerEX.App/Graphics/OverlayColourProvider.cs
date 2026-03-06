@@ -3,7 +3,7 @@
 
 using osuTK.Graphics;
 
-namespace YouTubePlayerEX.App.Graphics
+namespace NekoPlayer.App.Graphics
 {
     public class OverlayColourProvider
     {

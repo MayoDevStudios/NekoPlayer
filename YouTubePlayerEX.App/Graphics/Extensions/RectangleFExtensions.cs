@@ -5,7 +5,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Primitives;
 using osuTK;
 
-namespace YouTubePlayerEX.App.Graphics.Extensions
+namespace NekoPlayer.App.Graphics.Extensions
 {
     public static class RectangleFExtensions
     {

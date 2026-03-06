@@ -2,9 +2,9 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Graphics;
-using YouTubePlayerEX.App.Graphics.UserInterfaceV2;
+using NekoPlayer.App.Graphics.UserInterfaceV2;
 
-namespace YouTubePlayerEX.App.Graphics
+namespace NekoPlayer.App.Graphics
 {
     public partial class SettingsButtonV2 : RoundedButton
     {

@@ -21,14 +21,14 @@ using osuTK.Graphics;
 using PaletteNet;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
-using YouTubePlayerEX.App.Config;
-using YouTubePlayerEX.App.Extensions;
-using YouTubePlayerEX.App.Graphics.Sprites;
-using YouTubePlayerEX.App.Localisation;
-using YouTubePlayerEX.App.Online;
-using YouTubePlayerEX.App.Utils;
+using NekoPlayer.App.Config;
+using NekoPlayer.App.Extensions;
+using NekoPlayer.App.Graphics.Sprites;
+using NekoPlayer.App.Localisation;
+using NekoPlayer.App.Online;
+using NekoPlayer.App.Utils;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     public partial class VideoMetadataDisplay : CompositeDrawable
     {
@@ -63,7 +63,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
         private YTPlayerEXConfigManager appConfig { get; set; }
 
         [Resolved]
-        private YouTubePlayerEXAppBase app { get; set; }
+        private NekoPlayerAppBase app { get; set; }
 
         private Bindable<string> localeBindable = new Bindable<string>();
         private Bindable<UsernameDisplayMode> usernameDisplayMode;
@@ -73,10 +73,10 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
         private void load(OverlayColourProvider overlayColourProvider)
         {
             localeBindable = frameworkConfig.GetBindable<string>(FrameworkSetting.Locale);
-            usernameDisplayMode = appConfig.GetBindable<UsernameDisplayMode>(YTPlayerEXSetting.UsernameDisplayMode);
-            translationSource = appConfig.GetBindable<VideoMetadataTranslateSource>(YTPlayerEXSetting.VideoMetadataTranslateSource);
+            usernameDisplayMode = appConfig.GetBindable<UsernameDisplayMode>(NekoPlayerSetting.UsernameDisplayMode);
+            translationSource = appConfig.GetBindable<VideoMetadataTranslateSource>(NekoPlayerSetting.VideoMetadataTranslateSource);
 
-            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS;
+            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS;
             Masking = true;
 
             EdgeEffect = new osu.Framework.Graphics.Effects.EdgeEffectParameters
@@ -122,14 +122,14 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                             {
                                 videoName = new TruncatingSpriteText
                                 {
-                                    Font = YouTubePlayerEXApp.TorusAlternate.With(size: 20, weight: "Bold"),
+                                    Font = NekoPlayerApp.TorusAlternate.With(size: 20, weight: "Bold"),
                                     RelativeSizeAxes = Axes.X,
                                     Text = "please choose a video!",
                                     Colour = overlayColourProvider.Content2,
                                 },
                                 desc = new TruncatingSpriteText
                                 {
-                                    Font = YouTubePlayerEXApp.DefaultFont.With(size: 13, weight: "SemiBold"),
+                                    Font = NekoPlayerApp.DefaultFont.With(size: 13, weight: "SemiBold"),
                                     RelativeSizeAxes = Axes.X,
                                     Colour = overlayColourProvider.Foreground2,
                                     Text = "[no metadata available]",
@@ -142,7 +142,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                             Enabled = { Value = true },
                             Width = 90,
                             Height = 30,
-                            Text = YTPlayerEXStrings.Subscribe,
+                            Text = NekoPlayerStrings.Subscribe,
                             Origin = Anchor.CentreRight,
                             Anchor = Anchor.CentreRight,
                         }
@@ -193,9 +193,9 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                 bool response = await api.IsChannelSubscribed(channelId);
 
                 if (response == true)
-                    subscribeButton.Text = YTPlayerEXStrings.Unsubscribe;
+                    subscribeButton.Text = NekoPlayerStrings.Unsubscribe;
                 else
-                    subscribeButton.Text = YTPlayerEXStrings.Subscribe;
+                    subscribeButton.Text = NekoPlayerStrings.Subscribe;
             });
         }
 
@@ -238,7 +238,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                 DateTimeOffset? dateTime = videoData.Snippet.PublishedAtDateTimeOffset;
                 DateTimeOffset now = DateTime.Now;
                 Channel channelData = api.GetChannel(videoData.Snippet.ChannelId);
-                desc.Text = YTPlayerEXStrings.VideoMetadataDesc(api.GetLocalizedChannelTitle(channelData), Convert.ToInt32(videoData.Statistics.ViewCount).ToStandardFormattedString(0), dateTime.Value.Humanize(dateToCompareAgainst: now));
+                desc.Text = NekoPlayerStrings.VideoMetadataDesc(api.GetLocalizedChannelTitle(channelData), Convert.ToInt32(videoData.Statistics.ViewCount).ToStandardFormattedString(0), dateTime.Value.Humanize(dateToCompareAgainst: now));
             });
         }
 

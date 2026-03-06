@@ -4,9 +4,9 @@
 #nullable enable
 
 using osu.Framework.Graphics;
-using YouTubePlayerEX.App.Graphics.Shaders;
+using NekoPlayer.App.Graphics.Shaders;
 
-namespace YouTubePlayerEX.App.Graphics
+namespace NekoPlayer.App.Graphics
 {
     public interface ISingleShaderBufferedDrawable : IBufferedDrawable
     {

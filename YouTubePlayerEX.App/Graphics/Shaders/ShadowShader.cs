@@ -10,9 +10,9 @@ using osu.Framework.Graphics.Rendering;
 using osu.Framework.Graphics.Shaders.Types;
 using osuTK;
 using osuTK.Graphics;
-using YouTubePlayerEX.App.Graphics.Extensions;
+using NekoPlayer.App.Graphics.Extensions;
 
-namespace YouTubePlayerEX.App.Graphics.Shaders
+namespace NekoPlayer.App.Graphics.Shaders
 {
     public class ShadowShader : InternalShader, IApplicableToDrawRectangle, IHasTextureSize, IHasInflationPercentage
     {

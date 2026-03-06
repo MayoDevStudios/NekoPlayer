@@ -7,7 +7,7 @@ using osu.Framework.Audio.Track;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Logging;
 
-namespace YouTubePlayerEX.App.Audio
+namespace NekoPlayer.App.Audio
 {
     /// <summary>
     /// Audio Normalization Data

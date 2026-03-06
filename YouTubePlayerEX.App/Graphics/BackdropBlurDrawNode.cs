@@ -14,7 +14,7 @@ using osu.Framework.Utils;
 using osuTK;
 using osuTK.Graphics;
 
-namespace YouTubePlayerEX.App.Graphics
+namespace NekoPlayer.App.Graphics
 {
     public class BackdropBlurDrawNode : BufferedDrawNode
     {

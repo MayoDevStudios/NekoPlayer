@@ -16,7 +16,7 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using Vector2 = osuTK.Vector2;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     public partial class RoundedSliderBar<T> : AdaptiveSliderBar<T>
         where T : struct, INumber<T>, IMinMaxValue<T>

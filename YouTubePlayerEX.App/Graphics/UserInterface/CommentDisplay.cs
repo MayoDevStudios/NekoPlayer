@@ -17,13 +17,13 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osuTK;
 using osuTK.Graphics;
-using YouTubePlayerEX.App.Config;
-using YouTubePlayerEX.App.Extensions;
-using YouTubePlayerEX.App.Graphics.Sprites;
-using YouTubePlayerEX.App.Localisation;
-using YouTubePlayerEX.App.Online;
+using NekoPlayer.App.Config;
+using NekoPlayer.App.Extensions;
+using NekoPlayer.App.Graphics.Sprites;
+using NekoPlayer.App.Localisation;
+using NekoPlayer.App.Online;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     public partial class CommentDisplay : CompositeDrawable
     {
@@ -40,7 +40,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
         private YouTubeAPI api { get; set; } = null!;
 
         [Resolved]
-        private YouTubePlayerEXAppBase app { get; set; } = null!;
+        private NekoPlayerAppBase app { get; set; } = null!;
 
         [Resolved]
         private FrameworkConfigManager frameworkConfig { get; set; } = null!;
@@ -66,10 +66,10 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
         private void load(OverlayColourProvider overlayColourProvider)
         {
             localeBindable = frameworkConfig.GetBindable<string>(FrameworkSetting.Locale);
-            usernameDisplayMode = appConfig.GetBindable<UsernameDisplayMode>(YTPlayerEXSetting.UsernameDisplayMode);
-            translationSource = appConfig.GetBindable<VideoMetadataTranslateSource>(YTPlayerEXSetting.VideoMetadataTranslateSource);
+            usernameDisplayMode = appConfig.GetBindable<UsernameDisplayMode>(NekoPlayerSetting.UsernameDisplayMode);
+            translationSource = appConfig.GetBindable<VideoMetadataTranslateSource>(NekoPlayerSetting.VideoMetadataTranslateSource);
 
-            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS;
+            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS;
             Masking = true;
             InternalChildren = new Drawable[]
             {
@@ -97,7 +97,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                             },
                             Children = new Drawable[]
                             {
-                                channelName = new AdaptiveTextFlowContainer(f => f.Font = YouTubePlayerEXApp.DefaultFont.With(size: 13, weight: "SemiBold"))
+                                channelName = new AdaptiveTextFlowContainer(f => f.Font = NekoPlayerApp.DefaultFont.With(size: 13, weight: "SemiBold"))
                                 {
                                     RelativeSizeAxes = Axes.X,
                                     Text = "[channel name]",
@@ -105,7 +105,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                                 },
                                 commentText = new TruncatingSpriteText
                                 {
-                                    Font = YouTubePlayerEXApp.DefaultFont.With(size: 17, weight: "Regular"),
+                                    Font = NekoPlayerApp.DefaultFont.With(size: 17, weight: "Regular"),
                                     RelativeSizeAxes = Axes.X,
                                     Position = new Vector2(0, 13),
                                     Text = "[text]",
@@ -146,7 +146,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                                                 {
                                                     Text = "[no metadata]",
                                                     Colour = overlayColourProvider.Content2,
-                                                    Font = YouTubePlayerEXApp.DefaultFont.With(size: 13.5f, weight: "Regular"),
+                                                    Font = NekoPlayerApp.DefaultFont.With(size: 13.5f, weight: "Regular"),
                                                 },
                                             }
                                         }
@@ -201,7 +201,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                                                         {
                                                             Text = "[no metadata]",
                                                             Colour = overlayColourProvider.Content2,
-                                                            Font = YouTubePlayerEXApp.DefaultFont.With(size: 13.5f, weight: "Regular"),
+                                                            Font = NekoPlayerApp.DefaultFont.With(size: 13.5f, weight: "Regular"),
                                                         },
                                                     }
                                                 }
@@ -234,13 +234,13 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
             if (translated == false)
             {
                 Task.Run(async () => commentText.Text = translate.Translate(commentData.Snippet.TextOriginal, GoogleTranslateLanguage.auto));
-                translateToText.Text = YTPlayerEXStrings.TranslateViewOriginal;
+                translateToText.Text = NekoPlayerStrings.TranslateViewOriginal;
                 translated = true;
             }
             else
             {
                 commentText.Text = commentData.Snippet.TextOriginal;
-                translateToText.Text = YTPlayerEXStrings.TranslateTo(app.CurrentLanguage.Value.GetLocalisableDescription());
+                translateToText.Text = NekoPlayerStrings.TranslateTo(app.CurrentLanguage.Value.GetLocalisableDescription());
                 translated = false;
             }
         }
@@ -261,30 +261,30 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                     Schedule(() =>
                     {
                         channelName.Text = api.GetLocalizedChannelTitle(channelData);
-                        channelName.AddText(" • ", f => f.Font = YouTubePlayerEXApp.DefaultFont.With(size: 13, weight: "Regular"));
+                        channelName.AddText(" • ", f => f.Font = NekoPlayerApp.DefaultFont.With(size: 13, weight: "Regular"));
 #pragma warning disable CS8629 // Nullable 값 형식이 null일 수 있습니다.
-                        channelName.AddText(dateTime.Value.Humanize(dateToCompareAgainst: now), f => f.Font = YouTubePlayerEXApp.DefaultFont.With(size: 13, weight: "Regular"));
+                        channelName.AddText(dateTime.Value.Humanize(dateToCompareAgainst: now), f => f.Font = NekoPlayerApp.DefaultFont.With(size: 13, weight: "Regular"));
 #pragma warning restore CS8629 // Nullable 값 형식이 null일 수 있습니다.
                         commentText.Text = commentData.Snippet.TextOriginal;
                         likeCount.Text = Convert.ToInt32(commentData.Snippet.LikeCount).ToStandardFormattedString(0);
-                        translateToText.Text = YTPlayerEXStrings.TranslateTo(app.CurrentLanguage.Value.GetLocalisableDescription());
+                        translateToText.Text = NekoPlayerStrings.TranslateTo(app.CurrentLanguage.Value.GetLocalisableDescription());
                         profileImage.UpdateProfileImage(commentData.Snippet.AuthorChannelId.Value);
 
                         usernameDisplayMode.BindValueChanged(locale =>
                         {
                             channelName.Text = string.Empty;
                             channelName.Text = api.GetLocalizedChannelTitle(channelData);
-                            channelName.AddText(" • ", f => f.Font = YouTubePlayerEXApp.DefaultFont.With(size: 13, weight: "Regular"));
-                            channelName.AddText(dateTime.Value.Humanize(dateToCompareAgainst: now), f => f.Font = YouTubePlayerEXApp.DefaultFont.With(size: 13, weight: "Regular"));
+                            channelName.AddText(" • ", f => f.Font = NekoPlayerApp.DefaultFont.With(size: 13, weight: "Regular"));
+                            channelName.AddText(dateTime.Value.Humanize(dateToCompareAgainst: now), f => f.Font = NekoPlayerApp.DefaultFont.With(size: 13, weight: "Regular"));
                         }, true);
 
                         localeBindable.BindValueChanged(locale =>
                         {
                             channelName.Text = string.Empty;
                             channelName.Text = api.GetLocalizedChannelTitle(channelData);
-                            channelName.AddText(" • ", f => f.Font = YouTubePlayerEXApp.DefaultFont.With(size: 13, weight: "Regular"));
-                            channelName.AddText(dateTime.Value.Humanize(dateToCompareAgainst: now), f => f.Font = YouTubePlayerEXApp.DefaultFont.With(size: 13, weight: "Regular"));
-                            translateToText.Text = YTPlayerEXStrings.TranslateTo(app.CurrentLanguage.Value.GetLocalisableDescription());
+                            channelName.AddText(" • ", f => f.Font = NekoPlayerApp.DefaultFont.With(size: 13, weight: "Regular"));
+                            channelName.AddText(dateTime.Value.Humanize(dateToCompareAgainst: now), f => f.Font = NekoPlayerApp.DefaultFont.With(size: 13, weight: "Regular"));
+                            translateToText.Text = NekoPlayerStrings.TranslateTo(app.CurrentLanguage.Value.GetLocalisableDescription());
                         });
                     });
                 }

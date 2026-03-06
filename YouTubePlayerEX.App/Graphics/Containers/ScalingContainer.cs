@@ -8,9 +8,9 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osuTK;
-using YouTubePlayerEX.App.Config;
+using NekoPlayer.App.Config;
 
-namespace YouTubePlayerEX.App.Graphics.Containers
+namespace NekoPlayer.App.Graphics.Containers
 {
     public partial class ScalingContainer : DrawSizePreservingFillContainer
     {
@@ -21,7 +21,7 @@ namespace YouTubePlayerEX.App.Graphics.Containers
         [BackgroundDependencyLoader]
         private void load(YTPlayerEXConfigManager appConfig)
         {
-            uiScale = appConfig.GetBindable<float>(YTPlayerEXSetting.UIScale);
+            uiScale = appConfig.GetBindable<float>(NekoPlayerSetting.UIScale);
             uiScale.BindValueChanged(args => this.TransformTo(nameof(CurrentScale), args.NewValue, 500, Easing.OutQuart), true);
         }
 

@@ -15,11 +15,10 @@ using Google.Apis.YouTube.v3.Data;
 using osu.Framework.Configuration;
 using osu.Framework.Extensions;
 using osu.Framework.Logging;
-using Sentry.Protocol;
-using YouTubePlayerEX.App.Config;
-using YouTubePlayerEX.App.Localisation;
+using NekoPlayer.App.Config;
+using NekoPlayer.App.Localisation;
 
-namespace YouTubePlayerEX.App.Online
+namespace NekoPlayer.App.Online
 {
     public partial class YouTubeAPI
     {
@@ -28,9 +27,9 @@ namespace YouTubePlayerEX.App.Online
         private GoogleOAuth2 googleOAuth2;
 
         private FrameworkConfigManager frameworkConfig;
-        private YTPlayerEXConfigManager appConfig;
+        private NekoPlayerConfigManager appConfig;
 
-        public YouTubeAPI(FrameworkConfigManager frameworkConfig, GoogleTranslate translateApi, YTPlayerEXConfigManager appConfig, GoogleOAuth2 googleOAuth2, bool isTestClient)
+        public YouTubeAPI(FrameworkConfigManager frameworkConfig, GoogleTranslate translateApi, NekoPlayerConfigManager appConfig, GoogleOAuth2 googleOAuth2, bool isTestClient)
         {
             this.frameworkConfig = frameworkConfig;
             this.translateApi = translateApi;
@@ -64,7 +63,7 @@ namespace YouTubePlayerEX.App.Online
             request.Id = channelId;
 
             if (googleOAuth2.SignedIn.Value == true)
-                request.OauthToken = googleOAuth2.GetAccessToken();
+                request.AccessToken = googleOAuth2.GetAccessToken();
 
             var response = request.Execute();
 
@@ -98,7 +97,7 @@ namespace YouTubePlayerEX.App.Online
             var part = "statistics,snippet,brandingSettings,id,localizations";
             var request = youtubeService.Channels.List(part);
 
-            request.OauthToken = googleOAuth2.GetAccessToken();
+            request.AccessToken = googleOAuth2.GetAccessToken();
 
             request.Mine = true;
 
@@ -114,7 +113,7 @@ namespace YouTubePlayerEX.App.Online
             var part = "statistics,snippet,brandingSettings,id,localizations";
             var request = youtubeService.Channels.List(part);
 
-            request.OauthToken = googleOAuth2.GetAccessToken();
+            request.AccessToken = googleOAuth2.GetAccessToken();
 
             request.Mine = true;
 
@@ -146,7 +145,7 @@ namespace YouTubePlayerEX.App.Online
                 }
             }, part);
 
-            request.OauthToken = googleOAuth2.GetAccessToken();
+            request.AccessToken = googleOAuth2.GetAccessToken();
 
             request.Execute();
         }
@@ -177,7 +176,7 @@ namespace YouTubePlayerEX.App.Online
                         Language = CultureInfo.CurrentCulture.Name,
                     });
 
-                    request.OauthToken = googleOAuth2.GetAccessToken();
+                    request.AccessToken = googleOAuth2.GetAccessToken();
                     request.Execute();
                 }
                 else
@@ -190,7 +189,7 @@ namespace YouTubePlayerEX.App.Online
                         Language = CultureInfo.CurrentCulture.Name,
                     });
 
-                    request.OauthToken = googleOAuth2.GetAccessToken();
+                    request.AccessToken = googleOAuth2.GetAccessToken();
                     request.Execute();
                 }
             }
@@ -206,7 +205,7 @@ namespace YouTubePlayerEX.App.Online
                         Language = CultureInfo.CurrentCulture.Name,
                     });
 
-                    request.OauthToken = googleOAuth2.GetAccessToken();
+                    request.AccessToken = googleOAuth2.GetAccessToken();
                     request.Execute();
                 }
                 else
@@ -218,7 +217,7 @@ namespace YouTubePlayerEX.App.Online
                         Language = CultureInfo.CurrentCulture.Name,
                     });
 
-                    request.OauthToken = googleOAuth2.GetAccessToken();
+                    request.AccessToken = googleOAuth2.GetAccessToken();
                     request.Execute();
                 }
             }
@@ -229,7 +228,7 @@ namespace YouTubePlayerEX.App.Online
             var part = "snippet";
             var request = youtubeService.VideoAbuseReportReasons.List(part);
 
-            request.OauthToken = googleOAuth2.GetAccessToken();
+            request.AccessToken = googleOAuth2.GetAccessToken();
             request.Hl = frameworkConfig.Get<string>(FrameworkSetting.Locale);
 
             Logger.Log($"Using access token {googleOAuth2.GetAccessToken()}");
@@ -290,7 +289,7 @@ namespace YouTubePlayerEX.App.Online
             request.Order = orderEnum;
 
             if (googleOAuth2.SignedIn.Value == true)
-                request.OauthToken = googleOAuth2.GetAccessToken();
+                request.AccessToken = googleOAuth2.GetAccessToken();
 
             var response = request.Execute();
 
@@ -308,7 +307,7 @@ namespace YouTubePlayerEX.App.Online
             request.Q = query;
 
             if (googleOAuth2.SignedIn.Value == true)
-                request.OauthToken = googleOAuth2.GetAccessToken();
+                request.AccessToken = googleOAuth2.GetAccessToken();
 
             var response = request.Execute();
 
@@ -325,7 +324,7 @@ namespace YouTubePlayerEX.App.Online
             request.Id = commentId;
 
             if (googleOAuth2.SignedIn.Value == true)
-                request.OauthToken = googleOAuth2.GetAccessToken();
+                request.AccessToken = googleOAuth2.GetAccessToken();
 
             var response = await request.ExecuteAsync();
 
@@ -344,7 +343,7 @@ namespace YouTubePlayerEX.App.Online
 
             request.ForChannelId = channelId;
             request.Mine = true;
-            request.OauthToken = googleOAuth2.GetAccessToken();
+            request.AccessToken = googleOAuth2.GetAccessToken();
 
             var response = await request.ExecuteAsync();
 
@@ -364,7 +363,7 @@ namespace YouTubePlayerEX.App.Online
 
             request.ForChannelId = channelId;
             request.Mine = true;
-            request.OauthToken = googleOAuth2.GetAccessToken();
+            request.AccessToken = googleOAuth2.GetAccessToken();
 
             var response = await request.ExecuteAsync();
 
@@ -394,7 +393,7 @@ namespace YouTubePlayerEX.App.Online
             var part = "snippet";
             var request = youtubeService.Subscriptions.Insert(body, part);
 
-            request.OauthToken = googleOAuth2.GetAccessToken();
+            request.AccessToken = googleOAuth2.GetAccessToken();
 
             await request.ExecuteAsync();
 
@@ -408,7 +407,7 @@ namespace YouTubePlayerEX.App.Online
 
             var request = youtubeService.Subscriptions.Delete(subscriptionId);
 
-            request.OauthToken = googleOAuth2.GetAccessToken();
+            request.AccessToken = googleOAuth2.GetAccessToken();
 
             await request.ExecuteAsync();
 
@@ -462,7 +461,7 @@ namespace YouTubePlayerEX.App.Online
 
             if (displayBoth)
             {
-                if (appConfig.Get<VideoMetadataTranslateSource>(YTPlayerEXSetting.VideoMetadataTranslateSource) == VideoMetadataTranslateSource.YouTube)
+                if (appConfig.Get<VideoMetadataTranslateSource>(NekoPlayerSetting.VideoMetadataTranslateSource) == VideoMetadataTranslateSource.YouTube)
                 {
                     return GetLocalizedChannelTitleDisplayBoth(channel);
                 }
@@ -488,9 +487,9 @@ namespace YouTubePlayerEX.App.Online
                 }
             }
 
-            if (appConfig.Get<UsernameDisplayMode>(YTPlayerEXSetting.UsernameDisplayMode) == UsernameDisplayMode.DisplayName)
+            if (appConfig.Get<UsernameDisplayMode>(NekoPlayerSetting.UsernameDisplayMode) == UsernameDisplayMode.DisplayName)
             {
-                if (appConfig.Get<VideoMetadataTranslateSource>(YTPlayerEXSetting.VideoMetadataTranslateSource) == VideoMetadataTranslateSource.YouTube)
+                if (appConfig.Get<VideoMetadataTranslateSource>(NekoPlayerSetting.VideoMetadataTranslateSource) == VideoMetadataTranslateSource.YouTube)
                 {
                     return GetLocalizedChannelTitleOnlyOne(channel);
                 }
@@ -543,7 +542,7 @@ namespace YouTubePlayerEX.App.Online
             if (video == null)
                 return string.Empty;
 
-            if (appConfig.Get<VideoMetadataTranslateSource>(YTPlayerEXSetting.VideoMetadataTranslateSource) == VideoMetadataTranslateSource.GoogleTranslate)
+            if (appConfig.Get<VideoMetadataTranslateSource>(NekoPlayerSetting.VideoMetadataTranslateSource) == VideoMetadataTranslateSource.GoogleTranslate)
             {
                 try
                 {
@@ -574,7 +573,7 @@ namespace YouTubePlayerEX.App.Online
             if (video == null)
                 return string.Empty;
 
-            if (appConfig.Get<VideoMetadataTranslateSource>(YTPlayerEXSetting.VideoMetadataTranslateSource) == VideoMetadataTranslateSource.GoogleTranslate)
+            if (appConfig.Get<VideoMetadataTranslateSource>(NekoPlayerSetting.VideoMetadataTranslateSource) == VideoMetadataTranslateSource.GoogleTranslate)
             {
                 try
                 {
@@ -608,7 +607,7 @@ namespace YouTubePlayerEX.App.Online
             request.Id = videoId;
 
             if (googleOAuth2.SignedIn.Value == true)
-                request.OauthToken = googleOAuth2.GetAccessToken();
+                request.AccessToken = googleOAuth2.GetAccessToken();
 
             var response = request.Execute();
 
@@ -625,7 +624,7 @@ namespace YouTubePlayerEX.App.Online
             request.Id = playlistId;
 
             if (googleOAuth2.SignedIn.Value == true)
-                request.OauthToken = googleOAuth2.GetAccessToken();
+                request.AccessToken = googleOAuth2.GetAccessToken();
 
             var response = request.Execute();
 
@@ -644,7 +643,7 @@ namespace YouTubePlayerEX.App.Online
 
             request.Mine = true;
 
-            request.OauthToken = googleOAuth2.GetAccessToken();
+            request.AccessToken = googleOAuth2.GetAccessToken();
 
             var response = await request.ExecuteAsync();
 
@@ -674,7 +673,7 @@ namespace YouTubePlayerEX.App.Online
             var part = "snippet";
             var request = youtubeService.PlaylistItems.Insert(item, part);
 
-            request.OauthToken = googleOAuth2.GetAccessToken();
+            request.AccessToken = googleOAuth2.GetAccessToken();
 
             await request.ExecuteAsync();
         }
@@ -690,7 +689,7 @@ namespace YouTubePlayerEX.App.Online
             request.PlaylistId = playlistId;
             request.VideoId = videoId;
 
-            request.OauthToken = googleOAuth2.GetAccessToken();
+            request.AccessToken = googleOAuth2.GetAccessToken();
 
             var response = await request.ExecuteAsync();
 
@@ -714,7 +713,7 @@ namespace YouTubePlayerEX.App.Online
             request.PlaylistId = playlistId;
             request.VideoId = videoId;
 
-            request.OauthToken = googleOAuth2.GetAccessToken();
+            request.AccessToken = googleOAuth2.GetAccessToken();
 
             var response = await request.ExecuteAsync();
 
@@ -757,7 +756,7 @@ namespace YouTubePlayerEX.App.Online
             var part = "snippet,status";
             var request = youtubeService.Playlists.Insert(item, part);
 
-            request.OauthToken = googleOAuth2.GetAccessToken();
+            request.AccessToken = googleOAuth2.GetAccessToken();
 
             await request.ExecuteAsync();
         }
@@ -771,7 +770,7 @@ namespace YouTubePlayerEX.App.Online
             request.PlaylistId = playlistId;
 
             if (googleOAuth2.SignedIn.Value == true)
-                request.OauthToken = googleOAuth2.GetAccessToken();
+                request.AccessToken = googleOAuth2.GetAccessToken();
 
             var response = await request.ExecuteAsync();
 
@@ -787,7 +786,7 @@ namespace YouTubePlayerEX.App.Online
 
             var request = youtubeService.Videos.GetRating(videoId);
 
-            request.OauthToken = googleOAuth2.GetAccessToken();
+            request.AccessToken = googleOAuth2.GetAccessToken();
 
             var response = await request.ExecuteAsync();
 
@@ -821,7 +820,7 @@ namespace YouTubePlayerEX.App.Online
 
             var request = youtubeService.Videos.Rate(videoId, videoRating);
 
-            request.OauthToken = googleOAuth2.GetAccessToken();
+            request.AccessToken = googleOAuth2.GetAccessToken();
 
             await request.ExecuteAsync();
         }

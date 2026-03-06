@@ -10,9 +10,9 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osuTK;
 using osuTK.Graphics;
-using YouTubePlayerEX.App.Graphics.Containers;
+using NekoPlayer.App.Graphics.Containers;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     public partial class AdaptiveMenu : Menu
     {

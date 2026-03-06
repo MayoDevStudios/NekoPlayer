@@ -5,9 +5,9 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Events;
-using YouTubePlayerEX.App.Input.Binding;
+using NekoPlayer.App.Input.Binding;
 
-namespace YouTubePlayerEX.App.Overlays.Volume
+namespace NekoPlayer.App.Overlays.Volume
 {
     /// <summary>
     /// Add to a container or screen to make scrolling anywhere in the container cause the global game volume to be adjusted.

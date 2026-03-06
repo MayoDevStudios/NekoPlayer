@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using osu.Framework.Input;
 using osu.Framework.Input.Events;
 using osuTK.Input;
-using YouTubePlayerEX.App.Localisation;
+using NekoPlayer.App.Localisation;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     public partial class SearchTextBox : FocusedTextBox
     {
@@ -20,7 +20,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
         public SearchTextBox()
         {
             Height = 35;
-            PlaceholderText = YTPlayerEXStrings.SearchPlaceholder;
+            PlaceholderText = NekoPlayerStrings.SearchPlaceholder;
         }
 
         public override bool OnPressed(KeyBindingPressEvent<PlatformAction> e)

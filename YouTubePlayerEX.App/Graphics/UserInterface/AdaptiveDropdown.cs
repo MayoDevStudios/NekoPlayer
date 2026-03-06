@@ -18,15 +18,15 @@ using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
 using osuTK;
 using osuTK.Graphics;
-using YouTubePlayerEX.App.Graphics.Containers;
-using YouTubePlayerEX.App.Graphics.Sprites;
-using YouTubePlayerEX.App.Input.Binding;
+using NekoPlayer.App.Graphics.Containers;
+using NekoPlayer.App.Graphics.Sprites;
+using NekoPlayer.App.Input.Binding;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     public partial class AdaptiveDropdown<T> : Dropdown<T>, IKeyBindingHandler<GlobalAction>
     {
-        private const float corner_radius = YouTubePlayerEXApp.UI_CORNER_RADIUS / 2.5f;
+        private const float corner_radius = NekoPlayerApp.UI_CORNER_RADIUS / 2.5f;
 
         protected override DropdownHeader CreateHeader() => new AdaptiveDropdownHeader();
 
@@ -437,7 +437,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
 
                 protected override TextBox CreateTextBox() => new DropdownSearchTextBox
                 {
-                    FontSize = YouTubePlayerEXApp.DefaultFont.Size,
+                    FontSize = NekoPlayerApp.DefaultFont.Size,
                 };
 
                 private partial class DropdownSearchTextBox : AdaptiveTextBox

@@ -9,7 +9,7 @@ using osu.Framework.Graphics.Shaders.Types;
 using osuTK;
 using osuTK.Graphics;
 
-namespace YouTubePlayerEX.App.Graphics.Shaders
+namespace NekoPlayer.App.Graphics.Shaders
 {
     public class CrtShader : InternalShader
     {

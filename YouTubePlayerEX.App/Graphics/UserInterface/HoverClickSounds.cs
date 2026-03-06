@@ -13,7 +13,7 @@ using osu.Framework.Input.Events;
 using osu.Framework.Utils;
 using osuTK.Input;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     /// <summary>
     /// Adds hover and click sounds to a drawable.

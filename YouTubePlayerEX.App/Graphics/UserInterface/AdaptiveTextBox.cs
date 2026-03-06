@@ -18,11 +18,11 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
 using osu.Framework.Utils;
 using osuTK;
-using YouTubePlayerEX.App.Graphics.Sprites;
+using NekoPlayer.App.Graphics.Sprites;
 using osu.Framework.Text;
 using osu.Framework.Graphics.Containers;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     public partial class AdaptiveTextBox : BasicTextBox
     {
@@ -38,7 +38,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
 
         protected override SpriteText CreatePlaceholder() => new AdaptiveSpriteText
         {
-            Font = YouTubePlayerEXApp.DefaultFont,
+            Font = NekoPlayerApp.DefaultFont,
             Margin = new MarginPadding { Left = 2 },
         };
 
@@ -74,7 +74,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
         {
             Height = 40;
             TextContainer.Height = 0.5f;
-            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS;
+            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS;
             LengthLimit = 1000;
 
             Current.DisabledChanged += disabled => { Alpha = disabled ? 0.3f : 1; };
@@ -279,7 +279,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
         protected override Drawable GetDrawableCharacter(Grapheme c) => new FallingDownContainer
         {
             AutoSizeAxes = Axes.Both,
-            Child = new AdaptiveSpriteText { Text = c.ToString(), Font = YouTubePlayerEXApp.DefaultFont.With(size: FontSize) },
+            Child = new AdaptiveSpriteText { Text = c.ToString(), Font = NekoPlayerApp.DefaultFont.With(size: FontSize) },
         };
 
         protected override Caret CreateCaret() => caret = new AdaptiveCaret

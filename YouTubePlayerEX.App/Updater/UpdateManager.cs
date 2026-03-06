@@ -4,14 +4,13 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using osu.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Logging;
-using YouTubePlayerEX.App.Config;
-using YouTubePlayerEX.App.Extensions;
+using NekoPlayer.App.Config;
+using NekoPlayer.App.Extensions;
 
-namespace YouTubePlayerEX.App.Updater
+namespace NekoPlayer.App.Updater
 {
     public partial class UpdateManager : CompositeDrawable
     {
@@ -23,7 +22,7 @@ namespace YouTubePlayerEX.App.Updater
                                          GetType() != typeof(UpdateManager);
 
         [Resolved]
-        private YouTubePlayerEXAppBase app { get; set; } = null!;
+        private NekoPlayerAppBase app { get; set; } = null!;
 
 
         /// <summary>

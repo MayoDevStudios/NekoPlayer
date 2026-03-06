@@ -9,7 +9,7 @@ using osu.Framework.Graphics.Cursor;
 using osu.Framework.Input;
 using osu.Framework.Input.StateChanges;
 
-namespace YouTubePlayerEX.App.Graphics.Cursor
+namespace NekoPlayer.App.Graphics.Cursor
 {
     /// <summary>
     /// A container which provides the main <see cref="AppCursorContainer"/>.

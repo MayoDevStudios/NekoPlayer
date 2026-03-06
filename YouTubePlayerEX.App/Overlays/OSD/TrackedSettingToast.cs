@@ -12,12 +12,12 @@ using osu.Framework.Configuration.Tracking;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using YouTubePlayerEX.App.Config;
-using YouTubePlayerEX.App.Graphics;
+using NekoPlayer.App.Config;
+using NekoPlayer.App.Graphics;
 using osuTK;
 using osuTK.Graphics;
 
-namespace YouTubePlayerEX.App.Overlays.OSD
+namespace NekoPlayer.App.Overlays.OSD
 {
     public partial class TrackedSettingToast : Toast
     {

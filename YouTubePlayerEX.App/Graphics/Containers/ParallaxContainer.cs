@@ -11,7 +11,7 @@ using osuTK;
 using osu.Framework.Allocation;
 using osu.Framework.Utils;
 
-namespace YouTubePlayerEX.App.Graphics.Containers
+namespace NekoPlayer.App.Graphics.Containers
 {
     public partial class ParallaxContainer : Container, IRequireHighFrequencyMousePosition
     {

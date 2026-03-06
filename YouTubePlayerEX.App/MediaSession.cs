@@ -6,9 +6,9 @@
 using System;
 using Google.Apis.YouTube.v3.Data;
 using osu.Framework.Graphics.Containers;
-using YouTubePlayerEX.App.Online;
+using NekoPlayer.App.Online;
 
-namespace YouTubePlayerEX.App
+namespace NekoPlayer.App
 {
     public partial class MediaSession : CompositeDrawable
     {

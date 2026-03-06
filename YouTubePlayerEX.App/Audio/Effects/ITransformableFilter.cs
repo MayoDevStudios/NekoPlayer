@@ -4,7 +4,7 @@
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Transforms;
 
-namespace YouTubePlayerEX.App.Audio.Effects
+namespace NekoPlayer.App.Audio.Effects
 {
     public interface ITransformableFilter
     {

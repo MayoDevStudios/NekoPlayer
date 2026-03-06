@@ -5,7 +5,7 @@ using osu.Framework.Graphics.Rendering;
 using osu.Framework.Graphics.Shaders.Types;
 using osuTK;
 
-namespace YouTubePlayerEX.App.Graphics.Extensions
+namespace NekoPlayer.App.Graphics.Extensions
 {
     public static class RendererExtension
     {

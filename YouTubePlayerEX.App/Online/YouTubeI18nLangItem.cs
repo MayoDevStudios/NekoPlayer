@@ -5,7 +5,7 @@
 
 using osu.Framework.Localisation;
 
-namespace YouTubePlayerEX.App.Online
+namespace NekoPlayer.App.Online
 {
     public class YouTubeI18nLangItem
     {

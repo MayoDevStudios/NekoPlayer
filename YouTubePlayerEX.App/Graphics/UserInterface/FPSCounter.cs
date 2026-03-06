@@ -17,10 +17,10 @@ using osu.Framework.Platform;
 using osu.Framework.Timing;
 using osu.Framework.Utils;
 using osuTK;
-using YouTubePlayerEX.App.Config;
-using YouTubePlayerEX.App.Graphics.Sprites;
+using NekoPlayer.App.Config;
+using NekoPlayer.App.Graphics.Sprites;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     public partial class FPSCounter : VisibilityContainer, IHasCustomTooltip
     {
@@ -116,7 +116,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                                     Origin = Anchor.TopRight,
                                     Margin = new MarginPadding(1),
                                     Colour = overlayColourProvider.Content2,
-                                    Font = YouTubePlayerEXApp.DefaultFont.With(fixedWidth: true, size: 16, weight: "SemiBold"),
+                                    Font = NekoPlayerApp.DefaultFont.With(fixedWidth: true, size: 16, weight: "SemiBold"),
                                     Spacing = new Vector2(-1),
                                     Y = -2,
                                 },
@@ -126,7 +126,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                                     Origin = Anchor.TopRight,
                                     Margin = new MarginPadding(2),
                                     Colour = overlayColourProvider.Content2,
-                                    Font = YouTubePlayerEXApp.DefaultFont.With(fixedWidth: true, size: 13, weight: "SemiBold"),
+                                    Font = NekoPlayerApp.DefaultFont.With(fixedWidth: true, size: 13, weight: "SemiBold"),
                                     Spacing = new Vector2(-2),
                                     Y = 10,
                                 }
@@ -136,7 +136,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                 },
             };
 
-            config.BindWith(YTPlayerEXSetting.ShowFpsDisplay, showFpsDisplay);
+            config.BindWith(NekoPlayerSetting.ShowFpsDisplay, showFpsDisplay);
 
             uiVisible.BindValueChanged(visible =>
             {

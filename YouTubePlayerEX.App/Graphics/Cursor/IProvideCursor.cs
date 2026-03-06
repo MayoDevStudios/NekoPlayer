@@ -4,7 +4,7 @@
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Cursor;
 
-namespace YouTubePlayerEX.App.Graphics.Cursor
+namespace NekoPlayer.App.Graphics.Cursor
 {
     /// <summary>
     /// Interface for <see cref="IDrawable"/>s that display cursors which can replace the user's cursor.

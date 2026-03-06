@@ -15,10 +15,10 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
 using osuTK;
-using YouTubePlayerEX.App.Graphics.Sprites;
-using YouTubePlayerEX.App.Graphics.UserInterface;
+using NekoPlayer.App.Graphics.Sprites;
+using NekoPlayer.App.Graphics.UserInterface;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterfaceV2
+namespace NekoPlayer.App.Graphics.UserInterfaceV2
 {
     public partial class FormDropdown<T> : AdaptiveDropdown<T>, IFormControl
     {
@@ -306,7 +306,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterfaceV2
             {
                 ItemsContainer.Padding = new MarginPadding(9);
 
-                MaskingContainer.CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS / 1.5f;
+                MaskingContainer.CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS / 1.5f;
                 MaskingContainer.BorderThickness = FormControlBackground.BORDER_THICKNESS;
                 MaskingContainer.CornerExponent = FormControlBackground.CORNER_EXPONENT;
                 MaskingContainer.BorderColour = colourProvider.Highlight1;

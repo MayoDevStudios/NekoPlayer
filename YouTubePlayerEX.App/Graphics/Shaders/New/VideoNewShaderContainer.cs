@@ -13,7 +13,7 @@ using osu.Framework.Layout;
 using osuTK;
 using osuTK.Graphics;
 
-namespace YouTubePlayerEX.App.Graphics.Shaders.New
+namespace NekoPlayer.App.Graphics.Shaders.New
 {
     public abstract partial class VideoNewShaderContainer : Container, IBufferedDrawable, IHasStrength
     {

@@ -12,10 +12,10 @@ using osuTK.Graphics;
 using System;
 using osu.Framework.Localisation;
 using osu.Framework.Bindables;
-using YouTubePlayerEX.App.Graphics.Sprites;
+using NekoPlayer.App.Graphics.Sprites;
 using osu.Framework.Allocation;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     public partial class AdaptiveButton : AdaptiveClickableContainer
     {
@@ -144,7 +144,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
             Depth = -1,
             Origin = Anchor.Centre,
             Anchor = Anchor.Centre,
-            Font = YouTubePlayerEXApp.DefaultFont.With(size: 24),
+            Font = NekoPlayerApp.DefaultFont.With(size: 24),
             Colour = Color4.White,
         };
 

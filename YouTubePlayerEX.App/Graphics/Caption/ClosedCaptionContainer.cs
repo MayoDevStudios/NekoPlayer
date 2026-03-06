@@ -11,11 +11,11 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osuTK.Graphics;
 using YoutubeExplode.Videos.ClosedCaptions;
-using YouTubePlayerEX.App.Config;
-using YouTubePlayerEX.App.Graphics.Sprites;
-using YouTubePlayerEX.App.Graphics.Videos;
+using NekoPlayer.App.Config;
+using NekoPlayer.App.Graphics.Sprites;
+using NekoPlayer.App.Graphics.Videos;
 
-namespace YouTubePlayerEX.App.Graphics.Caption
+namespace NekoPlayer.App.Graphics.Caption
 {
     public partial class ClosedCaptionContainer : Container
     {
@@ -55,8 +55,8 @@ namespace YouTubePlayerEX.App.Graphics.Caption
         private void load(YTPlayerEXConfigManager config, SessionStatics sessionStatics)
         {
             controlsVisibleState = sessionStatics.GetBindable<bool>(Static.IsControlVisible);
-            captionEnabled = config.GetBindable<bool>(YTPlayerEXSetting.CaptionEnabled);
-            captionFont = config.GetBindable<UIFont>(YTPlayerEXSetting.UIFont);
+            captionEnabled = config.GetBindable<bool>(NekoPlayerSetting.CaptionEnabled);
+            captionFont = config.GetBindable<UIFont>(NekoPlayerSetting.UIFont);
 
             Add(captionContainer = new Container
             {
@@ -76,7 +76,7 @@ namespace YouTubePlayerEX.App.Graphics.Caption
                     },
                     spriteText = new AdaptiveSpriteText(false)
                     {
-                        Font = YouTubePlayerEXApp.DefaultFont.With(size: 24),
+                        Font = NekoPlayerApp.DefaultFont.With(size: 24),
                         Margin = new MarginPadding(4),
                     }
                 }
@@ -93,17 +93,17 @@ namespace YouTubePlayerEX.App.Graphics.Caption
                 {
                     case UIFont.Torus:
                     {
-                        spriteText.Font = YouTubePlayerEXApp.DefaultFont.With(size: 24);
+                        spriteText.Font = NekoPlayerApp.DefaultFont.With(size: 24);
                         break;
                     }
                     case UIFont.Hungeul:
                     {
-                        spriteText.Font = YouTubePlayerEXApp.Hungeul.With(size: 24);
+                        spriteText.Font = NekoPlayerApp.Hungeul.With(size: 24);
                         break;
                     }
                     case UIFont.Futehodo_MaruGothic:
                     {
-                        spriteText.Font = YouTubePlayerEXApp.Futehodo_MaruGothic.With(size: 24);
+                        spriteText.Font = NekoPlayerApp.Futehodo_MaruGothic.With(size: 24);
                         break;
                     }
                 }

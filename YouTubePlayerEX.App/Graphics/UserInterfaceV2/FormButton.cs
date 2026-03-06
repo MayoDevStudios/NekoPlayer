@@ -19,10 +19,10 @@ using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
 using osuTK;
 using osuTK.Graphics;
-using YouTubePlayerEX.App.Graphics.Sprites;
-using YouTubePlayerEX.App.Graphics.UserInterface;
+using NekoPlayer.App.Graphics.Sprites;
+using NekoPlayer.App.Graphics.UserInterface;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterfaceV2
+namespace NekoPlayer.App.Graphics.UserInterfaceV2
 {
     public partial class FormButton : CompositeDrawable, IFormControl
     {
@@ -250,7 +250,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterfaceV2
             {
                 base.LoadComplete();
 
-                Content.CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS / 1.5f;
+                Content.CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS / 1.5f;
 
                 Add(triangles = new TrianglesV2
                 {

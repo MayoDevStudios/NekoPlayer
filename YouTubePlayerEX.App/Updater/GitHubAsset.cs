@@ -5,7 +5,7 @@
 
 using Newtonsoft.Json;
 
-namespace YouTubePlayerEX.App.Updater
+namespace NekoPlayer.App.Updater
 {
     public class GitHubAsset
     {

@@ -4,9 +4,9 @@
 using System;
 using System.Globalization;
 using System.Numerics;
-using YouTubePlayerEX.App.Utils;
+using NekoPlayer.App.Utils;
 
-namespace YouTubePlayerEX.App.Extensions
+namespace NekoPlayer.App.Extensions
 {
     public static class NumberFormattingExtensions
     {

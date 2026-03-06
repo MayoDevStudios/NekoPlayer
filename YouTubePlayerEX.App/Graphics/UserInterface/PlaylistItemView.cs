@@ -25,14 +25,14 @@ using osuTK;
 using osuTK.Graphics;
 using PaletteNet;
 using SixLabors.ImageSharp.PixelFormats;
-using YouTubePlayerEX.App.Config;
-using YouTubePlayerEX.App.Extensions;
-using YouTubePlayerEX.App.Graphics.Sprites;
-using YouTubePlayerEX.App.Localisation;
-using YouTubePlayerEX.App.Online;
-using YouTubePlayerEX.App.Utils;
+using NekoPlayer.App.Config;
+using NekoPlayer.App.Extensions;
+using NekoPlayer.App.Graphics.Sprites;
+using NekoPlayer.App.Localisation;
+using NekoPlayer.App.Online;
+using NekoPlayer.App.Utils;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     public partial class PlaylistItemView : AdaptiveClickableContainer
     {
@@ -49,7 +49,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
         private YouTubeAPI api { get; set; } = null!;
 
         [Resolved]
-        private YouTubePlayerEXAppBase app { get; set; } = null!;
+        private NekoPlayerAppBase app { get; set; } = null!;
 
         [Resolved]
         private FrameworkConfigManager frameworkConfig { get; set; } = null!;
@@ -77,7 +77,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
             localeBindable = frameworkConfig.GetBindable<string>(FrameworkSetting.Locale);
 
             BorderColour = overlayColourProvider?.Highlight1 ?? colour.Yellow;
-            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS;
+            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS;
             Masking = true;
 
 #pragma warning disable CS8602 // null 가능 참조에 대한 역참조입니다.
@@ -132,7 +132,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                                     RelativeSizeAxes = Axes.X,
                                     Padding = new MarginPadding(8),
                                     Text = $"#{index + 1}",
-                                    Font = YouTubePlayerEXApp.DefaultFont.With(size: 17, weight: "Regular"),
+                                    Font = NekoPlayerApp.DefaultFont.With(size: 17, weight: "Regular"),
                                     Colour = overlayColourProvider.Content2,
                                 },
                                 loading = new LoadingLayer(true, false, false)
@@ -154,7 +154,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                                 {
                                     RelativeSizeAxes = Axes.X,
                                     Text = "[text]",
-                                    Font = YouTubePlayerEXApp.DefaultFont.With(size: 17, weight: "Regular"),
+                                    Font = NekoPlayerApp.DefaultFont.With(size: 17, weight: "Regular"),
                                     Colour = overlayColourProvider.Content2,
                                 },
                                 channelNameText = new TruncatingSpriteText
@@ -162,7 +162,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                                     RelativeSizeAxes = Axes.X,
                                     Position = new Vector2(0, 17),
                                     Text = "[channel name]",
-                                    Font = YouTubePlayerEXApp.DefaultFont.With(size: 13, weight: "SemiBold"),
+                                    Font = NekoPlayerApp.DefaultFont.With(size: 13, weight: "SemiBold"),
                                     Colour = overlayColourProvider.Background1,
                                 },
                                 viewsText = new TruncatingSpriteText
@@ -170,7 +170,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                                     RelativeSizeAxes = Axes.X,
                                     Position = new Vector2(0, (17 + 13)),
                                     Text = "0 views • 1 year ago",
-                                    Font = YouTubePlayerEXApp.DefaultFont.With(size: 13, weight: "SemiBold"),
+                                    Font = NekoPlayerApp.DefaultFont.With(size: 13, weight: "SemiBold"),
                                     Colour = overlayColourProvider.Background1,
                                 },
                             }
@@ -323,14 +323,14 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                         channelNameText.Text = api.GetLocalizedChannelTitle(channelData);
                         videoNameText.Text = api.GetLocalizedVideoTitle(videoData);
 #pragma warning disable CS8629 // Nullable 값 형식이 null일 수 있습니다.
-                        viewsText.Text = YTPlayerEXStrings.VideoMetadataDescWithoutChannelName(Convert.ToInt32(videoData.Statistics.ViewCount).ToStandardFormattedString(0), dateTime.Value.DateTime.Humanize(dateToCompareAgainst: now));
+                        viewsText.Text = NekoPlayerStrings.VideoMetadataDescWithoutChannelName(Convert.ToInt32(videoData.Statistics.ViewCount).ToStandardFormattedString(0), dateTime.Value.DateTime.Humanize(dateToCompareAgainst: now));
 #pragma warning restore CS8629 // Nullable 값 형식이 null일 수 있습니다.
 
                         localeBindable.BindValueChanged(locale =>
                         {
                             channelNameText.Text = api.GetLocalizedChannelTitle(channelData);
                             videoNameText.Text = api.GetLocalizedVideoTitle(videoData);
-                            viewsText.Text = YTPlayerEXStrings.VideoMetadataDescWithoutChannelName(Convert.ToInt32(videoData.Statistics.ViewCount).ToStandardFormattedString(0), dateTime.Value.DateTime.Humanize(dateToCompareAgainst: now));
+                            viewsText.Text = NekoPlayerStrings.VideoMetadataDescWithoutChannelName(Convert.ToInt32(videoData.Statistics.ViewCount).ToStandardFormattedString(0), dateTime.Value.DateTime.Humanize(dateToCompareAgainst: now));
                         });
                     });
 

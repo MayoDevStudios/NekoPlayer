@@ -10,7 +10,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Rendering;
 using osu.Framework.Graphics.Shaders;
 
-namespace YouTubePlayerEX.App.Graphics.Shaders.New
+namespace NekoPlayer.App.Graphics.Shaders.New
 {
     public partial class VideoNewShaderContainer
     {

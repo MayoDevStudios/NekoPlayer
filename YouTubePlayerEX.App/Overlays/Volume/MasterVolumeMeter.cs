@@ -8,7 +8,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Localisation;
 using osuTK.Graphics;
 
-namespace YouTubePlayerEX.App.Overlays.Volume
+namespace NekoPlayer.App.Overlays.Volume
 {
     public partial class MasterVolumeMeter : VolumeMeter
     {

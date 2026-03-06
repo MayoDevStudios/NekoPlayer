@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using osu.Framework.Graphics.Rendering;
 using osu.Framework.Graphics.Shaders;
 
-namespace YouTubePlayerEX.App.Graphics.Shaders
+namespace NekoPlayer.App.Graphics.Shaders
 {
     public interface IStepShader : ICustomizedShader
     {

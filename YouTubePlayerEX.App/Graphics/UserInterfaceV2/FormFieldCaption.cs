@@ -9,9 +9,9 @@ using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Localisation;
 using osuTK;
-using YouTubePlayerEX.App.Graphics.UserInterface;
+using NekoPlayer.App.Graphics.UserInterface;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterfaceV2
+namespace NekoPlayer.App.Graphics.UserInterfaceV2
 {
     public partial class FormFieldCaption : CompositeDrawable, IHasTooltip
     {
@@ -79,7 +79,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterfaceV2
             RelativeSizeAxes = Axes.X;
             AutoSizeAxes = Axes.Y;
 
-            InternalChild = textFlow = new AdaptiveTextFlowContainer(t => t.Font = YouTubePlayerEXApp.DefaultFont.With(size: 12, weight: "SemiBold"))
+            InternalChild = textFlow = new AdaptiveTextFlowContainer(t => t.Font = NekoPlayerApp.DefaultFont.With(size: 12, weight: "SemiBold"))
             {
                 RelativeSizeAxes = Axes.X,
                 AutoSizeAxes = Axes.Y,

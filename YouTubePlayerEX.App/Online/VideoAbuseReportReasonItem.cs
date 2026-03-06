@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 
-namespace YouTubePlayerEX.App.Online
+namespace NekoPlayer.App.Online
 {
     public partial class VideoAbuseReportReasonItem
     {

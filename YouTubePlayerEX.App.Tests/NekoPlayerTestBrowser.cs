@@ -17,16 +17,16 @@ using osu.Framework.Logging;
 using osu.Framework.Platform;
 using osu.Framework.Testing;
 using osu.Framework.Threading;
-using YouTubePlayerEX.App.Audio.Effects;
-using YouTubePlayerEX.App.Extensions;
-using YouTubePlayerEX.App.Graphics;
-using YouTubePlayerEX.App.Localisation;
-using YouTubePlayerEX.App.Overlays;
-using static YouTubePlayerEX.App.YouTubePlayerEXApp;
+using NekoPlayer.App.Audio.Effects;
+using NekoPlayer.App.Extensions;
+using NekoPlayer.App.Graphics;
+using NekoPlayer.App.Localisation;
+using NekoPlayer.App.Overlays;
+using static NekoPlayer.App.NekoPlayerApp;
 
-namespace YouTubePlayerEX.App.Tests
+namespace NekoPlayer.App.Tests
 {
-    public partial class YouTubePlayerEXTestBrowser : YouTubePlayerEXAppBase
+    public partial class NekoPlayerTestBrowser : NekoPlayerAppBase
     {
         private OnScreenDisplay onScreenDisplay;
 

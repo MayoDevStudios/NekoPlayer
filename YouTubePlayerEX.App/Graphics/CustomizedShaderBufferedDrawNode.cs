@@ -16,9 +16,9 @@ using osu.Framework.Graphics.Shaders.Types;
 using osuTK;
 using osuTK.Graphics;
 using osuTK.Graphics.ES30;
-using YouTubePlayerEX.App.Graphics.Shaders;
+using NekoPlayer.App.Graphics.Shaders;
 
-namespace YouTubePlayerEX.App.Graphics
+namespace NekoPlayer.App.Graphics
 {
     public abstract class CustomizedShaderBufferedDrawNode : BufferedDrawNode
     {

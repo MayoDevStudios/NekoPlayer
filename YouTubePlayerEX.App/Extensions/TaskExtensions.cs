@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using osu.Framework.Extensions.ExceptionExtensions;
 using osu.Framework.Logging;
 
-namespace YouTubePlayerEX.App.Extensions
+namespace NekoPlayer.App.Extensions
 {
     public static class TaskExtensions
     {

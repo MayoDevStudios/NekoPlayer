@@ -4,7 +4,7 @@
 using System;
 using osu.Framework.Graphics.Sprites;
 
-namespace YouTubePlayerEX.App.Graphics.Sprites
+namespace NekoPlayer.App.Graphics.Sprites
 {
     public partial class AdaptiveSpriteText : SpriteText
     {
@@ -16,7 +16,7 @@ namespace YouTubePlayerEX.App.Graphics.Sprites
 
         public AdaptiveSpriteText(bool enableShadow = true)
         {
-            Font = YouTubePlayerEXApp.DefaultFont;
+            Font = NekoPlayerApp.DefaultFont;
             Shadow = enableShadow;
         }
     }

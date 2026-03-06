@@ -3,7 +3,7 @@
 
 using System;
 
-namespace YouTubePlayerEX.App.Graphics.Shaders.New
+namespace NekoPlayer.App.Graphics.Shaders.New
 {
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
     public class ShaderStrengthAttribute : Attribute

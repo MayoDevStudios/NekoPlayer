@@ -3,9 +3,9 @@
 
 using System;
 using osu.Framework.Graphics.Shaders;
-using YouTubePlayerEX.App.Graphics.Shaders;
+using NekoPlayer.App.Graphics.Shaders;
 
-namespace YouTubePlayerEX.App.Extensions
+namespace NekoPlayer.App.Extensions
 {
     /// <summary>
     /// Holds extension methods for <see cref="IShader"/>.

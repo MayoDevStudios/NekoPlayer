@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
-namespace YouTubePlayerEX.App.Localisation
+namespace NekoPlayer.App.Localisation
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]

@@ -3,14 +3,14 @@
 
 using System;
 using System.Threading.Tasks;
-using YouTubePlayerEX.App;
-using YouTubePlayerEX.App.Extensions;
-using YouTubePlayerEX.App.Updater;
-using YouTubePlayerEX.Desktop.Updater;
+using NekoPlayer.App;
+using NekoPlayer.App.Extensions;
+using NekoPlayer.App.Updater;
+using NekoPlayer.Desktop.Updater;
 
-namespace YouTubePlayerEX.Desktop
+namespace NekoPlayer.Desktop
 {
-    internal partial class YouTubePlayerEXAppLinuxDesktop : YouTubePlayerEXApp
+    internal partial class NekoPlayerAppDesktop : NekoPlayerApp
     {
         protected override UpdateManager CreateUpdateManager() => new VelopackUpdateManager();
 

@@ -24,12 +24,12 @@ using osu.Framework.Threading;
 using osu.Framework.Utils;
 using osuTK;
 using osuTK.Graphics;
-using YouTubePlayerEX.App.Graphics;
-using YouTubePlayerEX.App.Graphics.Sprites;
-using YouTubePlayerEX.App.Graphics.UserInterface;
-using YouTubePlayerEX.App.Input.Binding;
+using NekoPlayer.App.Graphics;
+using NekoPlayer.App.Graphics.Sprites;
+using NekoPlayer.App.Graphics.UserInterface;
+using NekoPlayer.App.Input.Binding;
 
-namespace YouTubePlayerEX.App.Overlays.Volume
+namespace NekoPlayer.App.Overlays.Volume
 {
     public partial class VolumeMeter : Container, IStateful<SelectionState>
     {
@@ -205,7 +205,7 @@ namespace YouTubePlayerEX.App.Overlays.Volume
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
-                            Font = YouTubePlayerEXApp.DefaultFont.With(size: 0.16f * CircleSize, weight: "Bold")
+                            Font = NekoPlayerApp.DefaultFont.With(size: 0.16f * CircleSize, weight: "Bold")
                         }).WithEffect(new GlowEffect
                         {
                             Colour = Color4.Transparent,
@@ -237,7 +237,7 @@ namespace YouTubePlayerEX.App.Overlays.Volume
                             },
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
-                            Font = YouTubePlayerEXApp.DefaultFont.With(weight: "Bold"),
+                            Font = NekoPlayerApp.DefaultFont.With(weight: "Bold"),
                             Text = name,
                             Colour = overlayColourProvider.Content2,
                         }

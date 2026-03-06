@@ -10,9 +10,9 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Localisation;
 using osuTK.Graphics;
-using YouTubePlayerEX.App.Graphics.UserInterface;
+using NekoPlayer.App.Graphics.UserInterface;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterfaceV2
+namespace NekoPlayer.App.Graphics.UserInterfaceV2
 {
     public sealed partial class SettingsNote : CompositeDrawable
     {
@@ -42,7 +42,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterfaceV2
                 {
                     RelativeSizeAxes = Axes.X,
                     AutoSizeAxes = Axes.Y,
-                    CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS / 1.5f,
+                    CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS / 1.5f,
                     CornerExponent = 2.5f,
                     Masking = true,
                     Children = new Drawable[]
@@ -52,7 +52,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterfaceV2
                             Colour = Color4.Black,
                             RelativeSizeAxes = Axes.Both,
                         },
-                        text = new AdaptiveTextFlowContainer(s => s.Font = YouTubePlayerEXApp.DefaultFont.With(weight: "SemiBold"))
+                        text = new AdaptiveTextFlowContainer(s => s.Font = NekoPlayerApp.DefaultFont.With(weight: "SemiBold"))
                         {
                             Padding = new MarginPadding(8),
                             RelativeSizeAxes = Axes.X,

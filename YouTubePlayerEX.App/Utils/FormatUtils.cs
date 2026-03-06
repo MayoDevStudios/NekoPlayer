@@ -6,7 +6,7 @@ using Humanizer;
 using osu.Framework.Extensions.LocalisationExtensions;
 using osu.Framework.Localisation;
 
-namespace YouTubePlayerEX.App.Utils
+namespace NekoPlayer.App.Utils
 {
     public static class FormatUtils
     {

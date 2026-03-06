@@ -11,7 +11,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Platform;
 using osuTK;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     public partial class FPSCounterTooltip : CompositeDrawable, ITooltip
     {
@@ -38,7 +38,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                 },
                 new AdaptiveTextFlowContainer(cp =>
                 {
-                    cp.Font = YouTubePlayerEXApp.DefaultFont.With(weight: "SemiBold");
+                    cp.Font = NekoPlayerApp.DefaultFont.With(weight: "SemiBold");
                 })
                 {
                     AutoSizeAxes = Axes.Both,
@@ -50,7 +50,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                 },
                 textFlow = new AdaptiveTextFlowContainer(cp =>
                 {
-                    cp.Font = YouTubePlayerEXApp.DefaultFont.With(fixedWidth: true, weight: "Regular");
+                    cp.Font = NekoPlayerApp.DefaultFont.With(fixedWidth: true, weight: "Regular");
                     cp.Spacing = new Vector2(-1);
                 })
                 {

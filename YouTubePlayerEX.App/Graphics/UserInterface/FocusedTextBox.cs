@@ -8,9 +8,9 @@ using osu.Framework.Platform;
 using osu.Framework.Threading;
 using osuTK.Graphics;
 using osuTK.Input;
-using YouTubePlayerEX.App.Input.Binding;
+using NekoPlayer.App.Input.Binding;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     /// <summary>
     /// A textbox which holds focus eagerly.

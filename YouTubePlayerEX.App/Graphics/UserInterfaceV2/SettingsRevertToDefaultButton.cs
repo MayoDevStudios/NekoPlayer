@@ -8,10 +8,10 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
 using osuTK;
-using YouTubePlayerEX.App.Graphics.UserInterface;
-using YouTubePlayerEX.App.Localisation;
+using NekoPlayer.App.Graphics.UserInterface;
+using NekoPlayer.App.Localisation;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterfaceV2
+namespace NekoPlayer.App.Graphics.UserInterfaceV2
 {
     public partial class SettingsRevertToDefaultButton : AdaptiveClickableContainer
     {
@@ -66,7 +66,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterfaceV2
             Enabled.BindValueChanged(_ => updateDisplay(), true);
         }
 
-        public override LocalisableString TooltipText => YTPlayerEXStrings.RevertToDefault;
+        public override LocalisableString TooltipText => NekoPlayerStrings.RevertToDefault;
 
         protected override bool OnHover(HoverEvent e)
         {

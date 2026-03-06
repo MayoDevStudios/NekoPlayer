@@ -15,9 +15,9 @@ using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
 using osuTK;
 using osuTK.Graphics;
-using YouTubePlayerEX.App.Graphics.Sprites;
+using NekoPlayer.App.Graphics.Sprites;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     public partial class DrawableAdaptiveMenuItem : Menu.DrawableMenuItem
     {
@@ -163,7 +163,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                                     AlwaysPresent = true, // ensures that the menu item does not change width when switching between normal and bold text.
                                     Anchor = Anchor.CentreLeft,
                                     Origin = Anchor.CentreLeft,
-                                    Font = YouTubePlayerEXApp.DefaultFont.With(size: TEXT_SIZE),
+                                    Font = NekoPlayerApp.DefaultFont.With(size: TEXT_SIZE),
                                 },
                                 BoldText = new AdaptiveSpriteText
                                 {
@@ -171,7 +171,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                                     Alpha = 0,
                                     Anchor = Anchor.CentreLeft,
                                     Origin = Anchor.CentreLeft,
-                                    Font = YouTubePlayerEXApp.DefaultFont.With(size: TEXT_SIZE, weight: "Bold"),
+                                    Font = NekoPlayerApp.DefaultFont.With(size: TEXT_SIZE, weight: "Bold"),
                                 }
                             }
                         },

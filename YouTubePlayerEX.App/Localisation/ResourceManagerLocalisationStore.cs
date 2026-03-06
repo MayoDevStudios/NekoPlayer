@@ -13,7 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using osu.Framework.Localisation;
 
-namespace YouTubePlayerEX.App.Localisation
+namespace NekoPlayer.App.Localisation
 {
     public class ResourceManagerLocalisationStore : ILocalisationStore
     {

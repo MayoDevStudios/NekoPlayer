@@ -11,24 +11,24 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shaders;
 using osu.Framework.Screens;
 using osu.Framework.Threading;
-using YouTubePlayerEX.App.Graphics.UserInterface;
+using NekoPlayer.App.Graphics.UserInterface;
 
-namespace YouTubePlayerEX.App.Screens
+namespace NekoPlayer.App.Screens
 {
-    public partial class Loader : YouTubePlayerEXScreen
+    public partial class Loader : NekoPlayerScreen
     {
         public Loader()
         {
             ValidForResume = false;
         }
 
-        private YouTubePlayerEXScreen loadableScreen;
+        private NekoPlayerScreen loadableScreen;
         private ShaderPrecompiler precompiler;
 
         private LoadingSpinner spinner;
         private ScheduledDelegate spinnerShow;
 
-        protected virtual YouTubePlayerEXScreen CreateLoadableScreen() => new MainAppView();
+        protected virtual NekoPlayerScreen CreateLoadableScreen() => new MainAppView();
 
         protected virtual ShaderPrecompiler CreateShaderPrecompiler() => new ShaderPrecompiler();
 

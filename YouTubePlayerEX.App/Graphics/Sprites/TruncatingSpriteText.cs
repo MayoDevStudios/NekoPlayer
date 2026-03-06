@@ -5,7 +5,7 @@ using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Localisation;
 
-namespace YouTubePlayerEX.App.Graphics.Sprites
+namespace NekoPlayer.App.Graphics.Sprites
 {
     /// <summary>
     /// A derived version of <see cref="AdaptiveSpriteText"/> which automatically shows non-truncated text in tooltip when required.

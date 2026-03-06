@@ -12,9 +12,9 @@ using osu.Framework.Graphics.Rendering;
 using osu.Framework.Graphics.Shaders;
 using osu.Framework.Layout;
 using osuTK;
-using YouTubePlayerEX.App.Graphics.Containers;
+using NekoPlayer.App.Graphics.Containers;
 
-namespace YouTubePlayerEX.App.Graphics.Lines
+namespace NekoPlayer.App.Graphics.Lines
 {
     /// <summary>
     /// A <see cref="SmoothPath"/> which can blur the content underneath it.

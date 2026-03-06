@@ -19,12 +19,12 @@ using osu.Framework.Graphics.Textures;
 using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
 using osuTK.Graphics;
-using YouTubePlayerEX.App.Config;
-using YouTubePlayerEX.App.Extensions;
-using YouTubePlayerEX.App.Localisation;
-using YouTubePlayerEX.App.Online;
+using NekoPlayer.App.Config;
+using NekoPlayer.App.Extensions;
+using NekoPlayer.App.Localisation;
+using NekoPlayer.App.Online;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     public partial class ProfileImage : CompositeDrawable, IHasTooltip
     {
@@ -43,7 +43,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
         public virtual LocalisableString TooltipText { get; protected set; }
 
         [Resolved]
-        private YouTubePlayerEXAppBase app { get; set; }
+        private NekoPlayerAppBase app { get; set; }
 
         private Bindable<VideoMetadataTranslateSource> translationSource = new Bindable<VideoMetadataTranslateSource>();
 
@@ -72,8 +72,8 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
         [BackgroundDependencyLoader]
         private void load(ISampleStore tracks)
         {
-            usernameDisplayMode = appConfig.GetBindable<UsernameDisplayMode>(YTPlayerEXSetting.UsernameDisplayMode);
-            translationSource = appConfig.GetBindable<VideoMetadataTranslateSource>(YTPlayerEXSetting.VideoMetadataTranslateSource);
+            usernameDisplayMode = appConfig.GetBindable<UsernameDisplayMode>(NekoPlayerSetting.UsernameDisplayMode);
+            translationSource = appConfig.GetBindable<VideoMetadataTranslateSource>(NekoPlayerSetting.VideoMetadataTranslateSource);
             clickAudio = tracks.Get("button-select.wav");
         }
 
@@ -109,13 +109,13 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                 {
                     await GetProfileImage(channel.Snippet.Thumbnails.High.Url);
                 });
-                TooltipText = YTPlayerEXStrings.ProfileImageTooltip(api.GetLocalizedChannelTitle(channel, true), Convert.ToInt32(channel.Statistics.SubscriberCount).ToMetric(decimals: 2));
+                TooltipText = NekoPlayerStrings.ProfileImageTooltip(api.GetLocalizedChannelTitle(channel, true), Convert.ToInt32(channel.Statistics.SubscriberCount).ToMetric(decimals: 2));
 
                 translationSource.BindValueChanged(locale =>
                 {
                     Task.Run(async () =>
                     {
-                        TooltipText = YTPlayerEXStrings.ProfileImageTooltip(api.GetLocalizedChannelTitle(channel, true), Convert.ToInt32(channel.Statistics.SubscriberCount).ToMetric(decimals: 2));
+                        TooltipText = NekoPlayerStrings.ProfileImageTooltip(api.GetLocalizedChannelTitle(channel, true), Convert.ToInt32(channel.Statistics.SubscriberCount).ToMetric(decimals: 2));
                     });
                 }, true);
             });

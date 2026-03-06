@@ -5,7 +5,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osuTK;
 
-namespace YouTubePlayerEX.App.Graphics.Shaders.New.Bloom
+namespace NekoPlayer.App.Graphics.Shaders.New.Bloom
 {
     public partial class BufferedBloomContainer : BufferedContainer
     {

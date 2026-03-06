@@ -12,9 +12,9 @@ using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
 using osuTK;
 using osuTK.Graphics;
-using YouTubePlayerEX.App.Graphics.Sprites;
+using NekoPlayer.App.Graphics.Sprites;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     /// <summary>
     /// A button with added default sound effects.
@@ -82,7 +82,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 Masking = true,
-                CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS,
+                CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS,
                 RelativeSizeAxes = Axes.Both,
                 Children = new Drawable[]
                 {
@@ -181,7 +181,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterface
             Depth = -1,
             Origin = Anchor.Centre,
             Anchor = Anchor.Centre,
-            Font = YouTubePlayerEXApp.DefaultFont.With(weight: "Bold"),
+            Font = NekoPlayerApp.DefaultFont.With(weight: "Bold"),
         };
     }
 }

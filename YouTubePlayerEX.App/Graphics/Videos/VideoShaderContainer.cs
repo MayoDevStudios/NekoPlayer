@@ -10,9 +10,9 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shaders;
 using osuTK;
 using osuTK.Graphics;
-using YouTubePlayerEX.App.Graphics.Shaders;
+using NekoPlayer.App.Graphics.Shaders;
 
-namespace YouTubePlayerEX.App.Graphics.Videos
+namespace NekoPlayer.App.Graphics.Videos
 {
     public partial class VideoShaderContainer : Container, IMultiShaderBufferedDrawable
     {

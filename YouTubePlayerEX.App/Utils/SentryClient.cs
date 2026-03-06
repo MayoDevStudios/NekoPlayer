@@ -12,14 +12,14 @@ using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Logging;
 using Sentry;
-using YouTubePlayerEX.App.Config;
-using YouTubePlayerEX.App.Online;
+using NekoPlayer.App.Config;
+using NekoPlayer.App.Online;
 
-namespace YouTubePlayerEX.App.Utils
+namespace NekoPlayer.App.Utils
 {
     public partial class SentryClient : Component
     {
-        private YouTubePlayerEXAppBase app { get; }
+        private NekoPlayerAppBase app { get; }
         private IDisposable session { get; }
 
         private GoogleOAuth2 googleOAuth2 { get; set; }
@@ -29,7 +29,7 @@ namespace YouTubePlayerEX.App.Utils
         [Resolved]
         private YouTubeAPI youtubeAPI { get; set; }
 
-        public SentryClient(YouTubePlayerEXAppBase app, GoogleOAuth2 googleOAuth2)
+        public SentryClient(NekoPlayerAppBase app, GoogleOAuth2 googleOAuth2)
         {
             this.app = app;
             this.googleOAuth2 = googleOAuth2;

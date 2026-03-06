@@ -12,7 +12,7 @@ using osuTK;
 using osuTK.Graphics;
 using osuTK.Input;
 
-namespace YouTubePlayerEX.App.Graphics.Containers
+namespace NekoPlayer.App.Graphics.Containers
 {
     public partial class AdaptiveScrollContainer : AdaptiveScrollContainer<Drawable>
     {

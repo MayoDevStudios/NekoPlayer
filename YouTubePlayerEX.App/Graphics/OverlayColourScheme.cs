@@ -3,7 +3,7 @@
 
 using System;
 
-namespace YouTubePlayerEX.App.Graphics
+namespace NekoPlayer.App.Graphics
 {
     public enum OverlayColourScheme
     {

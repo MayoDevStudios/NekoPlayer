@@ -4,7 +4,7 @@
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 
-namespace YouTubePlayerEX.App.Graphics.Shaders.New.Bloom
+namespace NekoPlayer.App.Graphics.Shaders.New.Bloom
 {
     public partial class BloomContainer : VideoNewShaderContainer
     {

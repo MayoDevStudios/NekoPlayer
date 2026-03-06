@@ -3,7 +3,7 @@
 
 using System.ComponentModel;
 
-namespace YouTubePlayerEX.App.Config
+namespace NekoPlayer.App.Config
 {
     public enum UIFont
     {

@@ -5,7 +5,7 @@ using ManagedBass.Fx;
 using osu.Framework.Audio.Mixing;
 using osu.Framework.Graphics;
 
-namespace YouTubePlayerEX.App.Audio.Effects
+namespace NekoPlayer.App.Audio.Effects
 {
     public partial class AudioFilter : Component, ITransformableFilter
     {

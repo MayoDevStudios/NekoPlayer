@@ -7,9 +7,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using osu.Framework.Allocation;
-using YouTubePlayerEX.App.Online;
+using NekoPlayer.App.Online;
 
-namespace YouTubePlayerEX.App.Updater
+namespace NekoPlayer.App.Updater
 {
     /// <summary>
     /// An update manager that shows notifications if a newer release is detected.
@@ -20,7 +20,7 @@ namespace YouTubePlayerEX.App.Updater
         private string version = string.Empty;
 
         [BackgroundDependencyLoader]
-        private void load(YouTubePlayerEXAppBase game)
+        private void load(NekoPlayerAppBase game)
         {
             version = game.Version;
         }
@@ -29,7 +29,7 @@ namespace YouTubePlayerEX.App.Updater
         {
             try
             {
-                YouTubePlayerEXJsonWebRequest<GitHubRelease[]> releasesRequest = new YouTubePlayerEXJsonWebRequest<GitHubRelease[]>("https://api.github.com/repos/BoomboxRapsody/YouTubePlayerEX/releases?per_page=10&page=1");
+                NekoPlayerJsonWebRequest<GitHubRelease[]> releasesRequest = new NekoPlayerJsonWebRequest<GitHubRelease[]>("https://api.github.com/repos/BoomboxRapsody/YouTubePlayerEX/releases?per_page=10&page=1");
                 await releasesRequest.PerformAsync(cancellationToken).ConfigureAwait(false);
 
                 GitHubRelease[] releases = releasesRequest.ResponseObject;

@@ -9,9 +9,9 @@ using osu.Framework.Graphics.Colour;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osuTK.Graphics;
-using YouTubePlayerEX.App.Graphics.UserInterface;
+using NekoPlayer.App.Graphics.UserInterface;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterfaceV2
+namespace NekoPlayer.App.Graphics.UserInterfaceV2
 {
     public partial class FormControlBackground : CompositeDrawable
     {
@@ -42,7 +42,7 @@ namespace YouTubePlayerEX.App.Graphics.UserInterfaceV2
             RelativeSizeAxes = Axes.Both;
 
             Masking = true;
-            CornerRadius = YouTubePlayerEXApp.UI_CORNER_RADIUS / 1.5f;
+            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS / 1.5f;
 
             CornerExponent = CORNER_EXPONENT;
             BorderThickness = BORDER_THICKNESS;

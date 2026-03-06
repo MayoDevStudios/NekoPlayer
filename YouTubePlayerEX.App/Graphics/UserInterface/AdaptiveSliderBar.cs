@@ -9,9 +9,9 @@ using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Localisation;
 using osu.Framework.Utils;
-using YouTubePlayerEX.App.Extensions;
+using NekoPlayer.App.Extensions;
 
-namespace YouTubePlayerEX.App.Graphics.UserInterface
+namespace NekoPlayer.App.Graphics.UserInterface
 {
     public abstract partial class AdaptiveSliderBar<T> : SliderBar<T>, IHasTooltip
         where T : struct, INumber<T>, IMinMaxValue<T>

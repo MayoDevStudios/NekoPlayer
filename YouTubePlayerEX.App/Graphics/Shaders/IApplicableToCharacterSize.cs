@@ -3,7 +3,7 @@
 
 using osu.Framework.Graphics.Primitives;
 
-namespace YouTubePlayerEX.App.Graphics.Shaders
+namespace NekoPlayer.App.Graphics.Shaders
 {
     public interface IApplicableToCharacterSize
     {

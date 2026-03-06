@@ -6,12 +6,11 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Localisation;
-using YouTubePlayerEX.App.Graphics.Sprites;
-using osuTK;
-using YouTubePlayerEX.App.Graphics;
+using NekoPlayer.App.Graphics.Sprites;
+using NekoPlayer.App.Graphics;
 using osu.Framework.Allocation;
 
-namespace YouTubePlayerEX.App.Overlays.OSD
+namespace NekoPlayer.App.Overlays.OSD
 {
     public partial class Toast : Container
     {
@@ -69,14 +68,14 @@ namespace YouTubePlayerEX.App.Overlays.OSD
                 {
                     Padding = new MarginPadding { Horizontal = 22, Vertical = 15 },
                     Name = "Description",
-                    Font = YouTubePlayerEXApp.TorusAlternate.With(size: 20, weight: "Bold"),
+                    Font = NekoPlayerApp.TorusAlternate.With(size: 20, weight: "Bold"),
                     Anchor = Anchor.TopLeft,
                     Origin = Anchor.TopLeft,
                     Text = description
                 },
                 ValueSpriteText = new AdaptiveSpriteText
                 {
-                    Font = YouTubePlayerEXApp.TorusAlternate.With(size: 24, weight: "Light"),
+                    Font = NekoPlayerApp.TorusAlternate.With(size: 24, weight: "Light"),
                     Padding = new MarginPadding { Horizontal = 22, Vertical = 15 },
                     Name = "Value",
                     Anchor = Anchor.CentreRight,
@@ -89,7 +88,7 @@ namespace YouTubePlayerEX.App.Overlays.OSD
                     Origin = Anchor.BottomLeft,
                     Name = "Extra Text",
                     Margin = new MarginPadding { Bottom = 15, Horizontal = 22 },
-                    Font = YouTubePlayerEXApp.DefaultFont.With(size: 12, weight: "Bold"),
+                    Font = NekoPlayerApp.DefaultFont.With(size: 12, weight: "Bold"),
                 },
             };
         }

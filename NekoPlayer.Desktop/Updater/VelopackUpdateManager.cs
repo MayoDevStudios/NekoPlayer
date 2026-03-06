@@ -18,7 +18,7 @@ namespace NekoPlayer.Desktop.Updater
     public partial class VelopackUpdateManager : UpdateManager
     {
         [Resolved]
-        private YouTubePlayerEXAppBase game { get; set; } = null!;
+        private NekoPlayerAppBase game { get; set; } = null!;
 
 #nullable enable
         private ScheduledDelegate? scheduledBackgroundCheck;

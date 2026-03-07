@@ -87,9 +87,9 @@ namespace NekoPlayer.App.Screens
         private Container uiContainer;
         private Container uiGradientContainer;
         private OverlayContainer loadVideoContainer, settingsContainer, videoDescriptionContainer, commentsContainer, videoInfoExpertOverlay, searchContainer, reportAbuseOverlay, loadPlaylistContainer, unsubscribeDialog, addPlaylistOverlay, videoSaveLocationOverlay, myChannelDialog;
-        private SideOverlayContainer playlistOverlay, audioEffectsOverlay, menuOverlay;
+        private SideOverlayContainer playlistOverlay, audioEffectsOverlay, menuOverlay, myPlaylistsOverlay, exitOptions;
         private AdaptiveButtonWithShadow menuOverlayShow;
-        private MenuButtonItem loadBtnOverlayShow, settingsOverlayShowBtn, commentOpenButton, searchOpenButton, reportOpenButton, playlistOpenButton, audioEffectsOpenButton, saveVideoOpenButton;
+        private MenuButtonItem loadBtnOverlayShow, settingsOverlayShowBtn, commentOpenButton, searchOpenButton, reportOpenButton, playlistOpenButton, audioEffectsOpenButton, saveVideoOpenButton, newPlaylistOpenButton, myPlaylistsOpenButton;
         private VideoMetadataDisplayWithoutProfile videoMetadataDisplay;
         private VideoMetadataDisplay videoMetadataDisplayDetails;
         private RoundedButtonContainer commentOpenButtonDetails, likeButton;
@@ -172,7 +172,7 @@ namespace NekoPlayer.App.Screens
         private AdaptiveSpriteText videoLoadingProgress, videoInfoDetails, likeCount, dislikeCount, commentCount, commentsContainerTitle, currentTime, totalTime, playlistName, volumeText;
         private AdaptiveSpriteText speedText;
         private LinkFlowContainer videoDescription, gameVersion;
-        private FillFlowContainer commentContainer, searchResultContainer, playlistItemsView;
+        private FillFlowContainer commentContainer, searchResultContainer, playlistItemsView, myPlaylistItemsView;
 
         [Resolved]
         private GoogleOAuth2 googleOAuth2 { get; set; } = null!;
@@ -2104,7 +2104,7 @@ namespace NekoPlayer.App.Screens
                                                         {
                                                             Origin = Anchor.TopLeft,
                                                             Anchor = Anchor.TopLeft,
-                                                            Text = "no playlist selected!",
+                                                            Text = NekoPlayerStrings.PlaylistNotLoaded,
                                                             RelativeSizeAxes = Axes.X,
                                                             Font = NekoPlayerApp.TorusAlternate.With(size: 30, weight: "Bold"),
                                                             Colour = overlayColourProvider.Content2,
@@ -2117,11 +2117,89 @@ namespace NekoPlayer.App.Screens
                                                         {
                                                             Origin = Anchor.TopLeft,
                                                             Anchor = Anchor.TopLeft,
+                                                            Text = NekoPlayerStrings.PlaylistNotLoadedDesc,
                                                             RelativeSizeAxes = Axes.X,
                                                             AutoSizeAxes = Axes.Y,
-                                                            Text = "",
                                                         },
                                                         playlistItemsView = new FillFlowContainer
+                                                        {
+                                                            RelativeSizeAxes = Axes.X,
+                                                            AutoSizeAxes = Axes.Y,
+                                                            Direction = FillDirection.Vertical,
+                                                            Spacing = new Vector2(4),
+                                                            Children = new Drawable[]
+                                                            {
+                                                            }
+                                                        },
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        myPlaylistsOverlay = new SideOverlayContainer
+                        {
+                            Size = new Vector2(1f, .95f),
+                            Width = 400,
+                            RelativeSizeAxes = Axes.Y,
+                            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS,
+                            Masking = true,
+                            Origin = Anchor.CentreRight,
+                            Anchor = Anchor.CentreRight,
+                            Margin = new MarginPadding
+                            {
+                                Right = 16,
+                            },
+                            EdgeEffect = new osu.Framework.Graphics.Effects.EdgeEffectParameters
+                            {
+                                Type = osu.Framework.Graphics.Effects.EdgeEffectType.Shadow,
+                                Colour = Color4.Black.Opacity(0.25f),
+                                Offset = new Vector2(0, 2),
+                                Radius = 16,
+                            },
+                            Children = new Drawable[]
+                            {
+                                new Box
+                                {
+                                    RelativeSizeAxes = Axes.Both,
+                                    Colour = overlayColourProvider.Background5,
+                                },
+                                new AdaptiveSpriteText
+                                {
+                                    Origin = Anchor.TopLeft,
+                                    Anchor = Anchor.TopLeft,
+                                    Text = NekoPlayerStrings.MyPlaylists,
+                                    Margin = new MarginPadding(16),
+                                    Font = NekoPlayerApp.TorusAlternate.With(size: 30, weight: "Bold"),
+                                    Colour = overlayColourProvider.Content2,
+                                },
+                                new Container
+                                {
+                                    RelativeSizeAxes = Axes.Both,
+                                    Padding = new MarginPadding
+                                    {
+                                        Horizontal = 16,
+                                        Bottom = 16,
+                                        Top = 56,
+                                    },
+                                    Children = new Drawable[] {
+                                        new AdaptiveScrollContainer
+                                        {
+                                            RelativeSizeAxes = Axes.Both,
+                                            ScrollbarVisible = false,
+                                            Children = new Drawable[]
+                                            {
+                                                new FillFlowContainer
+                                                {
+                                                    RelativeSizeAxes = Axes.X,
+                                                    AutoSizeAxes = Axes.Y,
+                                                    Direction = FillDirection.Vertical,
+                                                    Spacing = new Vector2(4),
+                                                    Children = new Drawable[]
+                                                    {
+                                                        myPlaylistItemsView = new FillFlowContainer
                                                         {
                                                             RelativeSizeAxes = Axes.X,
                                                             AutoSizeAxes = Axes.Y,
@@ -2801,6 +2879,22 @@ namespace NekoPlayer.App.Screens
                                                             IconScale = new Vector2(1.2f),
                                                             Text = NekoPlayerStrings.Playlists,
                                                         },
+                                                        myPlaylistsOpenButton = new MenuButtonItem
+                                                        {
+                                                            Enabled = { Value = false },
+                                                            Origin = Anchor.TopRight,
+                                                            Anchor = Anchor.TopRight,
+                                                            Size = new Vector2(1, 45),
+                                                            RelativeSizeAxes = Axes.X,
+                                                            Icon = FontAwesome.Solid.List,
+                                                            IconScale = new Vector2(1.2f),
+                                                            Text = NekoPlayerStrings.MyPlaylists,
+                                                            Action = () =>
+                                                            {
+                                                                hideOverlays();
+                                                                showOverlayContainer(myPlaylistsOverlay);
+                                                            }
+                                                        },
                                                         audioEffectsOpenButton = new MenuButtonItem
                                                         {
                                                             Enabled = { Value = true },
@@ -2814,7 +2908,7 @@ namespace NekoPlayer.App.Screens
                                                         },
                                                         saveVideoOpenButton = new MenuButtonItem
                                                         {
-                                                            Enabled = { Value = true },
+                                                            Enabled = { Value = false },
                                                             Origin = Anchor.TopRight,
                                                             Anchor = Anchor.TopRight,
                                                             Size = new Vector2(1, 45),
@@ -2822,6 +2916,22 @@ namespace NekoPlayer.App.Screens
                                                             Icon = FontAwesome.Regular.Bookmark,
                                                             IconScale = new Vector2(1.2f),
                                                             Text = NekoPlayerStrings.Save,
+                                                        },
+                                                        newPlaylistOpenButton = new MenuButtonItem
+                                                        {
+                                                            Enabled = { Value = false },
+                                                            Origin = Anchor.TopRight,
+                                                            Anchor = Anchor.TopRight,
+                                                            Size = new Vector2(1, 45),
+                                                            RelativeSizeAxes = Axes.X,
+                                                            Icon = FontAwesome.Solid.Bookmark,
+                                                            IconScale = new Vector2(1.2f),
+                                                            Text = NekoPlayerStrings.AddNewPlaylist,
+                                                            Action = () =>
+                                                            {
+                                                                hideOverlays();
+                                                                showOverlayContainer(addPlaylistOverlay);
+                                                            },
                                                         },
                                                         new MenuButtonItem
                                                         {
@@ -2836,7 +2946,123 @@ namespace NekoPlayer.App.Screens
                                                             Action = () =>
                                                             {
                                                                 hideOverlays();
+                                                                showOverlayContainer(exitOptions);
+                                                            },
+                                                        },
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        exitOptions = new SideOverlayContainer
+                        {
+                            Size = new Vector2(1f, .95f),
+                            Width = 400,
+                            RelativeSizeAxes = Axes.Y,
+                            CornerRadius = NekoPlayerApp.UI_CORNER_RADIUS,
+                            Masking = true,
+                            Origin = Anchor.CentreRight,
+                            Anchor = Anchor.CentreRight,
+                            Margin = new MarginPadding
+                            {
+                                Right = 16,
+                            },
+                            EdgeEffect = new osu.Framework.Graphics.Effects.EdgeEffectParameters
+                            {
+                                Type = osu.Framework.Graphics.Effects.EdgeEffectType.Shadow,
+                                Colour = Color4.Black.Opacity(0.25f),
+                                Offset = new Vector2(0, 2),
+                                Radius = 16,
+                            },
+                            Children = new Drawable[]
+                            {
+                                new Box
+                                {
+                                    RelativeSizeAxes = Axes.Both,
+                                    Colour = overlayColourProvider.Background5,
+                                },
+                                new AdaptiveSpriteText
+                                {
+                                    Origin = Anchor.TopLeft,
+                                    Anchor = Anchor.TopLeft,
+                                    Text = NekoPlayerStrings.ExitOptions,
+                                    Margin = new MarginPadding(16),
+                                    Font = NekoPlayerApp.TorusAlternate.With(size: 30, weight: "Bold"),
+                                    Colour = overlayColourProvider.Content2,
+                                },
+                                new Container
+                                {
+                                    RelativeSizeAxes = Axes.Both,
+                                    Padding = new MarginPadding
+                                    {
+                                        Horizontal = 16,
+                                        Bottom = 16,
+                                        Top = 56,
+                                    },
+                                    Children = new Drawable[] {
+                                        new AdaptiveScrollContainer
+                                        {
+                                            RelativeSizeAxes = Axes.Both,
+                                            ScrollbarVisible = false,
+                                            Children = new Drawable[]
+                                            {
+                                                new FillFlowContainer
+                                                {
+                                                    RelativeSizeAxes = Axes.X,
+                                                    AutoSizeAxes = Axes.Y,
+                                                    Direction = FillDirection.Vertical,
+                                                    Spacing = new Vector2(4),
+                                                    Children = new Drawable[]
+                                                    {
+                                                        new MenuButtonItem
+                                                        {
+                                                            Enabled = { Value = true },
+                                                            Origin = Anchor.TopRight,
+                                                            Anchor = Anchor.TopRight,
+                                                            Size = new Vector2(1, 45),
+                                                            RelativeSizeAxes = Axes.X,
+                                                            Icon = FontAwesome.Solid.SignOutAlt,
+                                                            IconScale = new Vector2(1.2f),
+                                                            Text = NekoPlayerStrings.Exit,
+                                                            Action = () =>
+                                                            {
+                                                                hideOverlays();
                                                                 game.AttemptExit();
+                                                            },
+                                                        },
+                                                        new MenuButtonItem
+                                                        {
+                                                            Enabled = { Value = true },
+                                                            Origin = Anchor.TopRight,
+                                                            Anchor = Anchor.TopRight,
+                                                            Size = new Vector2(1, 45),
+                                                            RelativeSizeAxes = Axes.X,
+                                                            Icon = FontAwesome.Solid.SyncAlt,
+                                                            IconScale = new Vector2(1.2f),
+                                                            Text = NekoPlayerStrings.Restart,
+                                                            Action = () =>
+                                                            {
+                                                                hideOverlays();
+                                                                game.AttemptExit(ShutdownOptions.Restart);
+                                                            },
+                                                        },
+                                                        new MenuButtonItem
+                                                        {
+                                                            Enabled = { Value = true },
+                                                            Origin = Anchor.TopRight,
+                                                            Anchor = Anchor.TopRight,
+                                                            Size = new Vector2(1, 45),
+                                                            RelativeSizeAxes = Axes.X,
+                                                            Icon = FontAwesome.Solid.PowerOff,
+                                                            IconScale = new Vector2(1.2f),
+                                                            Text = NekoPlayerStrings.PowerOff,
+                                                            Action = () =>
+                                                            {
+                                                                hideOverlays();
+                                                                game.AttemptExit(ShutdownOptions.Shutdown);
                                                             },
                                                         },
                                                     }
@@ -2948,6 +3174,8 @@ namespace NekoPlayer.App.Screens
             addPlaylistOverlay.Hide();
             menuOverlay.Hide();
             myChannelDialog.Hide();
+            myPlaylistsOverlay.Hide();
+            exitOptions.Hide();
 
             captionEnabled.Disabled = true;
 
@@ -3001,7 +3229,41 @@ namespace NekoPlayer.App.Screens
                         });
                     });
 
+                    #region playlists
+
+                    Schedule(() => myPlaylistsOpenButton.Enabled.Value = true);
+
+                    Task.Run(async () =>
+                    {
+                        IList<Google.Apis.YouTube.v3.Data.Playlist> playlists = await api.GetMyPlaylistItems();
+
+                        foreach (Playlist playlist in playlists)
+                        {
+                            MyPlaylistView playlistItemView = new MyPlaylistView()
+                            {
+                                RelativeSizeAxes = Axes.X,
+                                Enabled = { Value = true },
+                                ClickAction = async v =>
+                                {
+                                    Schedule(async () =>
+                                    {
+                                        SetPlaylist(playlist.Id).FireAndForget();
+                                    });
+                                },
+                            };
+
+                            Schedule(() =>
+                            {
+                                playlistItemView.Data = playlist;
+                                myPlaylistItemsView.Add(playlistItemView);
+                                playlistItemView.UpdateData();
+                            });
+                        }
+                    });
+                    #endregion
+
                     Schedule(() => commentSendButton.Enabled.Value = true);
+                    Schedule(() => newPlaylistOpenButton.Enabled.Value = true);
                     Channel wth = api.GetMineChannel();
                     login.Text = NekoPlayerStrings.SignedIn(api.GetLocalizedChannelTitle(wth, true));
 
@@ -3025,6 +3287,15 @@ namespace NekoPlayer.App.Screens
                 {
                     Schedule(() => commentSendButton.Enabled.Value = false);
                     login.Text = NekoPlayerStrings.SignedOut;
+                    Schedule(() => saveVideoOpenButton.Enabled.Value = false);
+                    Schedule(() => reportOpenButton.Enabled.Value = false);
+                    Schedule(() => newPlaylistOpenButton.Enabled.Value = false);
+                    Schedule(() => myPlaylistsOpenButton.Enabled.Value = false);
+
+                    foreach (var item in myPlaylistItemsView.Children)
+                    {
+                        Schedule(() => item.Expire());
+                    }
 
                     commentTextBox.PlaceholderText = string.Empty;
                 }
@@ -3094,9 +3365,11 @@ namespace NekoPlayer.App.Screens
             overlayContainers.Add(videoSaveLocationOverlay);
             overlayContainers.Add(menuOverlay);
             overlayContainers.Add(myChannelDialog);
+            overlayContainers.Add(myPlaylistsOverlay);
+            overlayContainers.Add(exitOptions);
 
-            playlistName.Text = "no playlist selected!";
-            playlistAuthor.Text = string.Empty;
+            playlistName.Text = NekoPlayerStrings.PlaylistNotLoaded;
+            playlistAuthor.Text = NekoPlayerStrings.PlaylistNotLoadedDesc;
 
             infoForNerds.AddText("Codec: ");
             infoForNerds.AddText("[unknown]", f => f.Font = NekoPlayerApp.DefaultFont.With(weight: "Bold"));
@@ -3881,7 +4154,7 @@ namespace NekoPlayer.App.Screens
                                 LargeImageUrl = $"https://youtu.be/{videoData.Id}",
                                 LargeImageText = videoData.Snippet.Title,
                                 SmallImageText = "NekoPlayer",
-                                SmallImageKey = "youtube_player_ex_logo"
+                                SmallImageKey = "new_nekoplayer_logo_withbg"
                             },
                         });
                     }
@@ -3892,7 +4165,7 @@ namespace NekoPlayer.App.Screens
                             State = "Idle",
                             Assets = new Assets()
                             {
-                                LargeImageKey = "youtube_player_ex_logo",
+                                LargeImageKey = "new_nekoplayer_logo_withbg",
                                 LargeImageText = "NekoPlayer",
                             },
                         });
@@ -3909,7 +4182,7 @@ namespace NekoPlayer.App.Screens
                             Assets = new Assets()
                             {
                                 LargeImageText = "NekoPlayer",
-                                LargeImageKey = "youtube_player_ex_logo"
+                                LargeImageKey = "new_nekoplayer_logo_withbg"
                             },
                         });
                     }
@@ -3920,7 +4193,7 @@ namespace NekoPlayer.App.Screens
                             State = "Idle",
                             Assets = new Assets()
                             {
-                                LargeImageKey = "youtube_player_ex_logo",
+                                LargeImageKey = "new_nekoplayer_logo_withbg",
                                 LargeImageText = "NekoPlayer",
                             },
                         });
@@ -3949,7 +4222,7 @@ namespace NekoPlayer.App.Screens
             if (game.IsDeployedBuild)
                 checkForUpdates().FireAndForget();
 
-            if (appGlobalConfig.Get<bool>(NekoPlayerSetting.FinalLoginState) == true)
+            if (appGlobalConfig.Get<string>(NekoPlayerSetting.AccessToken) != string.Empty)
             {
                 Task.Run(async () => await googleOAuth2.SignIn());
             }
@@ -4429,8 +4702,8 @@ namespace NekoPlayer.App.Screens
                 Schedule(() => item.Expire());
             }
 
-            playlistName.Text = "please choose a playlist!";
-            playlistAuthor.Text = "[no metadata available]";
+            playlistName.Text = NekoPlayerStrings.PlaylistNotLoaded;
+            playlistAuthor.Text = NekoPlayerStrings.PlaylistNotLoadedDesc;
 
             if (playlists.Count == 0)
             {
@@ -4454,30 +4727,37 @@ namespace NekoPlayer.App.Screens
 
             foreach (var item in playlists)
             {
-                Google.Apis.YouTube.v3.Data.Video videoData = api.GetVideo(item.Snippet.ResourceId.VideoId);
-
-                PlaylistItemView playlistItemView = new PlaylistItemView(playlists.IndexOf(item))
+                try
                 {
-                    RelativeSizeAxes = Axes.X,
-                    Enabled = { Value = true },
-                    ClickAction = async v =>
+                    Google.Apis.YouTube.v3.Data.Video videoData = api.GetVideo(item.Snippet.ResourceId.VideoId);
+
+                    PlaylistItemView playlistItemView = new PlaylistItemView(playlists.IndexOf(item))
                     {
-                        Schedule(async () =>
+                        RelativeSizeAxes = Axes.X,
+                        Enabled = { Value = true },
+                        ClickAction = async v =>
                         {
-                            playlistItemIndex = playlists.IndexOf(item);
-                            await SetVideoSource(item.Snippet.ResourceId.VideoId);
-                        });
-                    },
-                };
+                            Schedule(async () =>
+                            {
+                                playlistItemIndex = playlists.IndexOf(item);
+                                await SetVideoSource(item.Snippet.ResourceId.VideoId);
+                            });
+                        },
+                    };
 
-                playlistItemViews.Add(playlistItemView);
+                    playlistItemViews.Add(playlistItemView);
 
-                Schedule(() =>
+                    Schedule(() =>
+                    {
+                        playlistItemView.Data = videoData;
+                        playlistItemsView.Add(playlistItemView);
+                        playlistItemView.UpdateData();
+                    });
+                }
+                catch (Exception e)
                 {
-                    playlistItemView.Data = videoData;
-                    playlistItemsView.Add(playlistItemView);
-                    playlistItemView.UpdateData();
-                });
+                    Logger.Error(e, e.GetDescription());
+                }
             }
 
             await SetVideoSource(playlists[0].Snippet.ResourceId.VideoId);
@@ -4779,7 +5059,10 @@ namespace NekoPlayer.App.Screens
                 Schedule(() => commentOpenButton.Enabled.Value = videoData.Statistics.CommentCount != null);
 
                 if (googleOAuth2.SignedIn.Value)
+                {
                     Schedule(() => reportOpenButton.Enabled.Value = true);
+                    Schedule(() => saveVideoOpenButton.Enabled.Value = true);
+                }
 
                 commentsDisabled = videoData.Statistics.CommentCount == null;
 

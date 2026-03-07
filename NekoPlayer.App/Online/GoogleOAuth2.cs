@@ -54,7 +54,7 @@ namespace NekoPlayer.App.Online
             Logger.Log("signed in to google");
 
             SignedIn.Value = true;
-            appConfig.SetValue<bool>(NekoPlayerSetting.FinalLoginState, true);
+            appConfig.SetValue<string>(NekoPlayerSetting.AccessToken, GetAccessToken());
         }
 
         public async Task SignOut()
@@ -66,7 +66,7 @@ namespace NekoPlayer.App.Online
                 Logger.Log("signed out to google");
 
                 SignedIn.Value = false;
-                appConfig.SetValue<bool>(NekoPlayerSetting.FinalLoginState, false);
+                appConfig.SetValue<string>(NekoPlayerSetting.AccessToken, string.Empty);
             }
         }
 
@@ -111,8 +111,7 @@ namespace NekoPlayer.App.Online
                 new[] { "https://www.googleapis.com/auth/youtube.force-ssl" },
                 "user",
                 CancellationToken.None,
-                new FileDataStore(credPath, false),
-                new LocalServerCodeReceiver()
+                new FileDataStore(credPath, false)
             );
 
             return credential;

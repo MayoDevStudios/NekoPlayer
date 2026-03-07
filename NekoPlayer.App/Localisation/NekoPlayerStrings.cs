@@ -950,6 +950,46 @@ namespace NekoPlayer.App.Localisation
         /// </summary>
         public static LocalisableString ViewChannel => new TranslatableString(getKey(@"view_channel"), @"View channel");
 
+        /// <summary>
+        /// "video not loaded!"
+        /// </summary>
+        public static LocalisableString VideoNotLoaded => new TranslatableString(getKey(@"video_not_loaded"), @"video not loaded!");
+
+        /// <summary>
+        /// "please load a video to watch!"
+        /// </summary>
+        public static LocalisableString VideoNotLoadedDesc => new TranslatableString(getKey(@"video_not_loaded_desc"), @"please load a video to watch!");
+
+        /// <summary>
+        /// "My playlists"
+        /// </summary>
+        public static LocalisableString MyPlaylists => new TranslatableString(getKey(@"my_playlists"), @"My playlists");
+
+        /// <summary>
+        /// "playlist not loaded!"
+        /// </summary>
+        public static LocalisableString PlaylistNotLoaded => new TranslatableString(getKey(@"playlist_not_loaded"), @"playlist not loaded!");
+
+        /// <summary>
+        /// "please load a playlist to watch!"
+        /// </summary>
+        public static LocalisableString PlaylistNotLoadedDesc => new TranslatableString(getKey(@"playlist_not_loaded_desc"), @"please load a playlist to watch!");
+
+        /// <summary>
+        /// "Exit options"
+        /// </summary>
+        public static LocalisableString ExitOptions => new TranslatableString(getKey(@"exit_options"), @"Exit options");
+
+        /// <summary>
+        /// "Power off system"
+        /// </summary>
+        public static LocalisableString PowerOff => new TranslatableString(getKey(@"power_off"), @"Power off system");
+
+        /// <summary>
+        /// "Restart system"
+        /// </summary>
+        public static LocalisableString Restart => new TranslatableString(getKey(@"restart_system"), @"Restart system");
+
         private static string getKey(string key) => $@"{prefix}:{key}";
     }
 }

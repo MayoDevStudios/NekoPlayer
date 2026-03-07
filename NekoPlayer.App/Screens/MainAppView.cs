@@ -2127,9 +2127,7 @@ namespace NekoPlayer.App.Screens
                                                             AutoSizeAxes = Axes.Y,
                                                             Direction = FillDirection.Vertical,
                                                             Spacing = new Vector2(4),
-                                                            Children = new Drawable[]
-                                                            {
-                                                            }
+                                                            Children = Array.Empty<Drawable>()
                                                         },
                                                     }
                                                 }
@@ -2205,9 +2203,7 @@ namespace NekoPlayer.App.Screens
                                                             AutoSizeAxes = Axes.Y,
                                                             Direction = FillDirection.Vertical,
                                                             Spacing = new Vector2(4),
-                                                            Children = new Drawable[]
-                                                            {
-                                                            }
+                                                            Children = Array.Empty<Drawable>()
                                                         },
                                                     }
                                                 }
@@ -4375,11 +4371,11 @@ namespace NekoPlayer.App.Screens
                 sizeWindowed.Value = windowedResolution.Value;
 
                 float adjustedY = Math.Max(
-                    dUsable.Y + (dUsable.Height - h) / 2f,
+                    dUsable.Y + ((dUsable.Height - h) / 2f),
                     dUsable.Y + topBar // titlebar adjustment
                 );
                 windowedPositionY.Value = dBounds.Height - h != 0 ? (adjustedY - dBounds.Y) / (dBounds.Height - h) : 0;
-                windowedPositionX.Value = dBounds.Width - w != 0 ? (dUsable.X - dBounds.X + (dUsable.Width - w) / 2f) / (dBounds.Width - w) : 0;
+                windowedPositionX.Value = dBounds.Width - w != 0 ? (dUsable.X - dBounds.X + ((dUsable.Width - w) / 2f)) / (dBounds.Width - w) : 0;
             });
 
             sizeWindowed.BindValueChanged(size =>
@@ -4930,12 +4926,10 @@ namespace NekoPlayer.App.Screens
                             {
                                 likeButton.ClickAction = async _ =>
                                 {
-
                                 };
 
                                 dislikeButton.ClickAction = async _ =>
                                 {
-
                                 };
                             }
                         });
@@ -4979,12 +4973,10 @@ namespace NekoPlayer.App.Screens
                             {
                                 likeButton.ClickAction = async _ =>
                                 {
-
                                 };
 
                                 dislikeButton.ClickAction = async _ =>
                                 {
-
                                 };
                             }
                         });
@@ -5028,12 +5020,10 @@ namespace NekoPlayer.App.Screens
                             {
                                 likeButton.ClickAction = async _ =>
                                 {
-
                                 };
 
                                 dislikeButton.ClickAction = async _ =>
                                 {
-
                                 };
                             }
                         });

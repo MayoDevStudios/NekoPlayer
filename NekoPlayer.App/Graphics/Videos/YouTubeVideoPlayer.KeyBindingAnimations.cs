@@ -251,28 +251,25 @@ namespace NekoPlayer.App.Graphics.Videos
                     seekArrow.Icon = icon;
                     if (trackAction != SeekAction.PlayPause)
                     {
-                        fadeIn = Scheduler.AddDelayed(() =>
+                        content.FadeInFromZero(250, Easing.Out);
+                        seekArrow.ScaleTo(new osuTK.Vector2(0.7f, 1));
+                        if (trackAction == SeekAction.FastRewind10sec)
                         {
-                            content.FadeInFromZero(250, Easing.Out);
-                            seekArrow.ScaleTo(new osuTK.Vector2(0.7f, 1));
-                            if (trackAction == SeekAction.FastRewind10sec)
-                            {
-                                seekArrow.MoveTo(new osuTK.Vector2(20, 0));
-                            }
-                            else
-                            {
-                                seekArrow.MoveTo(new osuTK.Vector2(20, 0));
-                            }
-                            seekArrow.ScaleTo(1, 250, Easing.Out);
-                            if (trackAction == SeekAction.FastRewind10sec)
-                            {
-                                seekArrow.MoveTo(new osuTK.Vector2(0), 500, Easing.OutQuart);
-                            }
-                            else
-                            {
-                                seekArrow.MoveTo(new osuTK.Vector2(40, 0), 500, Easing.OutQuart);
-                            }
-                        }, 0);
+                            seekArrow.MoveTo(new osuTK.Vector2(20, 0));
+                        }
+                        else
+                        {
+                            seekArrow.MoveTo(new osuTK.Vector2(20, 0));
+                        }
+                        seekArrow.ScaleTo(1, 250, Easing.Out);
+                        if (trackAction == SeekAction.FastRewind10sec)
+                        {
+                            seekArrow.MoveTo(new osuTK.Vector2(0), 500, Easing.OutQuart);
+                        }
+                        else
+                        {
+                            seekArrow.MoveTo(new osuTK.Vector2(40, 0), 500, Easing.OutQuart);
+                        }
                         using (BeginDelayedSequence(1250))
                         {
                             HideNow();

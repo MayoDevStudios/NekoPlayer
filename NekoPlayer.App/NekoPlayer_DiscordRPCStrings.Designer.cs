@@ -70,6 +70,33 @@ namespace NekoPlayer.App {
         }
         
         /// <summary>
+        ///   Listening Music과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string ListeningMusic {
+            get {
+                return ResourceManager.GetString("ListeningMusic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Listening on background과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string ListeningOnBackground {
+            get {
+                return ResourceManager.GetString("ListeningOnBackground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Listen on YouTube과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string ListenOnYouTube {
+            get {
+                return ResourceManager.GetString("ListenOnYouTube", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Watching Video과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string WatchingVideo {

@@ -19,6 +19,7 @@ namespace NekoPlayer.App.Config
             SetDefault(Static.IsVideoPlaying, false);
             SetDefault(Static.CurrentThumbnailUrl, string.Empty);
             SetDefault(Static.IsAnyOverlayOpen, false);
+            SetDefault(Static.WindowIsTray, false);
         }
     }
 
@@ -33,5 +34,6 @@ namespace NekoPlayer.App.Config
         IsVideoPlaying,
         CurrentThumbnailUrl,
         IsAnyOverlayOpen,
+        WindowIsTray,
     }
 }

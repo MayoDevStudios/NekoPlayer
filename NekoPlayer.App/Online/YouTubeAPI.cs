@@ -601,7 +601,7 @@ namespace NekoPlayer.App.Online
 
         public Video GetVideo(string videoId)
         {
-            var part = "statistics,snippet,localizations,contentDetails,status";
+            var part = "statistics,snippet,localizations,contentDetails,status,topicDetails";
             var request = youtubeService.Videos.List(part);
 
             request.Id = videoId;

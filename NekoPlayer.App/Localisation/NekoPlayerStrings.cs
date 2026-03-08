@@ -1036,6 +1036,11 @@ namespace NekoPlayer.App.Localisation
         /// </summary>
         public static LocalisableString Repeat => new TranslatableString(getKey(@"repeat"), @"Repeat On/Off");
 
+        /// <summary>
+        /// "When you log in, you may see an "Google hasn’t verified this app" screen. Please feel free to log in."
+        /// </summary>
+        public static LocalisableString OAuthNote => new TranslatableString(getKey(@"oauth_note"), @"When you log in, you may see an ""Google hasn’t verified this app"" screen. Please feel free to log in.");
+
         private static string getKey(string key) => $@"{prefix}:{key}";
     }
 }

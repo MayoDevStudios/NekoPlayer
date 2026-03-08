@@ -32,9 +32,14 @@ namespace NekoPlayer.App.Utils
         private NekoPlayerConfigManager config { get; set; }
 
         [Resolved]
+        private SessionStatics statics { get; set; }
+
+        [Resolved]
         private AudioManager audioManager { get; set; }
 
         private Bindable<double> muteBindable = new Bindable<double>(0);
+
+        private Bindable<bool> trayIconVisible;
 
         private SDL_Surface* appIcon;
 
@@ -50,6 +55,7 @@ namespace NekoPlayer.App.Utils
         [BackgroundDependencyLoader]
         private void load()
         {
+            trayIconVisible = statics.GetBindable<bool>(Static.WindowIsTray);
             appIcon = SDL3.SDL_LoadBMP(Directory.GetCurrentDirectory() + @"/appIcon.bmp");
         }
 
@@ -61,6 +67,7 @@ namespace NekoPlayer.App.Utils
             {
                 host.Window.Hide();
                 Schedule(() => audioManager.Samples.AddAdjustment(AdjustableProperty.Volume, muteBindable));
+                trayIconVisible.Value = true;
 
                 var icon = new TrayIcon
                 {
@@ -135,6 +142,7 @@ namespace NekoPlayer.App.Utils
             host.Window.Show();
             //host.Window.Raise();
 
+            trayIconVisible.Value = false;
             activeTrayIcon.Dispose();
             Logger.Log($"Notification tray icon removed");
             Schedule(() => audioManager.Samples.RemoveAdjustment(AdjustableProperty.Volume, muteBindable));

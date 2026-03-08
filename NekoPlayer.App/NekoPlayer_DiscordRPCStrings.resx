@@ -123,7 +123,16 @@
   <data name="WatchingVideo" xml:space="preserve">
     <value>Watching Video</value>
   </data>
+  <data name="ListeningMusic" xml:space="preserve">
+    <value>Listening Music</value>
+  </data>
+  <data name="ListeningOnBackground" xml:space="preserve">
+    <value>Listening on background</value>
+  </data>
   <data name="WatchOnYouTube" xml:space="preserve">
     <value>Watch on YouTube</value>
+  </data>
+  <data name="ListenOnYouTube" xml:space="preserve">
+    <value>Listen on YouTube</value>
   </data>
 </root>

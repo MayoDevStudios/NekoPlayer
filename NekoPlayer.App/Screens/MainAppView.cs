@@ -17,6 +17,25 @@ using DiscordRPC;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
 using Humanizer;
+using NekoPlayer.App.Audio;
+using NekoPlayer.App.Config;
+using NekoPlayer.App.Extensions;
+using NekoPlayer.App.Graphics;
+using NekoPlayer.App.Graphics.Containers;
+using NekoPlayer.App.Graphics.Shaders;
+using NekoPlayer.App.Graphics.Sprites;
+using NekoPlayer.App.Graphics.UserInterface;
+using NekoPlayer.App.Graphics.UserInterfaceV2;
+using NekoPlayer.App.Graphics.Videos;
+using NekoPlayer.App.Input;
+using NekoPlayer.App.Input.Binding;
+using NekoPlayer.App.Localisation;
+using NekoPlayer.App.Online;
+using NekoPlayer.App.Overlays;
+using NekoPlayer.App.Overlays.OSD;
+using NekoPlayer.App.Overlays.Volume;
+using NekoPlayer.App.Updater;
+using NekoPlayer.App.Utils;
 using osu.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
@@ -49,25 +68,6 @@ using SharpCompress.Archives.Zip;
 using YoutubeExplode.Converter;
 using YoutubeExplode.Videos.ClosedCaptions;
 using YoutubeExplode.Videos.Streams;
-using NekoPlayer.App.Audio;
-using NekoPlayer.App.Config;
-using NekoPlayer.App.Extensions;
-using NekoPlayer.App.Graphics;
-using NekoPlayer.App.Graphics.Containers;
-using NekoPlayer.App.Graphics.Shaders;
-using NekoPlayer.App.Graphics.Sprites;
-using NekoPlayer.App.Graphics.UserInterface;
-using NekoPlayer.App.Graphics.UserInterfaceV2;
-using NekoPlayer.App.Graphics.Videos;
-using NekoPlayer.App.Input;
-using NekoPlayer.App.Input.Binding;
-using NekoPlayer.App.Localisation;
-using NekoPlayer.App.Online;
-using NekoPlayer.App.Overlays;
-using NekoPlayer.App.Overlays.OSD;
-using NekoPlayer.App.Overlays.Volume;
-using NekoPlayer.App.Updater;
-using NekoPlayer.App.Utils;
 using static NekoPlayer.App.NekoPlayerApp;
 using Container = osu.Framework.Graphics.Containers.Container;
 using Language = NekoPlayer.App.Localisation.Language;
@@ -237,6 +237,7 @@ namespace NekoPlayer.App.Screens
         private AdaptiveColour colours { get; set; } = null!;
 
         private Bindable<SettingsNote.Data> videoQualityWarning = new Bindable<SettingsNote.Data>();
+        private Bindable<SettingsNote.Data> oauth_note = new Bindable<SettingsNote.Data>();
         private Bindable<SettingsNote.Data> hwAccelNote = new Bindable<SettingsNote.Data>();
 
         private Bindable<CloseButtonAction> closeButtonAction;
@@ -279,6 +280,8 @@ namespace NekoPlayer.App.Screens
 
         private IconButton repeatButton;
 
+        private Bindable<bool> trayIconVisible;
+
         [BackgroundDependencyLoader]
         private void load(ISampleStore sampleStore, FrameworkConfigManager config, NekoPlayerConfigManager appConfig, GameHost host, Storage storage, OverlayColourProvider overlayColourProvider, TextureStore textures, FrameworkDebugConfigManager debugConfig)
         {
@@ -296,6 +299,7 @@ namespace NekoPlayer.App.Screens
 
             isAnyOverlayOpen = sessionStatics.GetBindable<bool>(Static.IsAnyOverlayOpen);
             videoPlaying = sessionStatics.GetBindable<bool>(Static.IsVideoPlaying);
+            trayIconVisible = sessionStatics.GetBindable<bool>(Static.WindowIsTray);
 
             usernameDisplayMode = appConfig.GetBindable<UsernameDisplayMode>(NekoPlayerSetting.UsernameDisplayMode);
 
@@ -929,7 +933,10 @@ namespace NekoPlayer.App.Screens
                                                                     showOverlayContainer(myChannelDialog);
                                                                 }
                                                             },
-                                                        }),
+                                                        })
+                                                        {
+                                                            Note = { BindTarget = oauth_note },
+                                                        },
                                                         checkForUpdatesButtonCore = new SettingsItemV2(checkForUpdatesButton = new FormButton
                                                         {
                                                             Caption = NekoPlayerStrings.CheckUpdate,
@@ -3336,6 +3343,8 @@ namespace NekoPlayer.App.Screens
                 hardwareVideoDecoder.Value = val.NewValue ? HardwareVideoDecoder.Any : HardwareVideoDecoder.None;
             }, true);
 
+            oauth_note.Value = new SettingsNote.Data(NekoPlayerStrings.OAuthNote, SettingsNote.Type.Informational);
+
             if (RuntimeInfo.OS != RuntimeInfo.Platform.Windows)
             {
                 wasapiExperimentalItem.Hide();
@@ -4147,6 +4156,28 @@ namespace NekoPlayer.App.Screens
 
         private void updatePresence(DiscordRichPresenceMode mode)
         {
+            Timestamps timestamps = Timestamps.Now;
+            ActivityType activityType = ActivityType.Watching;
+
+            string state = NekoPlayer_DiscordRPCStrings.WatchingVideo;
+            string buttonLabel = NekoPlayer_DiscordRPCStrings.WatchOnYouTube;
+
+            if (videoData != null)
+            {
+                //state = api.GetLocalizedChannelTitle(api.GetChannel(videoData.Snippet.ChannelId));
+                if (trayIconVisible.Value)
+                {
+                    state = videoData.TopicDetails.TopicCategories.Contains("https://en.wikipedia.org/wiki/Music") ? NekoPlayer_DiscordRPCStrings.ListeningMusic : NekoPlayer_DiscordRPCStrings.ListeningOnBackground;
+                    activityType = ActivityType.Listening;
+                }
+                else
+                {
+                    state = videoData.TopicDetails.TopicCategories.Contains("https://en.wikipedia.org/wiki/Music") ? NekoPlayer_DiscordRPCStrings.ListeningMusic : NekoPlayer_DiscordRPCStrings.WatchingVideo;
+                    activityType = videoData.TopicDetails.TopicCategories.Contains("https://en.wikipedia.org/wiki/Music") ? ActivityType.Listening : ActivityType.Watching;
+                }
+                buttonLabel = videoData.TopicDetails.TopicCategories.Contains("https://en.wikipedia.org/wiki/Music") ? NekoPlayer_DiscordRPCStrings.ListenOnYouTube : NekoPlayer_DiscordRPCStrings.WatchOnYouTube;
+            }
+
             switch (mode)
             {
                 case DiscordRichPresenceMode.Full:
@@ -4155,13 +4186,14 @@ namespace NekoPlayer.App.Screens
                     {
                         discordRPC?.UpdatePresence(new RichPresence()
                         {
-                            Details = $"{videoData.Snippet.ChannelTitle} - {videoData.Snippet.Title}",
-                            State = NekoPlayer_DiscordRPCStrings.WatchingVideo,
+                            Type = activityType,
+                            Details = api.GetLocalizedVideoTitle(videoData),
+                            State = api.GetLocalizedChannelTitle(api.GetChannel(videoData.Snippet.ChannelId)),
+                            Timestamps = timestamps,
                             Assets = new Assets()
                             {
                                 LargeImageKey = videoData.Snippet.Thumbnails.High.Url,
                                 LargeImageUrl = $"https://youtu.be/{videoData.Id}",
-                                LargeImageText = videoData.Snippet.Title,
                                 SmallImageText = "NekoPlayer",
                                 SmallImageKey = "new_nekoplayer_logo_withbg"
                             },
@@ -4169,7 +4201,7 @@ namespace NekoPlayer.App.Screens
                             {
                                 new DiscordRPC.Button
                                 {
-                                    Label = NekoPlayer_DiscordRPCStrings.WatchOnYouTube,
+                                    Label = buttonLabel,
                                     Url = $"https://youtu.be/{videoData.Id}",
                                 }
                             }
@@ -4179,11 +4211,11 @@ namespace NekoPlayer.App.Screens
                     {
                         discordRPC?.UpdatePresence(new RichPresence()
                         {
+                            Type = activityType,
                             State = NekoPlayer_DiscordRPCStrings.IdleString,
                             Assets = new Assets()
                             {
                                 LargeImageKey = "new_nekoplayer_logo_withbg",
-                                LargeImageText = "NekoPlayer",
                             },
                         });
                     }
@@ -4195,17 +4227,18 @@ namespace NekoPlayer.App.Screens
                     {
                         discordRPC?.UpdatePresence(new RichPresence()
                         {
-                            State = NekoPlayer_DiscordRPCStrings.WatchingVideo,
+                            Type = activityType,
+                            State = state,
+                            Timestamps = timestamps,
                             Assets = new Assets()
                             {
-                                LargeImageText = "NekoPlayer",
                                 LargeImageKey = "new_nekoplayer_logo_withbg"
                             },
                             Buttons = new DiscordRPC.Button[]
                             {
                                 new DiscordRPC.Button
                                 {
-                                    Label = NekoPlayer_DiscordRPCStrings.WatchOnYouTube,
+                                    Label = buttonLabel,
                                     Url = $"https://youtu.be/{videoData.Id}",
                                 }
                             }
@@ -4215,11 +4248,11 @@ namespace NekoPlayer.App.Screens
                     {
                         discordRPC?.UpdatePresence(new RichPresence()
                         {
+                            Type = activityType,
                             State = NekoPlayer_DiscordRPCStrings.IdleString,
                             Assets = new Assets()
                             {
                                 LargeImageKey = "new_nekoplayer_logo_withbg",
-                                LargeImageText = "NekoPlayer",
                             },
                         });
                     }
@@ -4241,6 +4274,7 @@ namespace NekoPlayer.App.Screens
 
             discordRichPresence.BindValueChanged(mode => updatePresence(mode.NewValue), true);
             localeBindable.BindValueChanged(_ => updatePresence(discordRichPresence.Value), true);
+            trayIconVisible.BindValueChanged(_ => updatePresence(discordRichPresence.Value), true);
 
             //check updates for LoadComplete
             if (game.IsDeployedBuild)

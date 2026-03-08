@@ -123,7 +123,16 @@
   <data name="WatchingVideo" xml:space="preserve">
     <value>동영상 시청 중</value>
   </data>
+  <data name="ListeningMusic" xml:space="preserve">
+    <value>음악 감상 중</value>
+  </data>
+  <data name="ListeningOnBackground" xml:space="preserve">
+    <value>백그라운드에서 감상 중</value>
+  </data>
   <data name="WatchOnYouTube" xml:space="preserve">
     <value>YouTube에서 보기</value>
+  </data>
+  <data name="ListenOnYouTube" xml:space="preserve">
+    <value>YouTube에서 듣기</value>
   </data>
 </root>

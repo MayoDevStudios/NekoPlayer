@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using NekoPlayer.App.Graphics.Sprites;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
@@ -10,8 +11,8 @@ using osu.Framework.Graphics.Colour;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Threading;
 using osuTK.Graphics;
-using NekoPlayer.App.Graphics.Sprites;
 
 namespace NekoPlayer.App.Graphics.Videos
 {
@@ -82,6 +83,9 @@ namespace NekoPlayer.App.Graphics.Videos
 
                 private Container content;
                 public int RepeatCount = 0;
+
+                private ScheduledDelegate fadeIn;
+                private ScheduledDelegate fadeOut;
 
                 public SeekAnimation(SeekAction trackAction)
                 {
@@ -171,7 +175,8 @@ namespace NekoPlayer.App.Graphics.Videos
                                 }
                             }
                         });
-                    } else
+                    }
+                    else
                     {
                         Add(content = new Container
                         {
@@ -246,25 +251,28 @@ namespace NekoPlayer.App.Graphics.Videos
                     seekArrow.Icon = icon;
                     if (trackAction != SeekAction.PlayPause)
                     {
-                        content.FadeInFromZero(250, Easing.Out);
-                        seekArrow.ScaleTo(new osuTK.Vector2(0.7f, 1));
-                        if (trackAction == SeekAction.FastRewind10sec)
+                        fadeIn = Scheduler.AddDelayed(() =>
                         {
-                            seekArrow.MoveTo(new osuTK.Vector2(20, 0));
-                        }
-                        else
-                        {
-                            seekArrow.MoveTo(new osuTK.Vector2(20, 0));
-                        }
-                        seekArrow.ScaleTo(1, 250, Easing.Out);
-                        if (trackAction == SeekAction.FastRewind10sec)
-                        {
-                            seekArrow.MoveTo(new osuTK.Vector2(0), 500, Easing.OutQuart);
-                        }
-                        else
-                        {
-                            seekArrow.MoveTo(new osuTK.Vector2(40, 0), 500, Easing.OutQuart);
-                        }
+                            content.FadeInFromZero(250, Easing.Out);
+                            seekArrow.ScaleTo(new osuTK.Vector2(0.7f, 1));
+                            if (trackAction == SeekAction.FastRewind10sec)
+                            {
+                                seekArrow.MoveTo(new osuTK.Vector2(20, 0));
+                            }
+                            else
+                            {
+                                seekArrow.MoveTo(new osuTK.Vector2(20, 0));
+                            }
+                            seekArrow.ScaleTo(1, 250, Easing.Out);
+                            if (trackAction == SeekAction.FastRewind10sec)
+                            {
+                                seekArrow.MoveTo(new osuTK.Vector2(0), 500, Easing.OutQuart);
+                            }
+                            else
+                            {
+                                seekArrow.MoveTo(new osuTK.Vector2(40, 0), 500, Easing.OutQuart);
+                            }
+                        }, 0);
                         using (BeginDelayedSequence(1250))
                         {
                             HideNow();

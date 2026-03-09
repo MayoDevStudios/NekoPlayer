@@ -255,7 +255,7 @@ namespace NekoPlayer.App.Screens
 
         private Bindable<bool> signedIn;
 
-        private ParallaxContainer thumbnailContainerBase;
+        //private ParallaxContainer thumbnailContainerBase;
 
         [Resolved]
         private ShaderManager shaderManager { get; set; } = null!;
@@ -376,7 +376,7 @@ namespace NekoPlayer.App.Screens
                     Child = new ScalingContainerNew(ScalingMode.Video)
                     {
                         Children = new Drawable[] {
-                            thumbnailContainerBase = new ParallaxContainer
+                            new ParallaxContainer
                             {
                                 Children = new Drawable[]
                                 {
@@ -3156,24 +3156,24 @@ namespace NekoPlayer.App.Screens
             };
 
             thumbnailContainer.BlurTo(Vector2.Divide(new Vector2(10, 10), 1));
-            loadVideoContainer.Hide();
+            RegisterOverlayContainer(loadVideoContainer);
             overlayFadeContainer.Hide();
-            settingsContainer.Hide();
-            videoDescriptionContainer.Hide();
-            commentsContainer.Hide();
-            searchContainer.Hide();
-            videoInfoExpertOverlay.Hide();
-            reportAbuseOverlay.Hide();
-            playlistOverlay.Hide();
-            loadPlaylistContainer.Hide();
-            audioEffectsOverlay.Hide();
-            unsubscribeDialog.Hide();
-            videoSaveLocationOverlay.Hide();
-            addPlaylistOverlay.Hide();
-            menuOverlay.Hide();
-            myChannelDialog.Hide();
-            myPlaylistsOverlay.Hide();
-            exitOptions.Hide();
+            RegisterOverlayContainer(settingsContainer);
+            RegisterOverlayContainer(videoDescriptionContainer);
+            RegisterOverlayContainer(commentsContainer);
+            RegisterOverlayContainer(searchContainer);
+            RegisterOverlayContainer(videoInfoExpertOverlay);
+            RegisterOverlayContainer(reportAbuseOverlay);
+            RegisterOverlayContainer(playlistOverlay);
+            RegisterOverlayContainer(loadPlaylistContainer);
+            RegisterOverlayContainer(audioEffectsOverlay);
+            RegisterOverlayContainer(unsubscribeDialog);
+            RegisterOverlayContainer(videoSaveLocationOverlay);
+            RegisterOverlayContainer(addPlaylistOverlay);
+            RegisterOverlayContainer(menuOverlay);
+            RegisterOverlayContainer(myChannelDialog);
+            RegisterOverlayContainer(myPlaylistsOverlay);
+            RegisterOverlayContainer(exitOptions);
 
             captionEnabled.Disabled = true;
 
@@ -3350,6 +3350,7 @@ namespace NekoPlayer.App.Screens
                 wasapiExperimentalItem.Hide();
             }
 
+            /*
             overlayContainers.Add(loadVideoContainer);
             overlayContainers.Add(settingsContainer);
             overlayContainers.Add(videoDescriptionContainer);
@@ -3367,6 +3368,7 @@ namespace NekoPlayer.App.Screens
             overlayContainers.Add(myChannelDialog);
             overlayContainers.Add(myPlaylistsOverlay);
             overlayContainers.Add(exitOptions);
+            */
 
             playlistName.Text = NekoPlayerStrings.PlaylistNotLoaded;
             playlistAuthor.Text = NekoPlayerStrings.PlaylistNotLoadedDesc;
@@ -3852,9 +3854,12 @@ namespace NekoPlayer.App.Screens
                     alert.Text = NekoPlayerStrings.RunningLatestRelease(game.Version);
                     alert.Show();
                     */
-                    Toast toast = new Toast(NekoPlayerStrings.General, NekoPlayerStrings.RunningLatestRelease(game.Version));
+                    if (settingsContainer.IsVisible)
+                    {
+                        Toast toast = new Toast(NekoPlayerStrings.General, NekoPlayerStrings.RunningLatestRelease(game.Version));
 
-                    onScreenDisplay.Display(toast);
+                        onScreenDisplay.Display(toast);
+                    }
 
                     game.UpdateManagerVersionText.Value = game.Version;
                     checkForUpdatesButton.Enabled.Value = true;
@@ -4152,8 +4157,6 @@ namespace NekoPlayer.App.Screens
             }
         }
 
-        private Random random;
-
         private void updatePresence(DiscordRichPresenceMode mode)
         {
             Timestamps timestamps = Timestamps.Now;
@@ -4197,14 +4200,14 @@ namespace NekoPlayer.App.Screens
                                 SmallImageText = "NekoPlayer",
                                 SmallImageKey = "new_nekoplayer_logo_withbg"
                             },
-                            Buttons = new DiscordRPC.Button[]
-                            {
+                            Buttons =
+                            [
                                 new DiscordRPC.Button
                                 {
                                     Label = buttonLabel,
                                     Url = $"https://youtu.be/{videoData.Id}",
                                 }
-                            }
+                            ]
                         });
                     }
                     else
@@ -4234,14 +4237,14 @@ namespace NekoPlayer.App.Screens
                             {
                                 LargeImageKey = "new_nekoplayer_logo_withbg"
                             },
-                            Buttons = new DiscordRPC.Button[]
-                            {
+                            Buttons =
+                            [
                                 new DiscordRPC.Button
                                 {
                                     Label = buttonLabel,
                                     Url = $"https://youtu.be/{videoData.Id}",
                                 }
-                            }
+                            ]
                         });
                     }
                     else
@@ -4269,8 +4272,6 @@ namespace NekoPlayer.App.Screens
         protected override void LoadComplete()
         {
             base.LoadComplete();
-
-            random = new Random();
 
             discordRichPresence.BindValueChanged(mode => updatePresence(mode.NewValue), true);
             localeBindable.BindValueChanged(_ => updatePresence(discordRichPresence.Value), true);
@@ -4473,6 +4474,12 @@ namespace NekoPlayer.App.Screens
         }
 
         private List<OverlayContainer> overlayContainers = new List<OverlayContainer>();
+
+        public void RegisterOverlayContainer(OverlayContainer overlayContainer)
+        {
+            overlayContainer.Hide();
+            overlayContainers.Add(overlayContainer);
+        }
 
         [Resolved]
         private VolumeOverlay volume { get; set; }
@@ -5342,6 +5349,8 @@ namespace NekoPlayer.App.Screens
 
         private void addVideoToScreen()
         {
+            Task.Run(async () => await api.SendPlayerResponseAsync(videoId));
+
             string audioFile = app.Host.CacheStorage.GetStorageForDirectory("videos").GetFullPath($"{videoId}") + @"/audio.mp3";
 
             AudioNormalization audioNormalization = new AudioNormalization(audioFile);
@@ -5807,18 +5816,18 @@ namespace NekoPlayer.App.Screens
                     {
                         case LoadType.Full:
                         {
-                            await app.YouTubeClient.Videos.DownloadAsync([audioStreamInfo], new ConversionRequestBuilder(app.Host.CacheStorage.GetStorageForDirectory("videos").GetFullPath($"{videoId}") + @"\audio.mp3").Build());
-                            await app.YouTubeClient.Videos.DownloadAsync([videoStreamInfo], new ConversionRequestBuilder(app.Host.CacheStorage.GetStorageForDirectory("videos").GetFullPath($"{videoId}") + @"\video.mp4").Build());
+                            await app.YouTubeClient.Videos.DownloadAsync([audioStreamInfo], new ConversionRequestBuilder(app.Host.CacheStorage.GetStorageForDirectory("videos").GetFullPath($"{videoId}") + @"\audio.mp3").SetFFmpegPath(app.GetFFmpegPath()).Build());
+                            await app.YouTubeClient.Videos.DownloadAsync([videoStreamInfo], new ConversionRequestBuilder(app.Host.CacheStorage.GetStorageForDirectory("videos").GetFullPath($"{videoId}") + @"\video.mp4").SetFFmpegPath(app.GetFFmpegPath()).Build());
                             break;
                         }
                         case LoadType.AudioOnly:
                         {
-                            await app.YouTubeClient.Videos.DownloadAsync([audioStreamInfo], new ConversionRequestBuilder(app.Host.CacheStorage.GetStorageForDirectory("videos").GetFullPath($"{videoId}") + @"\audio.mp3").Build());
+                            await app.YouTubeClient.Videos.DownloadAsync([audioStreamInfo], new ConversionRequestBuilder(app.Host.CacheStorage.GetStorageForDirectory("videos").GetFullPath($"{videoId}") + @"\audio.mp3").SetFFmpegPath(app.GetFFmpegPath()).Build());
                             break;
                         }
                         case LoadType.VideoOnly:
                         {
-                            await app.YouTubeClient.Videos.DownloadAsync([videoStreamInfo], new ConversionRequestBuilder(app.Host.CacheStorage.GetStorageForDirectory("videos").GetFullPath($"{videoId}") + @"\video.mp4").Build());
+                            await app.YouTubeClient.Videos.DownloadAsync([videoStreamInfo], new ConversionRequestBuilder(app.Host.CacheStorage.GetStorageForDirectory("videos").GetFullPath($"{videoId}") + @"\video.mp4").SetFFmpegPath(app.GetFFmpegPath()).Build());
                             break;
                         }
                     }

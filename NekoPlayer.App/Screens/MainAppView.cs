@@ -4503,6 +4503,7 @@ namespace NekoPlayer.App.Screens
 
         public async Task SetPlaylist(string playlistId)
         {
+            playlistId = YoutubeExplode.Playlists.PlaylistId.Parse(playlistId);
             Schedule(async () =>
             {
                 Playlist playlist = api.GetPlaylistInfo(playlistId);
@@ -5394,7 +5395,7 @@ namespace NekoPlayer.App.Screens
 
         private void addVideoToScreen()
         {
-            Task.Run(async () => await api.SendPlayerResponseAsync(videoId));
+            //Task.Run(async () => await api.SendPlayerResponseAsync(videoId));
 
             string audioFile = app.Host.CacheStorage.GetStorageForDirectory("videos").GetFullPath($"{videoId}") + @"/audio.mp3";
 

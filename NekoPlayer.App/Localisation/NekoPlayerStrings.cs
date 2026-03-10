@@ -657,9 +657,9 @@ namespace NekoPlayer.App.Localisation
         public static LocalisableString ClearAllCaches => new TranslatableString(getKey(@"clear_all_caches"), @"Clear all caches");
 
         /// <summary>
-        /// "Load from playlist ID"
+        /// "Load from playlist ID or URL"
         /// </summary>
-        public static LocalisableString LoadFromPlaylistId => new TranslatableString(getKey(@"load_from_playlist_id"), "Load from playlist ID");
+        public static LocalisableString LoadFromPlaylistId => new TranslatableString(getKey(@"load_from_playlist_id"), "Load from playlist ID or URL");
 
         /// <summary>
         /// "Load Playlist"

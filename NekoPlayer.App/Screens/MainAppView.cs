@@ -3202,7 +3202,7 @@ namespace NekoPlayer.App.Screens
             };
 
             madeByText.AddText("made by ");
-            madeByText.AddLink("MayoDev Studios", "https://github.com/MayoDevStudios/");
+            madeByText.AddLink("MayoDev Studios", "https://github.com/BoomboxRapsody/");
 
             latencyModeDropdown.Current.BindValueChanged(mode =>
             {

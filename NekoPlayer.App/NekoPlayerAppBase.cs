@@ -46,7 +46,7 @@ using YoutubeExplode;
 namespace NekoPlayer.App
 {
     [Cached(typeof(NekoPlayerAppBase))]
-    public partial class NekoPlayerAppBase : osu.Framework.Game
+    public partial class NekoPlayerAppBase : Game
     {
         // Anything in this class is shared between the test browser and the game implementation.
         // It allows for caching global dependencies that should be accessible to tests, or changing
@@ -88,7 +88,7 @@ namespace NekoPlayer.App
 
         protected NekoPlayerAppBase()
         {
-            Name = "YouTube Player EX";
+            Name = "NekoPlayer";
         }
 
         protected Storage Storage { get; set; }

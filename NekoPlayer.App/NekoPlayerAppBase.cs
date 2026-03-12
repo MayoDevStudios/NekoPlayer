@@ -343,7 +343,7 @@ namespace NekoPlayer.App
 
                 dependencies.CacheAs(colours = new AdaptiveColour());
 
-                dependencies.CacheAs(overlayColourProvider = new OverlayColourProvider(OverlayColourScheme.Blue));
+                dependencies.CacheAs(overlayColourProvider = new OverlayColourProvider(OverlayColourScheme.Aquamarine));
 
                 Logger.Log($"🎨 OverlayColourProvider loaded");
 

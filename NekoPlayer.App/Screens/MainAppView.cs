@@ -80,7 +80,7 @@ namespace NekoPlayer.App.Screens
     {
         private BufferedContainer videoContainer;
         private AdaptiveButton loadBtn, commentSendButton, searchButton, loadPlaylistBtn, loadPlaylistOpenButton, prevVideoButton, nextVideoButton, declineButton, acceptButton, logoutButton, viewChannelButton;
-        private AdaptiveTextBox videoIdBox, commentTextBox, searchTextBox, playlistIdBox;
+        private EnhancedFocusedTextBox videoIdBox, playlistIdBox, commentTextBox, searchTextBox;
         private LoadingSpinner spinner;
         private ScheduledDelegate spinnerShow;
         private AdaptiveAlertContainer alert;
@@ -813,7 +813,7 @@ namespace NekoPlayer.App.Screens
                                     Size = new Vector2(200, 60),
                                     Margin = new MarginPadding(8),
                                 },
-                                videoIdBox = new AdaptiveTextBox
+                                videoIdBox = new EnhancedFocusedTextBox
                                 {
                                     Origin = Anchor.CentreRight,
                                     Anchor = Anchor.CentreRight,
@@ -821,6 +821,26 @@ namespace NekoPlayer.App.Screens
                                     FontSize = 30,
                                     Size = new Vector2(385, 60),
                                     Margin = new MarginPadding(8),
+                                    OnEnterKeyPressed = () =>
+                                    {
+                                        if (string.IsNullOrEmpty(videoIdBox.Text))
+                                            return;
+
+                                        Task.Run(async () =>
+                                        {
+                                            try
+                                            {
+                                                Schedule(async () =>
+                                                {
+                                                    await SetVideoSource(videoIdBox.Text);
+                                                });
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                Logger.Error(ex, ex.GetDescription());
+                                            }
+                                        });
+                                    }
                                 },
                             }
                         },
@@ -1769,13 +1789,54 @@ namespace NekoPlayer.App.Screens
                                     {
                                         new Drawable[]
                                         {
-                                            commentTextBox = new AdaptiveTextBox
+                                            commentTextBox = new EnhancedFocusedTextBox
                                             {
                                                 RelativeSizeAxes = Axes.X,
                                                 Size = new Vector2(0.97f, 1f),
                                                 Text = "",
                                                 FontSize = 20,
                                                 Height = 45,
+                                                OnEnterKeyPressed = () =>
+                                                {
+                                                    if (!googleOAuth2.SignedIn.Value)
+                                                        return;
+
+                                                    if (string.IsNullOrEmpty(commentTextBox.Text))
+                                                        return;
+
+                                                    Toast toast = new Toast(NekoPlayerStrings.General, NekoPlayerStrings.CommentAdded);
+                                                    api.SendComment(videoId, commentTextBox.Text);
+
+                                                    Task.Run(async () =>
+                                                    {
+                                                        Channel myChannel = await api.GetMineChannelAsync();
+
+                                                        Comment dummy = new Comment();
+
+                                                        CommentSnippet wth = new CommentSnippet
+                                                        {
+                                                            PublishedAtDateTimeOffset = DateTimeOffset.Now,
+                                                            AuthorChannelId = { Value = myChannel.Id },
+                                                            TextDisplay = commentTextBox.Text,
+                                                            TextOriginal = commentTextBox.Text,
+                                                            LikeCount = 0,
+                                                        };
+
+                                                        dummy.Snippet = wth;
+
+                                                        Schedule(() =>
+                                                        {
+                                                            commentContainer.Add(new CommentDisplay(dummy)
+                                                            {
+                                                                RelativeSizeAxes = Axes.X,
+                                                            });
+                                                        });
+                                                    });
+
+                                                    Schedule(() => onScreenDisplay.Display(toast));
+
+                                                    commentTextBox.Text = string.Empty;
+                                                }
                                             },
                                             commentSendButton = new IconButton
                                             {
@@ -1932,7 +1993,7 @@ namespace NekoPlayer.App.Screens
                                     {
                                         new Drawable[]
                                         {
-                                            searchTextBox = new AdaptiveTextBox
+                                            searchTextBox = new EnhancedFocusedTextBox
                                             {
                                                 RelativeSizeAxes = Axes.X,
                                                 Size = new Vector2(0.97f, 1f),
@@ -1940,6 +2001,13 @@ namespace NekoPlayer.App.Screens
                                                 PlaceholderText = NekoPlayerStrings.SearchPlaceholder,
                                                 FontSize = 20,
                                                 Height = 45,
+                                                OnEnterKeyPressed = () =>
+                                                {
+                                                    if (string.IsNullOrEmpty(searchTextBox.Text))
+                                                        return;
+
+                                                    Schedule(() => Search());
+                                                }
                                             },
                                             searchButton = new IconButton
                                             {
@@ -2306,7 +2374,7 @@ namespace NekoPlayer.App.Screens
                                     Size = new Vector2(200, 60),
                                     Margin = new MarginPadding(8),
                                 },
-                                playlistIdBox = new AdaptiveTextBox
+                                playlistIdBox = new EnhancedFocusedTextBox
                                 {
                                     Origin = Anchor.CentreRight,
                                     Anchor = Anchor.CentreRight,
@@ -2314,6 +2382,13 @@ namespace NekoPlayer.App.Screens
                                     FontSize = 30,
                                     Size = new Vector2(385, 60),
                                     Margin = new MarginPadding(8),
+                                    OnEnterKeyPressed = () =>
+                                    {
+                                        if (string.IsNullOrEmpty(playlistIdBox.Text))
+                                            return;
+
+                                        SetPlaylist(playlistIdBox.Text).FireAndForget();
+                                    }
                                 },
                             }
                         },
@@ -2872,6 +2947,7 @@ namespace NekoPlayer.App.Screens
                                                             Icon = FontAwesome.Regular.FolderOpen,
                                                             IconScale = new Vector2(1.2f),
                                                             Text = NekoPlayerStrings.LoadVideo,
+                                                            Hotkey = new Hotkey(GlobalAction.OpenLoadVideo),
                                                         },
                                                         settingsOverlayShowBtn = new MenuButtonItem
                                                         {
@@ -2883,6 +2959,7 @@ namespace NekoPlayer.App.Screens
                                                             Icon = FontAwesome.Solid.Cog,
                                                             IconScale = new Vector2(1.2f),
                                                             Text = NekoPlayerStrings.Settings,
+                                                            Hotkey = new Hotkey(GlobalAction.OpenSettings),
                                                         },
                                                         commentOpenButton = new MenuButtonItem
                                                         {
@@ -2894,6 +2971,7 @@ namespace NekoPlayer.App.Screens
                                                             Icon = FontAwesome.Regular.CommentAlt,
                                                             IconScale = new Vector2(1.2f),
                                                             Text = NekoPlayerStrings.CommentsWithoutCount,
+                                                            Hotkey = new Hotkey(GlobalAction.OpenComments),
                                                         },
                                                         searchOpenButton = new MenuButtonItem
                                                         {
@@ -2905,6 +2983,7 @@ namespace NekoPlayer.App.Screens
                                                             Icon = FontAwesome.Solid.Search,
                                                             IconScale = new Vector2(1.2f),
                                                             Text = NekoPlayerStrings.Search,
+                                                            Hotkey = new Hotkey(GlobalAction.OpenSearch),
                                                         },
                                                         reportOpenButton = new MenuButtonItem
                                                         {
@@ -2916,6 +2995,7 @@ namespace NekoPlayer.App.Screens
                                                             Icon = FontAwesome.Solid.Flag,
                                                             IconScale = new Vector2(1.2f),
                                                             Text = NekoPlayerStrings.Report,
+                                                            Hotkey = new Hotkey(GlobalAction.ReportAbuse),
                                                         },
                                                         playlistOpenButton = new MenuButtonItem
                                                         {
@@ -2927,6 +3007,7 @@ namespace NekoPlayer.App.Screens
                                                             Icon = FontAwesome.Solid.List,
                                                             IconScale = new Vector2(1.2f),
                                                             Text = NekoPlayerStrings.Playlists,
+                                                            Hotkey = new Hotkey(GlobalAction.OpenPlaylist),
                                                         },
                                                         myPlaylistsOpenButton = new MenuButtonItem
                                                         {
@@ -2938,6 +3019,7 @@ namespace NekoPlayer.App.Screens
                                                             Icon = FontAwesome.Solid.List,
                                                             IconScale = new Vector2(1.2f),
                                                             Text = NekoPlayerStrings.MyPlaylists,
+                                                            Hotkey = new Hotkey(GlobalAction.OpenMyPlaylists),
                                                             Action = () =>
                                                             {
                                                                 hideOverlays();
@@ -2954,6 +3036,7 @@ namespace NekoPlayer.App.Screens
                                                             Icon = FontAwesome.Solid.VolumeUp,
                                                             IconScale = new Vector2(1.2f),
                                                             Text = NekoPlayerStrings.AudioEffects,
+                                                            Hotkey = new Hotkey(GlobalAction.OpenAudioEffects),
                                                         },
                                                         saveVideoOpenButton = new MenuButtonItem
                                                         {
@@ -2965,6 +3048,7 @@ namespace NekoPlayer.App.Screens
                                                             Icon = FontAwesome.Regular.Bookmark,
                                                             IconScale = new Vector2(1.2f),
                                                             Text = NekoPlayerStrings.Save,
+                                                            Hotkey = new Hotkey(GlobalAction.SaveVideoToPlaylist),
                                                         },
                                                         newPlaylistOpenButton = new MenuButtonItem
                                                         {
@@ -2976,6 +3060,7 @@ namespace NekoPlayer.App.Screens
                                                             Icon = FontAwesome.Solid.Bookmark,
                                                             IconScale = new Vector2(1.2f),
                                                             Text = NekoPlayerStrings.AddNewPlaylist,
+                                                            Hotkey = new Hotkey(GlobalAction.AddPlaylistKey),
                                                             Action = () =>
                                                             {
                                                                 hideOverlays();
@@ -4365,6 +4450,7 @@ namespace NekoPlayer.App.Screens
             {
                 hideOverlays();
                 showOverlayContainer(searchContainer);
+                searchTextBox.TakeFocus();
             };
 
             reportOpenButton.Action = () =>
@@ -4395,6 +4481,7 @@ namespace NekoPlayer.App.Screens
             {
                 hideOverlays();
                 showOverlayContainer(loadPlaylistContainer);
+                playlistIdBox.TakeFocus();
             };
 
             commentOpenButton.Action = () =>
@@ -4410,6 +4497,7 @@ namespace NekoPlayer.App.Screens
             {
                 hideOverlays();
                 showOverlayContainer(loadVideoContainer);
+                videoIdBox.TakeFocus();
             };
 
             settingsOverlayShowBtn.Action = () =>
@@ -4636,6 +4724,66 @@ namespace NekoPlayer.App.Screens
                     hideOverlays();
                     return true;
 
+                case GlobalAction.OpenLoadVideo:
+                    if (!loadVideoContainer.IsVisible)
+                    {
+                        hideOverlays();
+                        showOverlayContainer(loadVideoContainer);
+                        videoIdBox.TakeFocus();
+                    }
+                    else
+                        hideOverlayContainer(loadVideoContainer);
+
+                    return true;
+
+                case GlobalAction.OpenSearch:
+                    if (!searchContainer.IsVisible)
+                    {
+                        hideOverlays();
+                        showOverlayContainer(searchContainer);
+                        searchTextBox.TakeFocus();
+                    }
+                    else
+                        hideOverlayContainer(searchContainer);
+
+                    return true;
+
+                case GlobalAction.OpenMyPlaylists:
+                    if (!myPlaylistsOverlay.IsVisible)
+                    {
+                        hideOverlays();
+                        showOverlayContainer(myPlaylistsOverlay);
+                    }
+                    else
+                        hideOverlayContainer(myPlaylistsOverlay);
+
+                    return true;
+
+                case GlobalAction.AddPlaylistKey:
+                    if (!addPlaylistOverlay.IsVisible)
+                    {
+                        hideOverlays();
+                        showOverlayContainer(addPlaylistOverlay);
+                    }
+                    else
+                        hideOverlayContainer(addPlaylistOverlay);
+
+                    return true;
+
+                case GlobalAction.SaveVideoToPlaylist:
+                    if (videoData == null)
+                        return true;
+
+                    if (!videoSaveLocationOverlay.IsVisible)
+                    {
+                        hideOverlays();
+                        showOverlayContainer(videoSaveLocationOverlay);
+                    }
+                    else
+                        hideOverlayContainer(videoSaveLocationOverlay);
+
+                    return true;
+
                 case GlobalAction.OpenSettings:
                     if (!settingsContainer.IsVisible)
                     {
@@ -4659,6 +4807,9 @@ namespace NekoPlayer.App.Screens
                     return true;
 
                 case GlobalAction.ReportAbuse:
+                    if (videoData == null)
+                        return true;
+
                     if (!reportAbuseOverlay.IsVisible)
                     {
                         hideOverlays();
@@ -4670,6 +4821,9 @@ namespace NekoPlayer.App.Screens
                     return true;
 
                 case GlobalAction.OpenComments:
+                    if (videoData == null)
+                        return true;
+
                     if (!commentsContainer.IsVisible)
                     {
                         hideOverlays();
@@ -4700,23 +4854,6 @@ namespace NekoPlayer.App.Screens
                     else
                         hideOverlayContainer(audioEffectsOverlay);
 
-                    return true;
-
-                case GlobalAction.Select:
-                    if (isLoadVideoContainerVisible)
-                    {
-                        Task.Run(async () =>
-                        {
-                            try
-                            {
-                                await SetVideoSource(videoIdBox.Text);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine($"¿¹¿Ü ¹ß»ý: {ex.Message}");
-                            }
-                        });
-                    }
                     return true;
 
                 case GlobalAction.PlayPause:
@@ -6166,6 +6303,17 @@ namespace NekoPlayer.App.Screens
                         return NekoPlayerStrings.Unlimited;
                 }
                 return base.GenerateItemText(item);
+            }
+        }
+
+        private partial class EnhancedFocusedTextBox : FocusedTextBox
+        {
+            public Action OnEnterKeyPressed;
+
+            protected override void OnTextCommitted(bool textChanged)
+            {
+                base.OnTextCommitted(textChanged);
+                OnEnterKeyPressed.Invoke();
             }
         }
 

@@ -62,6 +62,7 @@ namespace NekoPlayer.App.Overlays
                     {
                         volumeMeters = new SelectionCycleFillFlowContainer<VolumeMeter>
                         {
+                            Scale = new Vector2(0.8f),
                             Direction = FillDirection.Vertical,
                             AutoSizeAxes = Axes.Both,
                             Anchor = Anchor.CentreLeft,
@@ -156,6 +157,7 @@ namespace NekoPlayer.App.Overlays
         protected override void PopIn()
         {
             ClearTransforms();
+            volumeMeters.ScaleTo(1, 1000, Easing.OutElastic);
             this.FadeIn(100);
 
             schedulePopOut();
@@ -163,7 +165,8 @@ namespace NekoPlayer.App.Overlays
 
         protected override void PopOut()
         {
-            this.FadeOut(100);
+            this.FadeOut(250, Easing.InQuint);
+            volumeMeters.ScaleTo(0.8f, 250, Easing.InQuint);
         }
 
         protected override bool OnMouseMove(MouseMoveEvent e)

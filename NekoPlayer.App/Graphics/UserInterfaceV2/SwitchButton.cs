@@ -10,6 +10,7 @@ using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Colour;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Effects;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
@@ -112,6 +113,29 @@ namespace NekoPlayer.App.Graphics.UserInterfaceV2
 
             if (Current.Value)
                 fillColour = borderColour;
+
+            if (Current.Value)
+            {
+                content.TweenEdgeEffectTo(new EdgeEffectParameters
+                {
+                    Hollow = true,
+                    Colour = fillColour.Opacity(0.2f),
+                    Radius = 20,
+                    Type = EdgeEffectType.Glow,
+                    Roundness = Height / 2,
+                }, 200, Easing.OutElasticQuarter);
+            }
+            else
+            {
+                content.TweenEdgeEffectTo(new EdgeEffectParameters
+                {
+                    Hollow = true,
+                    Colour = fillColour.Opacity(0),
+                    Radius = 20,
+                    Type = EdgeEffectType.Glow,
+                    Roundness = Height / 2,
+                }, 120, Easing.OutExpo);
+            }
 
             if (Current.Disabled)
             {

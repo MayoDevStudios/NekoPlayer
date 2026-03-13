@@ -67,7 +67,7 @@ namespace NekoPlayer.App.Overlays
                             AutoSizeAxes = Axes.Both,
                             Anchor = Anchor.CentreLeft,
                             Origin = Anchor.CentreLeft,
-                            Spacing = new Vector2(0, offset),
+                            Spacing = new Vector2(0, -offset),
                             Children = new[]
                             {
                                 volumeMeterEffect = new VolumeMeter(NekoPlayerStrings.SFXVolume, 125, colours.BlueDarker),
@@ -157,8 +157,9 @@ namespace NekoPlayer.App.Overlays
         protected override void PopIn()
         {
             ClearTransforms();
-            volumeMeters.ScaleTo(1, 1000, Easing.OutElastic);
-            this.FadeIn(100);
+            volumeMeters.ScaleTo(1, 500, Easing.OutQuint);
+            volumeMeters.TransformTo("Spacing", new Vector2(0, offset), 500, Easing.OutQuint);
+            this.FadeIn(500, Easing.OutQuint);
 
             schedulePopOut();
         }
@@ -167,6 +168,7 @@ namespace NekoPlayer.App.Overlays
         {
             this.FadeOut(250, Easing.InQuint);
             volumeMeters.ScaleTo(0.8f, 250, Easing.InQuint);
+            volumeMeters.TransformTo("Spacing", new Vector2(0, -offset), 250, Easing.InQuint);
         }
 
         protected override bool OnMouseMove(MouseMoveEvent e)

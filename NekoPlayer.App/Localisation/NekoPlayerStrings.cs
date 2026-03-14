@@ -1071,6 +1071,46 @@ namespace NekoPlayer.App.Localisation
         /// </summary>
         public static LocalisableString ProfileImageShape => new TranslatableString(getKey(@"profile_image_shape"), @"Profile image shape");
 
+        /// <summary>
+        /// "Sort by"
+        /// </summary>
+        public static LocalisableString SortDefault => new TranslatableString(getKey(@"sort_title"), @"Sort by");
+
+        /// <summary>
+        /// "Top"
+        /// </summary>
+        public static LocalisableString CommentsSortTop => new TranslatableString(getKey(@"sort_top"), @"Top");
+
+        /// <summary>
+        /// "Newest"
+        /// </summary>
+        public static LocalisableString CommentsSortNewest => new TranslatableString(getKey(@"sort_newest"), @"Newest");
+
+        /// <summary>
+        /// "User interface"
+        /// </summary>
+        public static LocalisableString UserInterface => new TranslatableString(getKey(@"user_interface"), @"User interface");
+
+        /// <summary>
+        /// "No comments here..."
+        /// </summary>
+        public static LocalisableString NoComments => new TranslatableString(getKey(@"no_comments"), @"No comments here...");
+
+        /// <summary>
+        /// "whatever else?"
+        /// </summary>
+        public static LocalisableString NoCommentsDesc => new TranslatableString(getKey(@"no_comments_desc"), @"whatever else?");
+
+        /// <summary>
+        /// "Mute system sounds"
+        /// </summary>
+        public static LocalisableString SystemMute => new TranslatableString(getKey(@"system_sound_mute"), @"Mute system sounds");
+
+        /// <summary>
+        /// "This setting mutes NekoPlayer sounds and other apps, and system sounds."
+        /// </summary>
+        public static LocalisableString SystemMuteDesc => new TranslatableString(getKey(@"system_sound_mute_desc"), @"This setting mutes NekoPlayer sounds and other apps, and system sounds.");
+
         private static string getKey(string key) => $@"{prefix}:{key}";
     }
 }

@@ -444,10 +444,23 @@ namespace NekoPlayer.App.Screens
                 idleBackground = new BufferedContainer
                 {
                     RelativeSizeAxes = Axes.Both,
-                    BlurSigma = new Vector2(256),
-                    Alpha = 0.25f,
-                    FrameBufferScale = new Vector2(.4f),
-                    Child = new BubbleBackground()
+                    Children = new Drawable[]
+                    {
+                        new Box
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            Colour = overlayColourProvider.Background6,
+                        },
+                        new Triangles
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            TriangleScale = 5f,
+                            Velocity = 2f,
+                            HideAlphaDiscrepancies = false,
+                            ColourDark = overlayColourProvider.Background5,
+                            ColourLight = overlayColourProvider.Background3,
+                        },
+                    },
                 },
                 videoContainer = new BufferedContainer
                 {
@@ -941,6 +954,13 @@ namespace NekoPlayer.App.Screens
                                                             Padding = new MarginPadding { Horizontal = 30 },
                                                             BackgroundColour = colours.YellowDarker.Darken(0.5f),
                                                             Action = () => Task.Run(exportLogs),
+                                                        },
+                                                        new SettingsButtonV2
+                                                        {
+                                                            Text = NekoPlayerStrings.ReportBugs,
+                                                            TooltipText = NekoPlayerStrings.ReportBugsDesc,
+                                                            Padding = new MarginPadding { Horizontal = 30 },
+                                                            Action = () => host.OpenUrlExternally("https://github.com/BoomboxRapsody/NekoPlayer/issues"),
                                                         },
                                                         new AdaptiveSpriteText
                                                         {
@@ -3371,6 +3391,7 @@ namespace NekoPlayer.App.Screens
             };
 
             thumbnailContainer.BlurTo(Vector2.Divide(new Vector2(10, 10), 1));
+
             RegisterOverlayContainer(loadVideoContainer);
             overlayFadeContainer.Hide();
             RegisterOverlayContainer(settingsContainer);
@@ -3448,7 +3469,7 @@ namespace NekoPlayer.App.Screens
 
                     Task.Run(async () =>
                     {
-                        IList<Google.Apis.YouTube.v3.Data.Playlist> playlists = await api.GetMyPlaylistItemsAsync();
+                        IList<Playlist> playlists = await api.GetMyPlaylistItemsAsync();
 
                         foreach (Playlist playlist in playlists)
                         {
@@ -3564,26 +3585,6 @@ namespace NekoPlayer.App.Screens
             {
                 wasapiExperimentalItem.Hide();
             }
-
-            /*
-            overlayContainers.Add(loadVideoContainer);
-            overlayContainers.Add(settingsContainer);
-            overlayContainers.Add(videoDescriptionContainer);
-            overlayContainers.Add(commentsContainer);
-            overlayContainers.Add(videoInfoExpertOverlay);
-            overlayContainers.Add(searchContainer);
-            overlayContainers.Add(reportAbuseOverlay);
-            overlayContainers.Add(playlistOverlay);
-            overlayContainers.Add(loadPlaylistContainer);
-            overlayContainers.Add(audioEffectsOverlay);
-            overlayContainers.Add(unsubscribeDialog);
-            overlayContainers.Add(addPlaylistOverlay);
-            overlayContainers.Add(videoSaveLocationOverlay);
-            overlayContainers.Add(menuOverlay);
-            overlayContainers.Add(myChannelDialog);
-            overlayContainers.Add(myPlaylistsOverlay);
-            overlayContainers.Add(exitOptions);
-            */
 
             playlistName.Text = NekoPlayerStrings.PlaylistNotLoaded;
             playlistAuthor.Text = NekoPlayerStrings.PlaylistNotLoadedDesc;
@@ -3910,8 +3911,6 @@ namespace NekoPlayer.App.Screens
                 MMDevice defaultPlaybackDevice = enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
 
                 systemVolume.Value = defaultPlaybackDevice.AudioEndpointVolume.MasterVolumeLevelScalar;
-
-                //defaultPlaybackDevice.AudioEndpointVolume.OnVolumeNotification += audioEndpointVolume_OnVolumeNotification; //cause bugs
 
                 systemVolume.BindValueChanged(value =>
                 {
@@ -4355,8 +4354,6 @@ namespace NekoPlayer.App.Screens
             }
         }
 
-        private bool isLoadVideoContainerVisible = false;
-
         private Bindable<bool> isAnyOverlayOpen;
 
         private readonly Bindable<Display> currentDisplay = new Bindable<Display>();
@@ -4387,24 +4384,24 @@ namespace NekoPlayer.App.Screens
             {
                 if (item.Id.Kind == "youtube#video")
                 {
-                    YouTubeSearchResultView wth = new YouTubeSearchResultView()
+                    YouTubeSearchResultView trickcal_is_good_game = new YouTubeSearchResultView()
                     {
                         RelativeSizeAxes = Axes.X,
                     };
 
-                    searchResultContainer.Add(wth);
+                    searchResultContainer.Add(trickcal_is_good_game);
 
-                    wth.ClickAction = async _ =>
+                    trickcal_is_good_game.ClickAction = async _ =>
                     {
                         ClearPlaylistItems();
                         await SetVideoSource(item.Id.VideoId);
                     };
 
-                    wth.Enabled.Value = true;
+                    trickcal_is_good_game.Enabled.Value = true;
 
-                    wth.Data = item;
+                    trickcal_is_good_game.Data = item;
 
-                    wth.UpdateData();
+                    trickcal_is_good_game.UpdateData();
                 }
                 else if (item.Id.Kind == "youtube#playlist")
                 {
@@ -4475,6 +4472,9 @@ namespace NekoPlayer.App.Screens
                             Details = api.GetLocalizedVideoTitle(videoData),
                             State = api.GetLocalizedChannelTitle(api.GetChannel(videoData.Snippet.ChannelId)),
                             Timestamps = timestamps,
+                            StatusDisplay = StatusDisplayType.Details,
+                            StateUrl = $"https://www.youtube.com/channel/{api.GetChannel(videoData.Snippet.ChannelId).Id}",
+                            DetailsUrl = $"https://youtu.be/{videoData.Id}",
                             Assets = new Assets()
                             {
                                 LargeImageKey = videoData.Snippet.Thumbnails.High.Url,
@@ -5077,11 +5077,6 @@ namespace NekoPlayer.App.Screens
             return false;
         }
 
-        private void restartApp()
-        {
-            throw new NotImplementedException();
-        }
-
         [Resolved]
         private OnScreenDisplay osd { get; set; } = null!;
 
@@ -5294,6 +5289,9 @@ namespace NekoPlayer.App.Screens
 
         private void updateComments(string videoId)
         {
+            if (commentsDisabled)
+                return;
+
             Schedule(() =>
             {
                 foreach (var item in commentContainer.Children)
@@ -5306,11 +5304,13 @@ namespace NekoPlayer.App.Screens
 
                 OrderEnum orderEnum = CommentsSort.Value == CommentsSortCriteria.Top ? OrderEnum.Relevance : OrderEnum.Time;
 
-                // comments area
-                IList<CommentThread> commentThreadData = api.GetCommentThread(videoId, orderEnum);
-                foreach (CommentThread item in commentThreadData)
+                IList<CommentThread> commentThreadData;
+
+                try
                 {
-                    if (item.Snippet.IsPublic == true)
+                    // comments area
+                    commentThreadData = api.GetCommentThread(videoId, orderEnum);
+                    foreach (CommentThread item in commentThreadData)
                     {
 #pragma warning disable CS4014 // 이 호출을 대기하지 않으므로 호출이 완료되기 전에 현재 메서드가 계속 실행됩니다.
                         Task.Run(async () =>
@@ -5327,12 +5327,17 @@ namespace NekoPlayer.App.Screens
                         });
 #pragma warning restore CS4014 // 이 호출을 대기하지 않으므로 호출이 완료되기 전에 현재 메서드가 계속 실행됩니다.
                     }
-                }
 
-                if (commentThreadData.Count > 0)
-                    commentsEmpty.Hide();
-                else
+                    if (commentThreadData.Count > 0)
+                        commentsEmpty.Hide();
+                    else
+                        commentsEmpty.Show();
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(e, e.GetDescription());
                     commentsEmpty.Show();
+                }
             });
         }
 
@@ -5544,7 +5549,7 @@ namespace NekoPlayer.App.Screens
                 else
                     Schedule(() => commentOpenButtonDetails.Hide());
 
-                game.RequestUpdateWindowTitle($"{videoData.Snippet.ChannelTitle} - {videoData.Snippet.Title}");
+                game.RequestUpdateWindowTitle($"{api.GetLocalizedChannelTitle(api.GetChannel(videoData.Snippet.ChannelId))} - {api.GetLocalizedVideoTitle(videoData)}");
 
                 DateTimeOffset? dateTime = videoData.Snippet.PublishedAtDateTimeOffset;
                 DateTime now = DateTime.Now;
@@ -5694,8 +5699,12 @@ namespace NekoPlayer.App.Screens
                 {
                     Task.Run(async () =>
                     {
-                        Schedule(() => videoDescription.Text = api.GetLocalizedVideoDescription(videoData));
-                        videoInfoDetails.Text = NekoPlayerStrings.VideoMetadataDescWithoutChannelName(Convert.ToInt32(videoData.Statistics.ViewCount).ToStandardFormattedString(0), uploadDate.ToString());
+                        Schedule(() =>
+                        {
+                            game.RequestUpdateWindowTitle($"{api.GetLocalizedChannelTitle(api.GetChannel(videoData.Snippet.ChannelId))} - {api.GetLocalizedVideoTitle(videoData)}");
+                            videoDescription.Text = api.GetLocalizedVideoDescription(videoData);
+                            videoInfoDetails.Text = NekoPlayerStrings.VideoMetadataDescWithoutChannelName(Convert.ToInt32(videoData.Statistics.ViewCount).ToStandardFormattedString(0), uploadDate.ToString());
+                        });
                     });
                 });
 
@@ -5778,6 +5787,8 @@ namespace NekoPlayer.App.Screens
                     currentVideoSource.Play();
                 };
             }
+
+            updatePresence(discordRichPresence.Value);
         }
 
         private void seekTo(double pos)

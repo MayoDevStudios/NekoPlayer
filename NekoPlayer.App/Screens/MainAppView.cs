@@ -5305,23 +5305,20 @@ namespace NekoPlayer.App.Screens
                     commentThreadData = api.GetCommentThread(videoId, orderEnum);
                     foreach (CommentThread item in commentThreadData)
                     {
-                        if (item.Snippet.IsPublic == true)
-                        {
 #pragma warning disable CS4014 // 이 호출을 대기하지 않으므로 호출이 완료되기 전에 현재 메서드가 계속 실행됩니다.
-                            Task.Run(async () =>
-                            {
-                                Comment comment = await api.GetComment(item.Id);
+                        Task.Run(async () =>
+                        {
+                            Comment comment = await api.GetComment(item.Id);
 
-                                Schedule(() =>
+                            Schedule(() =>
+                            {
+                                commentContainer.Add(new CommentDisplay(comment)
                                 {
-                                    commentContainer.Add(new CommentDisplay(comment)
-                                    {
-                                        RelativeSizeAxes = Axes.X,
-                                    });
+                                    RelativeSizeAxes = Axes.X,
                                 });
                             });
+                        });
 #pragma warning restore CS4014 // 이 호출을 대기하지 않으므로 호출이 완료되기 전에 현재 메서드가 계속 실행됩니다.
-                        }
                     }
 
                     if (commentThreadData.Count > 0)

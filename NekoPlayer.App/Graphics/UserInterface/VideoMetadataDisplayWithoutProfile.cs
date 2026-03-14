@@ -227,7 +227,7 @@ namespace NekoPlayer.App.Graphics.UserInterface
                 {
                     Task.Run(async () =>
                     {
-                        videoName.Text = api.GetLocalizedVideoTitle(videoData);
+                        Schedule(() => videoName.Text = api.GetLocalizedVideoTitle(videoData));
                         updateDescText();
                     });
                 });

@@ -88,7 +88,7 @@ namespace NekoPlayer.App.Graphics.UserInterface
                         {
                             LeftBox = new Box
                             {
-                                Height = SliderNubRemake.HEIGHT,
+                                Height = SliderNubRemake.HEIGHT  / 2,
                                 Colour = AccentColour,
                                 RelativeSizeAxes = Axes.None,
                                 Anchor = Anchor.CentreLeft,
@@ -96,7 +96,7 @@ namespace NekoPlayer.App.Graphics.UserInterface
                             },
                             RightBox = new Box
                             {
-                                Height = SliderNubRemake.HEIGHT,
+                                Height = SliderNubRemake.HEIGHT / 2,
                                 Colour = backgroundColour,
                                 RelativeSizeAxes = Axes.None,
                                 Anchor = Anchor.CentreRight,
@@ -151,7 +151,7 @@ namespace NekoPlayer.App.Graphics.UserInterface
             mainContent.EdgeEffect = new EdgeEffectParameters
             {
                 Type = EdgeEffectType.Glow,
-                Colour = AccentColour.Darken(1),
+                Colour = AccentColour.Darken(1).Opacity(0.5f),
                 Hollow = true,
                 Radius = 5,
             };

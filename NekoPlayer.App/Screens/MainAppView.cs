@@ -1553,7 +1553,7 @@ namespace NekoPlayer.App.Screens
                                                                 },
                                                                 likeCount = new AdaptiveSpriteText
                                                                 {
-                                                                    Text = "[no metadata]",
+                                                                    Text = "0",
                                                                 },
                                                             }
                                                         }
@@ -1605,7 +1605,7 @@ namespace NekoPlayer.App.Screens
                                                                 },
                                                                 dislikeCount = new AdaptiveSpriteText
                                                                 {
-                                                                    Text = "[no metadata]",
+                                                                    Text = "0",
                                                                 },
                                                             }
                                                         }
@@ -1620,10 +1620,8 @@ namespace NekoPlayer.App.Screens
                                                     AlwaysPresent = true,
                                                     ClickAction = f =>
                                                     {
-                                                        if (!commentsDisabled) {
-                                                            hideOverlays();
-                                                            showOverlayContainer(commentsContainer);
-                                                        }
+                                                        hideOverlays();
+                                                        showOverlayContainer(commentsContainer);
                                                     },
                                                     Children = new Drawable[]
                                                     {
@@ -1656,7 +1654,7 @@ namespace NekoPlayer.App.Screens
                                                                 },
                                                                 commentCount = new AdaptiveSpriteText
                                                                 {
-                                                                    Text = "[no metadata]",
+                                                                    Text = "0",
                                                                     Colour = overlayColourProvider.Content2,
                                                                 },
                                                             }
@@ -1848,6 +1846,9 @@ namespace NekoPlayer.App.Screens
                                                 Height = 45,
                                                 OnEnterKeyPressed = () =>
                                                 {
+                                                    if (videoData == null)
+                                                        return;
+
                                                     if (!googleOAuth2.SignedIn.Value)
                                                         return;
 
@@ -1967,7 +1968,7 @@ namespace NekoPlayer.App.Screens
                                                             AlwaysPresent = true,
                                                             Anchor = Anchor.TopCentre,
                                                             Origin = Anchor.TopCentre,
-                                                            Padding = new MarginPadding { Top = 20 },
+                                                            Padding = new MarginPadding { Top = 8 },
                                                             RelativeSizeAxes = Axes.X,
                                                             AutoSizeAxes = Axes.Y,
                                                             TextAnchor = Anchor.Centre,
@@ -1975,6 +1976,13 @@ namespace NekoPlayer.App.Screens
                                                             Colour = overlayColourProvider.Foreground2,
                                                         }
                                                     }
+                                                },
+                                                new Sprite
+                                                {
+                                                    Size = new Vector2(120),
+                                                    Texture = textures.Get(@"speaki"),
+                                                    Anchor = Anchor.BottomLeft,
+                                                    Origin = Anchor.BottomLeft,
                                                 },
                                             }
                                         }
@@ -4393,20 +4401,30 @@ namespace NekoPlayer.App.Screens
             string state = NekoPlayer_DiscordRPCStrings.WatchingVideo;
             string buttonLabel = NekoPlayer_DiscordRPCStrings.WatchOnYouTube;
 
-            if (videoData != null)
+            try
             {
-                //state = api.GetLocalizedChannelTitle(api.GetChannel(videoData.Snippet.ChannelId));
-                if (trayIconVisible.Value)
+                if (videoData != null)
                 {
-                    state = videoData.TopicDetails.TopicCategories.Contains("https://en.wikipedia.org/wiki/Music") ? NekoPlayer_DiscordRPCStrings.ListeningMusic : NekoPlayer_DiscordRPCStrings.ListeningOnBackground;
-                    activityType = ActivityType.Listening;
+                    //state = api.GetLocalizedChannelTitle(api.GetChannel(videoData.Snippet.ChannelId));
+                    if (trayIconVisible.Value)
+                    {
+                        state = videoData.TopicDetails.TopicCategories.Contains("https://en.wikipedia.org/wiki/Music") ? NekoPlayer_DiscordRPCStrings.ListeningMusic : NekoPlayer_DiscordRPCStrings.ListeningOnBackground;
+                        activityType = ActivityType.Listening;
+                    }
+                    else
+                    {
+                        state = videoData.TopicDetails.TopicCategories.Contains("https://en.wikipedia.org/wiki/Music") ? NekoPlayer_DiscordRPCStrings.ListeningMusic : NekoPlayer_DiscordRPCStrings.WatchingVideo;
+                        activityType = videoData.TopicDetails.TopicCategories.Contains("https://en.wikipedia.org/wiki/Music") ? ActivityType.Listening : ActivityType.Watching;
+                    }
+                    buttonLabel = videoData.TopicDetails.TopicCategories.Contains("https://en.wikipedia.org/wiki/Music") ? NekoPlayer_DiscordRPCStrings.ListenOnYouTube : NekoPlayer_DiscordRPCStrings.WatchOnYouTube;
                 }
-                else
-                {
-                    state = videoData.TopicDetails.TopicCategories.Contains("https://en.wikipedia.org/wiki/Music") ? NekoPlayer_DiscordRPCStrings.ListeningMusic : NekoPlayer_DiscordRPCStrings.WatchingVideo;
-                    activityType = videoData.TopicDetails.TopicCategories.Contains("https://en.wikipedia.org/wiki/Music") ? ActivityType.Listening : ActivityType.Watching;
-                }
-                buttonLabel = videoData.TopicDetails.TopicCategories.Contains("https://en.wikipedia.org/wiki/Music") ? NekoPlayer_DiscordRPCStrings.ListenOnYouTube : NekoPlayer_DiscordRPCStrings.WatchOnYouTube;
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, e.GetDescription());
+                state = NekoPlayer_DiscordRPCStrings.WatchingVideo;
+                activityType = ActivityType.Watching;
+                buttonLabel = NekoPlayer_DiscordRPCStrings.WatchOnYouTube;
             }
 
             switch (mode)
@@ -5264,6 +5282,7 @@ namespace NekoPlayer.App.Screens
                                     await api.RateVideo(videoId, VideosResource.RateRequest.RatingEnum.Like);
                                     Schedule(() =>
                                     {
+                                        refreshLikeDislikeCount(videoId);
                                         dislikeButtonBackgroundSelected.Hide();
                                         likeButtonBackgroundSelected.Show();
                                         likeButtonForeground.Colour = overlayColourProvider1.Background4;
@@ -5276,6 +5295,7 @@ namespace NekoPlayer.App.Screens
                                     await api.RateVideo(videoId, VideosResource.RateRequest.RatingEnum.Dislike);
                                     Schedule(() =>
                                     {
+                                        refreshLikeDislikeCount(videoId);
                                         dislikeButtonBackgroundSelected.Show();
                                         likeButtonBackgroundSelected.Hide();
                                         likeButtonForeground.Colour = overlayColourProvider1.Content2;
@@ -5312,6 +5332,7 @@ namespace NekoPlayer.App.Screens
                                     await api.RateVideo(videoId, VideosResource.RateRequest.RatingEnum.None);
                                     Schedule(() =>
                                     {
+                                        refreshLikeDislikeCount(videoId);
                                         dislikeButtonBackgroundSelected.Hide();
                                         likeButtonBackgroundSelected.Hide();
                                         likeButtonForeground.Colour = dislikeButtonForeground.Colour = overlayColourProvider1.Content2;
@@ -5323,6 +5344,7 @@ namespace NekoPlayer.App.Screens
                                     await api.RateVideo(videoId, VideosResource.RateRequest.RatingEnum.Dislike);
                                     Schedule(() =>
                                     {
+                                        refreshLikeDislikeCount(videoId);
                                         dislikeButtonBackgroundSelected.Show();
                                         likeButtonBackgroundSelected.Hide();
                                         likeButtonForeground.Colour = overlayColourProvider1.Content2;
@@ -5359,6 +5381,7 @@ namespace NekoPlayer.App.Screens
                                     await api.RateVideo(videoId, VideosResource.RateRequest.RatingEnum.Like);
                                     Schedule(() =>
                                     {
+                                        refreshLikeDislikeCount(videoId);
                                         dislikeButtonBackgroundSelected.Hide();
                                         likeButtonBackgroundSelected.Show();
                                         likeButtonForeground.Colour = overlayColourProvider1.Background4;
@@ -5371,6 +5394,7 @@ namespace NekoPlayer.App.Screens
                                     await api.RateVideo(videoId, VideosResource.RateRequest.RatingEnum.None);
                                     Schedule(() =>
                                     {
+                                        refreshLikeDislikeCount(videoId);
                                         dislikeButtonBackgroundSelected.Hide();
                                         likeButtonBackgroundSelected.Hide();
                                         likeButtonForeground.Colour = dislikeButtonForeground.Colour = overlayColourProvider1.Content2;
@@ -5396,6 +5420,24 @@ namespace NekoPlayer.App.Screens
 
         [Resolved]
         private OverlayColourProvider overlayColourProvider1 { get; set; }
+
+        private void refreshLikeDislikeCount(string videoId)
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                    dislikeCount.Text = ReturnYouTubeDislike.GetDislikes(videoId).Dislikes > 0 ? Convert.ToDouble(ReturnYouTubeDislike.GetDislikes(videoId).Dislikes).ToMetric(decimals: 2) : Convert.ToDouble(ReturnYouTubeDislike.GetDislikes(videoId).RawDislikes).ToMetric(decimals: 2);
+                    dislikeButton.TooltipText = NekoPlayerStrings.DislikeCountTooltip(ReturnYouTubeDislike.GetDislikes(videoId).Dislikes.ToStandardFormattedString(0), ReturnYouTubeDislike.GetDislikes(videoId).RawDislikes.ToStandardFormattedString(0));
+                }
+                catch
+                {
+                    dislikeCount.Text = "0";
+                }
+
+                likeCount.Text = videoData.Statistics.LikeCount != null ? Convert.ToDouble(videoData.Statistics.LikeCount).ToMetric(decimals: 2) : Convert.ToDouble(ReturnYouTubeDislike.GetDislikes(videoId).RawLikes).ToMetric(decimals: 2);
+            });
+        }
 
         private void updateVideoMetadata(string videoId)
         {
@@ -5440,6 +5482,7 @@ namespace NekoPlayer.App.Screens
                 }
                 sessionStatics.GetBindable<string>(Static.CurrentThumbnailUrl).Value = videoData.Snippet.Thumbnails.High.Url;
                 commentCount.Text = videoData.Statistics.CommentCount != null ? Convert.ToInt32(videoData.Statistics.CommentCount).ToStandardFormattedString(0) : NekoPlayerStrings.DisabledByUploader;
+                /*
                 try
                 {
                     dislikeCount.Text = ReturnYouTubeDislike.GetDislikes(videoId).Dislikes > 0 ? Convert.ToDouble(ReturnYouTubeDislike.GetDislikes(videoId).Dislikes).ToMetric(decimals: 2) : Convert.ToDouble(ReturnYouTubeDislike.GetDislikes(videoId).RawDislikes).ToMetric(decimals: 2);
@@ -5449,14 +5492,17 @@ namespace NekoPlayer.App.Screens
                 {
                     dislikeCount.Text = "0";
                 }
+                */
 
                 string uploadDateRaw = videoData.Snippet.PublishedAtRaw;
 
                 DateTime.TryParseExact(uploadDateRaw, @"yyyy-MM-dd\THH:mm:ss\Z", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out var uploadDate);
 
-                likeCount.Text = videoData.Statistics.LikeCount != null ? Convert.ToDouble(videoData.Statistics.LikeCount).ToMetric(decimals: 2) : Convert.ToDouble(ReturnYouTubeDislike.GetDislikes(videoId).RawLikes).ToMetric(decimals: 2);
+                //likeCount.Text = videoData.Statistics.LikeCount != null ? Convert.ToDouble(videoData.Statistics.LikeCount).ToMetric(decimals: 2) : Convert.ToDouble(ReturnYouTubeDislike.GetDislikes(videoId).RawLikes).ToMetric(decimals: 2);
                 commentsContainerTitle.Text = NekoPlayerStrings.Comments(videoData.Statistics.CommentCount != null ? Convert.ToInt32(videoData.Statistics.CommentCount).ToStandardFormattedString(0) : NekoPlayerStrings.Disabled);
                 videoInfoDetails.Text = NekoPlayerStrings.VideoMetadataDescWithoutChannelName(Convert.ToInt32(videoData.Statistics.ViewCount).ToStandardFormattedString(0), uploadDate.ToString());
+
+                refreshLikeDislikeCount(videoId);
 
                 Schedule(() =>
                 {
@@ -5531,6 +5577,9 @@ namespace NekoPlayer.App.Screens
 
                     commentSendButton.ClickAction = _ =>
                     {
+                        if (videoData == null)
+                            return;
+
                         if (!googleOAuth2.SignedIn.Value)
                             return;
 
@@ -5603,6 +5652,11 @@ namespace NekoPlayer.App.Screens
 #pragma warning restore CS4014 // 이 호출을 대기하지 않으므로 호출이 완료되기 전에 현재 메서드가 계속 실행됩니다.
                     }
                 }
+
+                if (commentThreadData.Count > 0)
+                    commentsEmpty.Hide();
+                else
+                    commentsEmpty.Show();
 
                 CommentsSort.BindValueChanged(sort =>
                 {

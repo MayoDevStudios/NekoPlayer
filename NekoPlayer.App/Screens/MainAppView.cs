@@ -311,6 +311,8 @@ namespace NekoPlayer.App.Screens
             Newest,
         }
 
+        private SettingsItemV2 systemMuteSwitchBase;
+
         [BackgroundDependencyLoader]
         private void load(ISampleStore sampleStore, FrameworkConfigManager config, NekoPlayerConfigManager appConfig, GameHost host, Storage storage, OverlayColourProvider overlayColourProvider, TextureStore textures, FrameworkDebugConfigManager debugConfig)
         {
@@ -1333,7 +1335,7 @@ namespace NekoPlayer.App.Screens
                                                             Padding = new MarginPadding { Horizontal = 30, Vertical = 12 },
                                                             Colour = overlayColourProvider.Content2,
                                                         },
-                                                        new SettingsItemV2(new FormCheckBox
+                                                        systemMuteSwitchBase = new SettingsItemV2(new FormCheckBox
                                                         {
                                                             Caption = NekoPlayerStrings.SystemMute,
                                                             HintText = NekoPlayerStrings.SystemMuteDesc,
@@ -3924,9 +3926,11 @@ namespace NekoPlayer.App.Screens
                 {
                     defaultPlaybackDevice.AudioEndpointVolume.Mute = value.NewValue;
                 });
-            } else
+            }
+            else
             {
                 systemVolumeControlBase.Hide();
+                systemMuteSwitchBase.Hide();
             }
             #endregion
 

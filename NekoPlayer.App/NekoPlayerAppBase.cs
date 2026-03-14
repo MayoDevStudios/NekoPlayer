@@ -652,7 +652,7 @@ namespace NekoPlayer.App
 
             if (!string.IsNullOrEmpty(customTitle))
             {
-                newTitle = $"NekoPlayer > {customTitle}";
+                newTitle = $"NekoPlayer | {customTitle}";
             }
 
             if (newTitle != Host.Window.Title)

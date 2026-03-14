@@ -2101,7 +2101,7 @@ namespace NekoPlayer.App.Screens
                                             searchTextBox = new EnhancedFocusedTextBox
                                             {
                                                 RelativeSizeAxes = Axes.X,
-                                                Size = new Vector2(0.97f, 1f),
+                                                Size = new Vector2(1f, 1f),
                                                 Text = "",
                                                 PlaceholderText = NekoPlayerStrings.SearchPlaceholder,
                                                 FontSize = 20,
@@ -2121,6 +2121,10 @@ namespace NekoPlayer.App.Screens
                                                 Icon = FontAwesome.Solid.Search,
                                                 Width = 50,
                                                 Height = 45,
+                                                Margin = new MarginPadding
+                                                {
+                                                    Left = 8,
+                                                },
                                                 AlwaysPresent = true,
                                                 Enabled = { Value = true },
                                             },

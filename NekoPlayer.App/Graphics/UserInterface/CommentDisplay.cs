@@ -52,7 +52,7 @@ namespace NekoPlayer.App.Graphics.UserInterface
         private Bindable<Localisation.Language> uiLanguage;
         private Bindable<UsernameDisplayMode> usernameDisplayMode = null!;
 
-        public CommentDisplay(Comment comment)
+        public CommentDisplay(CommentThread comment)
         {
             commentData = comment;
             Height = 110;
@@ -213,7 +213,7 @@ namespace NekoPlayer.App.Graphics.UserInterface
 
         private bool translated;
 
-        private Comment commentData;
+        private CommentThread commentData;
 
         private HoverSounds samples = new HoverClickSounds(HoverSampleSet.Default);
 
@@ -228,13 +228,13 @@ namespace NekoPlayer.App.Graphics.UserInterface
         {
             if (translated == false)
             {
-                Task.Run(async () => commentText.Text = translate.Translate(commentData.Snippet.TextOriginal, GoogleTranslateLanguage.auto));
+                Task.Run(async () => commentText.Text = translate.Translate(commentData.Snippet.TopLevelComment.Snippet.TextOriginal, GoogleTranslateLanguage.auto));
                 translateToText.Text = NekoPlayerStrings.TranslateViewOriginal;
                 translated = true;
             }
             else
             {
-                commentText.Text = commentData.Snippet.TextOriginal;
+                commentText.Text = commentData.Snippet.TopLevelComment.Snippet.TextOriginal;
                 translateToText.Text = NekoPlayerStrings.TranslateTo(app.CurrentLanguage.Value.GetLocalisableDescription());
                 translated = false;
             }
@@ -249,13 +249,13 @@ namespace NekoPlayer.App.Graphics.UserInterface
             {
                 try
                 {
-                    DateTimeOffset? dateTime = commentData.Snippet.PublishedAtDateTimeOffset;
+                    DateTimeOffset? dateTime = commentData.Snippet.TopLevelComment.Snippet.PublishedAtDateTimeOffset;
                     DateTimeOffset now = DateTime.Now;
                     Channel channelData = null;
 
                     try
                     {
-                        channelData = api.GetChannel(commentData.Snippet.AuthorChannelId.Value);
+                        channelData = api.GetChannel(commentData.Snippet.TopLevelComment.Snippet.AuthorChannelId.Value);
                     }
                     catch (Exception e)
                     {
@@ -264,22 +264,22 @@ namespace NekoPlayer.App.Graphics.UserInterface
 
                     Schedule(() =>
                     {
-                        channelName.Text = channelData != null ? api.GetLocalizedChannelTitle(channelData) : commentData.Snippet.AuthorDisplayName;
+                        channelName.Text = channelData != null ? api.GetLocalizedChannelTitle(channelData) : commentData.Snippet.TopLevelComment.Snippet.AuthorDisplayName;
                         channelName.AddText(" • ", f => f.Font = NekoPlayerApp.DefaultFont.With(size: 13, weight: "Regular"));
 #pragma warning disable CS8629 // Nullable 값 형식이 null일 수 있습니다.
                         channelName.AddText(dateTime.Value.Humanize(dateToCompareAgainst: now), f => f.Font = NekoPlayerApp.DefaultFont.With(size: 13, weight: "Regular"));
 #pragma warning restore CS8629 // Nullable 값 형식이 null일 수 있습니다.
-                        commentText.Text = commentData.Snippet.TextOriginal;
-                        likeCount.Text = Convert.ToInt32(commentData.Snippet.LikeCount).ToStandardFormattedString(0);
+                        commentText.Text = commentData.Snippet.TopLevelComment.Snippet.TextOriginal;
+                        likeCount.Text = Convert.ToInt32(commentData.Snippet.TopLevelComment.Snippet.LikeCount).ToStandardFormattedString(0);
                         translateToText.Text = NekoPlayerStrings.TranslateTo(app.CurrentLanguage.Value.GetLocalisableDescription());
-                        profileImage.UpdateProfileImage(commentData.Snippet.AuthorChannelId.Value);
+                        profileImage.UpdateProfileImage(commentData.Snippet.TopLevelComment.Snippet.AuthorChannelId.Value);
 
                         usernameDisplayMode.BindValueChanged(locale =>
                         {
                             Schedule(() =>
                             {
                                 channelName.Text = string.Empty;
-                                channelName.Text = channelData != null ? api.GetLocalizedChannelTitle(channelData) : commentData.Snippet.AuthorDisplayName;
+                                channelName.Text = channelData != null ? api.GetLocalizedChannelTitle(channelData) : commentData.Snippet.TopLevelComment.Snippet.AuthorDisplayName;
                                 channelName.AddText(" • ", f => f.Font = NekoPlayerApp.DefaultFont.With(size: 13, weight: "Regular"));
                                 channelName.AddText(dateTime.Value.Humanize(dateToCompareAgainst: now), f => f.Font = NekoPlayerApp.DefaultFont.With(size: 13, weight: "Regular"));
                             });
@@ -290,7 +290,7 @@ namespace NekoPlayer.App.Graphics.UserInterface
                             Schedule(() =>
                             {
                                 channelName.Text = string.Empty;
-                                channelName.Text = channelData != null ? api.GetLocalizedChannelTitle(channelData) : commentData.Snippet.AuthorDisplayName;
+                                channelName.Text = channelData != null ? api.GetLocalizedChannelTitle(channelData) : commentData.Snippet.TopLevelComment.Snippet.AuthorDisplayName;
                                 channelName.AddText(" • ", f => f.Font = NekoPlayerApp.DefaultFont.With(size: 13, weight: "Regular"));
                                 channelName.AddText(dateTime.Value.Humanize(dateToCompareAgainst: now), f => f.Font = NekoPlayerApp.DefaultFont.With(size: 13, weight: "Regular"));
                                 translateToText.Text = NekoPlayerStrings.TranslateTo(app.CurrentLanguage.Value.GetLocalisableDescription());

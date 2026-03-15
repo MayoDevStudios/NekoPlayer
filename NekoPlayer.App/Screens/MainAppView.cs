@@ -637,16 +637,13 @@ namespace NekoPlayer.App.Screens
                                                                 new FillFlowContainer
                                                                 {
                                                                     AutoSizeAxes = Axes.Both,
-                                                                    Spacing = new Vector2(8, 0),
+                                                                    //Spacing = new Vector2(8, 0),
                                                                     Direction = FillDirection.Horizontal,
-                                                                    Padding = new MarginPadding
-                                                                    {
-                                                                        Horizontal = 8
-                                                                    },
                                                                     Children = new Drawable[]
                                                                     {
                                                                         prevVideoButton = new ControlBarIconButton(true)
                                                                         {
+                                                                            Width = 40,
                                                                             Enabled = { Value = false },
                                                                             Icon = FontAwesome.Solid.FastBackward,
                                                                             TooltipText = NekoPlayerStrings.PreviousVideo,
@@ -665,6 +662,7 @@ namespace NekoPlayer.App.Screens
                                                                         },
                                                                         playPause = new ControlBarIconButton(true)
                                                                         {
+                                                                            Width = 40,
                                                                             Enabled = { Value = true },
                                                                             Icon = FontAwesome.Solid.Play,
                                                                             TooltipText = NekoPlayerStrings.Play,
@@ -683,6 +681,7 @@ namespace NekoPlayer.App.Screens
                                                                         },
                                                                         nextVideoButton = new ControlBarIconButton(true)
                                                                         {
+                                                                            Width = 40,
                                                                             Enabled = { Value = false },
                                                                             Icon = FontAwesome.Solid.FastForward,
                                                                             TooltipText = NekoPlayerStrings.NextVideo,
@@ -701,6 +700,7 @@ namespace NekoPlayer.App.Screens
                                                                         },
                                                                         repeatButton = new ControlBarIconButton
                                                                         {
+                                                                            Width = 40,
                                                                             Enabled = { Value = true },
                                                                             Icon = FontAwesome.Solid.Sync,
                                                                             TooltipText = NekoPlayerStrings.Repeat,

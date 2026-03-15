@@ -4,9 +4,15 @@
 #nullable enable
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Google.Apis.YouTube.v3.Data;
 using Humanizer;
+using NekoPlayer.App.Config;
+using NekoPlayer.App.Extensions;
+using NekoPlayer.App.Graphics.Containers;
+using NekoPlayer.App.Graphics.Sprites;
+using NekoPlayer.App.Online;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Configuration;
@@ -15,13 +21,8 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Logging;
 using osuTK;
-using osuTK.Graphics;
-using NekoPlayer.App.Config;
-using NekoPlayer.App.Extensions;
-using NekoPlayer.App.Graphics.Sprites;
-using NekoPlayer.App.Localisation;
-using NekoPlayer.App.Online;
 
 namespace NekoPlayer.App.Graphics.UserInterface
 {
@@ -29,12 +30,11 @@ namespace NekoPlayer.App.Graphics.UserInterface
     {
         private ProfileImage profileImage = null!;
         private AdaptiveTextFlowContainer channelName = null!;
-        private TruncatingSpriteText commentText = null!;
+        private LinkFlowContainer commentText = null!;
         public Action<VideoMetadataDisplay> ClickEvent = null!;
-        private AdaptiveSpriteText likeCount = null!, translateToText = null!;
-        private RoundedButtonContainer translateButton = null!;
+        private AdaptiveSpriteText likeCount = null!, replyCount = null!;
 
-        private Box bgLayer = null!;
+        public Action<double> TimestampClicked;
 
         [Resolved]
         private YouTubeAPI api { get; set; } = null!;
@@ -48,13 +48,13 @@ namespace NekoPlayer.App.Graphics.UserInterface
         [Resolved]
         private NekoPlayerConfigManager appConfig { get; set; } = null!;
 
-        private Bindable<Localisation.Language> uiLanguage;
+        private Bindable<Localisation.Language> uiLanguage = null!;
         private Bindable<UsernameDisplayMode> usernameDisplayMode = null!;
 
-        public CommentDisplay(Comment comment)
+        public CommentDisplay(CommentThread comment)
         {
             commentData = comment;
-            Height = 110;
+            AutoSizeAxes = Axes.Y;
             Task.Run(async () =>
             {
                 UpdateData();
@@ -72,86 +72,49 @@ namespace NekoPlayer.App.Graphics.UserInterface
             InternalChildren = new Drawable[]
             {
                 samples,
-                bgLayer = new Box
+                new Box
                 {
                     RelativeSizeAxes = Axes.Both,
                     Colour = overlayColourProvider.Background4,
                     Alpha = 0.7f,
                 },
                 new Container {
-                    RelativeSizeAxes = Axes.Both,
+                    RelativeSizeAxes = Axes.X,
+                    AutoSizeAxes = Axes.Y,
                     Padding = new MarginPadding(7),
                     Children = new Drawable[]
                     {
                         profileImage = new ProfileImage(35),
-                        new Container
+                        new FillFlowContainer
                         {
-                            RelativeSizeAxes = Axes.Both,
-                            Padding = new MarginPadding
+                            RelativeSizeAxes = Axes.X,
+                            Margin = new MarginPadding
                             {
-                                Vertical = 5,
+                                Top = 5,
                                 Left = 42,
                                 Right = 5,
                             },
+                            AutoSizeAxes = Axes.Y,
+                            Direction = FillDirection.Vertical,
+                            Spacing = new Vector2(0, 2),
                             Children = new Drawable[]
                             {
                                 channelName = new AdaptiveTextFlowContainer(f => f.Font = NekoPlayerApp.DefaultFont.With(size: 13, weight: "SemiBold"))
                                 {
                                     RelativeSizeAxes = Axes.X,
+                                    AutoSizeAxes = Axes.Y,
                                     Colour = overlayColourProvider.Background1,
                                 },
-                                commentText = new TruncatingSpriteText
+                                commentText = new LinkFlowContainer(font => font.Font = NekoPlayerApp.DefaultFont.With(size: 17, weight: "Regular"))
                                 {
-                                    Font = NekoPlayerApp.DefaultFont.With(size: 17, weight: "Regular"),
                                     RelativeSizeAxes = Axes.X,
-                                    Position = new Vector2(0, 13),
+                                    AutoSizeAxes = Axes.Y,
                                     Colour = overlayColourProvider.Content2,
-                                },
-                                translateButton = new RoundedButtonContainer
-                                {
-                                    AutoSizeAxes = Axes.X,
-                                    Height = 27,
-                                    CornerRadius = 12,
-                                    Masking = true,
-                                    AlwaysPresent = true,
-                                    Position = new Vector2(0, 35),
-                                    ClickAction = f => translateComment(),
-                                    Children = new Drawable[]
-                                    {
-                                        new Container
-                                        {
-                                            RelativeSizeAxes = Axes.Both,
-                                            CornerRadius = 12,
-                                            Child = new Box
-                                            {
-                                                RelativeSizeAxes = Axes.Both,
-                                                Colour = overlayColourProvider.Background3,
-                                                Alpha = 0.7f,
-                                            },
-                                        },
-                                        new FillFlowContainer
-                                        {
-                                            AutoSizeAxes = Axes.X,
-                                            RelativeSizeAxes = Axes.Y,
-                                            Direction = FillDirection.Horizontal,
-                                            Spacing = new Vector2(4, 0),
-                                            Padding = new MarginPadding(8),
-                                            Children = new Drawable[]
-                                            {
-                                                translateToText = new AdaptiveSpriteText
-                                                {
-                                                    Colour = overlayColourProvider.Content2,
-                                                    Font = NekoPlayerApp.DefaultFont.With(size: 13.5f, weight: "Regular"),
-                                                },
-                                            }
-                                        }
-                                    }
                                 },
                                 new FillFlowContainer
                                 {
                                     RelativeSizeAxes = Axes.X,
                                     AutoSizeAxes = Axes.Y,
-                                    Position = new Vector2(0, 65),
                                     Direction = FillDirection.Horizontal,
                                     Spacing = new Vector2(4, 0),
                                     Children = new Drawable[]
@@ -201,6 +164,51 @@ namespace NekoPlayer.App.Graphics.UserInterface
                                                 }
                                             }
                                         },
+                                        new Container
+                                        {
+                                            AutoSizeAxes = Axes.X,
+                                            Height = 27,
+                                            CornerRadius = 12,
+                                            Masking = true,
+                                            AlwaysPresent = true,
+                                            Children = new Drawable[]
+                                            {
+                                                new Container
+                                                {
+                                                    RelativeSizeAxes = Axes.Both,
+                                                    CornerRadius = 12,
+                                                    Child = new Box
+                                                    {
+                                                        RelativeSizeAxes = Axes.Both,
+                                                        Colour = overlayColourProvider.Background3,
+                                                        Alpha = 0.7f,
+                                                    },
+                                                },
+                                                new FillFlowContainer
+                                                {
+                                                    AutoSizeAxes = Axes.X,
+                                                    RelativeSizeAxes = Axes.Y,
+                                                    Direction = FillDirection.Horizontal,
+                                                    Spacing = new Vector2(4, 0),
+                                                    Padding = new MarginPadding(8),
+                                                    Children = new Drawable[]
+                                                    {
+                                                        new SpriteIcon
+                                                        {
+                                                            Width = 12,
+                                                            Height = 12,
+                                                            Icon = FontAwesome.Solid.CommentAlt,
+                                                            Colour = overlayColourProvider.Content2,
+                                                        },
+                                                        replyCount = new AdaptiveSpriteText
+                                                        {
+                                                            Colour = overlayColourProvider.Content2,
+                                                            Font = NekoPlayerApp.DefaultFont.With(size: 13.5f, weight: "Regular"),
+                                                        },
+                                                    }
+                                                }
+                                            }
+                                        },
                                     }
                                 },
                             }
@@ -212,7 +220,7 @@ namespace NekoPlayer.App.Graphics.UserInterface
 
         private bool translated;
 
-        private Comment commentData;
+        private CommentThread commentData;
 
         private HoverSounds samples = new HoverClickSounds(HoverSampleSet.Default);
 
@@ -223,24 +231,40 @@ namespace NekoPlayer.App.Graphics.UserInterface
                 hoverClickSounds.Enabled.Value = (ClickEvent != null);
         }
 
-        private void translateComment()
+        private void setText(string text)
         {
-            if (translated == false)
+            List<YouTubeDescriptionTextToken> list = NekoPlayerDescriptionParser.Parse(text);
+
+            foreach (YouTubeDescriptionTextToken item in list)
             {
-                Task.Run(async () => commentText.Text = translate.Translate(commentData.Snippet.TextOriginal, GoogleTranslateLanguage.auto));
-                translateToText.Text = NekoPlayerStrings.TranslateViewOriginal;
-                translated = true;
-            }
-            else
-            {
-                commentText.Text = commentData.Snippet.TextOriginal;
-                translateToText.Text = NekoPlayerStrings.TranslateTo(app.CurrentLanguage.Value.GetLocalisableDescription());
-                translated = false;
+                switch (item.Type)
+                {
+                    case YouTubeDescriptionTokenType.Text:
+                        commentText.AddText(item.Value);
+                        break;
+                    case YouTubeDescriptionTokenType.Url:
+                        if (NekoPlayerDescriptionParser.IsTwitter(item.Value))
+                            commentText.AddArbitraryDrawable(new UrlRedirectDisplay(item.Value));
+                        else if (NekoPlayerDescriptionParser.IsYouTubeVideo(item.Value))
+                            commentText.AddArbitraryDrawable(new UrlRedirectDisplay(item.Value));
+                        else
+                            commentText.AddLink(item.Value, item.Value);
+                        break;
+                    case YouTubeDescriptionTokenType.Mention:
+                        if (api.GetChannelExistsViaHandle(item.Value))
+                            commentText.AddLink(item.Value, $"https://www.youtube.com/{item.Value}");
+                        else
+                            commentText.AddText(item.Value);
+                        break;
+                    case YouTubeDescriptionTokenType.Timestamp:
+                        commentText.AddArbitraryDrawable(new TimestampButton(item.Value)
+                        {
+                            TimestampClicked = TimestampClicked,
+                        });
+                        break;
+                }
             }
         }
-
-        [Resolved]
-        private GoogleTranslate translate { get; set; } = null!;
 
         public void UpdateData()
         {
@@ -248,28 +272,38 @@ namespace NekoPlayer.App.Graphics.UserInterface
             {
                 try
                 {
-                    DateTimeOffset? dateTime = commentData.Snippet.PublishedAtDateTimeOffset;
+                    DateTimeOffset? dateTime = commentData.Snippet.TopLevelComment.Snippet.PublishedAtDateTimeOffset;
                     DateTimeOffset now = DateTime.Now;
-                    Channel channelData = api.GetChannel(commentData.Snippet.AuthorChannelId.Value);
+                    Channel channelData = null!;
+
+                    try
+                    {
+                        channelData = api.GetChannel(commentData.Snippet.TopLevelComment.Snippet.AuthorChannelId.Value);
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Error(e, e.GetDescription());
+                    }
 
                     Schedule(() =>
                     {
-                        channelName.Text = api.GetLocalizedChannelTitle(channelData);
+                        channelName.Text = channelData != null ? api.GetLocalizedChannelTitle(channelData) : commentData.Snippet.TopLevelComment.Snippet.AuthorDisplayName;
                         channelName.AddText(" • ", f => f.Font = NekoPlayerApp.DefaultFont.With(size: 13, weight: "Regular"));
 #pragma warning disable CS8629 // Nullable 값 형식이 null일 수 있습니다.
                         channelName.AddText(dateTime.Value.Humanize(dateToCompareAgainst: now), f => f.Font = NekoPlayerApp.DefaultFont.With(size: 13, weight: "Regular"));
 #pragma warning restore CS8629 // Nullable 값 형식이 null일 수 있습니다.
-                        commentText.Text = commentData.Snippet.TextOriginal;
-                        likeCount.Text = Convert.ToInt32(commentData.Snippet.LikeCount).ToStandardFormattedString(0);
-                        translateToText.Text = NekoPlayerStrings.TranslateTo(app.CurrentLanguage.Value.GetLocalisableDescription());
-                        profileImage.UpdateProfileImage(commentData.Snippet.AuthorChannelId.Value);
+                        setText(commentData.Snippet.TopLevelComment.Snippet.TextOriginal);
+                        likeCount.Text = Convert.ToInt32(commentData.Snippet.TopLevelComment.Snippet.LikeCount).ToStandardFormattedString(0);
+                        //translateToText.Text = NekoPlayerStrings.TranslateTo(app.CurrentLanguage.Value.GetLocalisableDescription());
+                        profileImage.UpdateProfileImage(commentData.Snippet.TopLevelComment.Snippet.AuthorChannelId.Value);
+                        replyCount.Text = Convert.ToInt32(commentData.Snippet.TotalReplyCount).ToStandardFormattedString(0);
 
                         usernameDisplayMode.BindValueChanged(locale =>
                         {
                             Schedule(() =>
                             {
                                 channelName.Text = string.Empty;
-                                channelName.Text = api.GetLocalizedChannelTitle(channelData);
+                                channelName.Text = channelData != null ? api.GetLocalizedChannelTitle(channelData) : commentData.Snippet.TopLevelComment.Snippet.AuthorDisplayName;
                                 channelName.AddText(" • ", f => f.Font = NekoPlayerApp.DefaultFont.With(size: 13, weight: "Regular"));
                                 channelName.AddText(dateTime.Value.Humanize(dateToCompareAgainst: now), f => f.Font = NekoPlayerApp.DefaultFont.With(size: 13, weight: "Regular"));
                             });
@@ -280,10 +314,10 @@ namespace NekoPlayer.App.Graphics.UserInterface
                             Schedule(() =>
                             {
                                 channelName.Text = string.Empty;
-                                channelName.Text = api.GetLocalizedChannelTitle(channelData);
+                                channelName.Text = channelData != null ? api.GetLocalizedChannelTitle(channelData) : commentData.Snippet.TopLevelComment.Snippet.AuthorDisplayName;
                                 channelName.AddText(" • ", f => f.Font = NekoPlayerApp.DefaultFont.With(size: 13, weight: "Regular"));
                                 channelName.AddText(dateTime.Value.Humanize(dateToCompareAgainst: now), f => f.Font = NekoPlayerApp.DefaultFont.With(size: 13, weight: "Regular"));
-                                translateToText.Text = NekoPlayerStrings.TranslateTo(app.CurrentLanguage.Value.GetLocalisableDescription());
+                                //translateToText.Text = NekoPlayerStrings.TranslateTo(app.CurrentLanguage.Value.GetLocalisableDescription());
                             });
                         });
                     });

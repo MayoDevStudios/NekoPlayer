@@ -82,6 +82,24 @@ namespace NekoPlayer.App.Online
             return result;
         }
 
+        public bool GetChannelExistsViaHandle(string handle)
+        {
+            var part = "statistics,snippet,brandingSettings,id,localizations";
+            var request = youtubeService.Channels.List(part);
+
+            request.ForHandle = handle;
+
+            if (googleOAuth2.SignedIn.Value == true)
+                request.AccessToken = googleOAuth2.GetAccessToken();
+
+            var response = request.Execute();
+
+            if (response.Items.Count == 0)
+                return false;
+
+            return true;
+        }
+
         public IList<I18nLanguage> GetAvailableLanguages()
         {
             var part = "snippet";
@@ -521,7 +539,10 @@ namespace NekoPlayer.App.Online
             }
             else
             {
-                return channel.Snippet.CustomUrl;
+                if (!string.IsNullOrEmpty(channel.Snippet.CustomUrl))
+                    return channel.Snippet.CustomUrl;
+                else
+                    return GetLocalizedChannelTitleOnlyOne(channel);
             }
         }
 

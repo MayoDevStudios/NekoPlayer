@@ -646,11 +646,11 @@ namespace NekoPlayer.App
             if (Host.Window == null)
                 return;
 
-            string newTitle = "NekoPlayer";
+            string newTitle = IsDeployedBuild ? "NekoPlayer" : "NekoPlayer (development)";
 
             if (!string.IsNullOrEmpty(customTitle))
             {
-                newTitle = $"NekoPlayer | {customTitle}";
+                newTitle = IsDeployedBuild ? $"NekoPlayer | {customTitle}" : $"NekoPlayer (development) | {customTitle}";
             }
 
             if (newTitle != Host.Window.Title)

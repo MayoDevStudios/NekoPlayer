@@ -5330,6 +5330,17 @@ namespace NekoPlayer.App.Screens
                         else
                             videoDescription.AddText(item.Value);
                         break;
+                    case YouTubeDescriptionTokenType.Timestamp:
+                        videoDescription.AddArbitraryDrawable(new TimestampButton(item.Value)
+                        {
+                            TimestampClicked = second =>
+                            {
+                                Logger.Log(second.ToString());
+                                hideOverlays();
+                                seekTo((second / 60) * 1000);
+                            },
+                        });
+                        break;
                 }
             }
         }

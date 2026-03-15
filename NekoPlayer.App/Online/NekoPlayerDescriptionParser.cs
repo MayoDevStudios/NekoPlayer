@@ -30,7 +30,7 @@ namespace NekoPlayer.App.Online
         public static List<YouTubeDescriptionTextToken> Parse(string input)
         {
             var tokens = new List<YouTubeDescriptionTextToken>();
-            var regex = new Regex(@"https?://[^\s]+|@\w+");
+            var regex = new Regex(@"https?://[^\s]+|@\w+|\d{1,2}:\d{2}(?::\d{2})?");
 
             int lastIndex = 0;
 
@@ -42,12 +42,20 @@ namespace NekoPlayer.App.Online
                     tokens.Add(new YouTubeDescriptionTextToken
                     {
                         Type = YouTubeDescriptionTokenType.Text,
-                        Value = input.Substring(lastIndex, match.Index - lastIndex)
+                        Value = input[lastIndex..match.Index]
                     });
                 }
 
                 // URL or Mention
-                if (match.Value.StartsWith("@"))
+                if (Regex.IsMatch(match.Value, @"^\d{1,2}:\d{2}(:\d{2})?$"))
+                {
+                    tokens.Add(new YouTubeDescriptionTextToken
+                    {
+                        Type = YouTubeDescriptionTokenType.Timestamp,
+                        Value = match.Value
+                    });
+                }
+                else if (match.Value.StartsWith("@"))
                 {
                     tokens.Add(new YouTubeDescriptionTextToken
                     {

@@ -7,6 +7,7 @@ namespace NekoPlayer.App.Online
     {
         Text,
         Url,
-        Mention
+        Mention,
+        Timestamp,
     }
 }

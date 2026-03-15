@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Google.Apis.YouTube.v3.Data;
 using Humanizer;
@@ -22,7 +21,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Input.Events;
 using osu.Framework.Logging;
 using osuTK;
 
@@ -233,118 +231,38 @@ namespace NekoPlayer.App.Graphics.UserInterface
                 hoverClickSounds.Enabled.Value = (ClickEvent != null);
         }
 
-        [Resolved]
-        private GoogleTranslate translate { get; set; } = null!;
-
         private void setText(string text)
         {
-            Match match = Regex.Match(text, @"\d{1,2}:\d{2}");
-            string textWithoutTimestamp = Regex.Replace(text, @"^\d{1,2}:\d{2}\s*", "");
+            List<YouTubeDescriptionTextToken> list = NekoPlayerDescriptionParser.Parse(text);
 
-            if (match.Success)
+            foreach (YouTubeDescriptionTextToken item in list)
             {
-                string timestamp = match.Value;
-                commentText.AddArbitraryDrawable(new TimestampButton(timestamp)
+                switch (item.Type)
                 {
-                    TimestampClicked = TimestampClicked,
-                });
-
-                List<YouTubeDescriptionTextToken> list = NekoPlayerDescriptionParser.Parse(textWithoutTimestamp);
-
-                foreach (YouTubeDescriptionTextToken item in list)
-                {
-                    switch (item.Type)
-                    {
-                        case YouTubeDescriptionTokenType.Text:
-                            commentText.AddText(item.Value);
-                            break;
-                        case YouTubeDescriptionTokenType.Url:
+                    case YouTubeDescriptionTokenType.Text:
+                        commentText.AddText(item.Value);
+                        break;
+                    case YouTubeDescriptionTokenType.Url:
+                        if (NekoPlayerDescriptionParser.IsTwitter(item.Value))
+                            commentText.AddArbitraryDrawable(new UrlRedirectDisplay(item.Value));
+                        else if (NekoPlayerDescriptionParser.IsYouTubeVideo(item.Value))
+                            commentText.AddArbitraryDrawable(new UrlRedirectDisplay(item.Value));
+                        else
                             commentText.AddLink(item.Value, item.Value);
-                            break;
-                        case YouTubeDescriptionTokenType.Mention:
+                        break;
+                    case YouTubeDescriptionTokenType.Mention:
+                        if (api.GetChannelExistsViaHandle(item.Value))
                             commentText.AddLink(item.Value, $"https://www.youtube.com/{item.Value}");
-                            break;
-                    }
-                }
-            }
-            else
-            {
-                List<YouTubeDescriptionTextToken> list = NekoPlayerDescriptionParser.Parse(textWithoutTimestamp);
-
-                foreach (YouTubeDescriptionTextToken item in list)
-                {
-                    switch (item.Type)
-                    {
-                        case YouTubeDescriptionTokenType.Text:
+                        else
                             commentText.AddText(item.Value);
-                            break;
-                        case YouTubeDescriptionTokenType.Url:
-                            if (NekoPlayerDescriptionParser.IsTwitter(item.Value))
-                                commentText.AddArbitraryDrawable(new UrlRedirectDisplay(item.Value));
-                            else if (NekoPlayerDescriptionParser.IsYouTubeVideo(item.Value))
-                                commentText.AddArbitraryDrawable(new UrlRedirectDisplay(item.Value));
-                            else
-                                commentText.AddLink(item.Value, item.Value);
-                            break;
-                        case YouTubeDescriptionTokenType.Mention:
-                            if (api.GetChannelExistsViaHandle(item.Value))
-                                commentText.AddLink(item.Value, $"https://www.youtube.com/{item.Value}");
-                            else
-                                commentText.AddText(item.Value);
-                            break;
-                    }
-                }
-            }
-        }
-
-        private partial class TimestampButton : AdaptiveClickableContainer
-        {
-            private string text;
-            public Action<double> TimestampClicked;
-
-            public TimestampButton(string text)
-                : base(HoverSampleSet.Button)
-            {
-                this.text = text;
-                Enabled.Value = true;
-                Masking = true;
-            }
-
-            [BackgroundDependencyLoader]
-            private void load(OverlayColourProvider overlayColourProvider)
-            {
-                AutoSizeAxes = Axes.Both;
-
-                AddRangeInternal(new Drawable[]
-                {
-                    new CircularContainer
-                    {
-                        AutoSizeAxes = Axes.Both,
-                        Children = new Drawable[]
+                        break;
+                    case YouTubeDescriptionTokenType.Timestamp:
+                        commentText.AddArbitraryDrawable(new TimestampButton(item.Value)
                         {
-                            new Box
-                            {
-                                RelativeSizeAxes = Axes.Both,
-                                Colour = overlayColourProvider.Background2,
-                            },
-                            new AdaptiveSpriteText
-                            {
-                                Margin = new MarginPadding(2),
-                                Text = text,
-                            }
-                        }
-                    }
-                });
-            }
-
-            protected override bool OnClick(ClickEvent e)
-            {
-                TimeSpan ts = TimeSpan.Parse(text);
-                int seconds = (int)ts.TotalSeconds;
-
-                TimestampClicked.Invoke(Convert.ToDouble(seconds));
-
-                return base.OnClick(e);
+                            TimestampClicked = TimestampClicked,
+                        });
+                        break;
+                }
             }
         }
 

@@ -32,6 +32,7 @@ namespace NekoPlayer.App.Graphics.UserInterface
             this.url = url;
             Enabled.Value = true;
             Masking = true;
+            TooltipText = url;
         }
 
         private SpriteIcon icon;

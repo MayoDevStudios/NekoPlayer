@@ -85,7 +85,7 @@ namespace NekoPlayer.App.Online
                         Value = match.Value
                     });
                 }
-                else if (match.Value.StartsWith("@"))
+                else if (match.Value.StartsWith('@'))
                 {
                     tokens.Add(new YouTubeDescriptionTextToken
                     {
@@ -93,7 +93,7 @@ namespace NekoPlayer.App.Online
                         Value = match.Value
                     });
                 }
-                else if (match.Value.StartsWith("#"))
+                else if (match.Value.StartsWith('#'))
                 {
                     tokens.Add(new YouTubeDescriptionTextToken
                     {

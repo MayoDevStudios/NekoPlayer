@@ -10,7 +10,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
@@ -38,7 +37,6 @@ using NekoPlayer.App.Overlays.OSD;
 using NekoPlayer.App.Overlays.Volume;
 using NekoPlayer.App.Updater;
 using NekoPlayer.App.Utils;
-using OpenTabletDriver.Native.Windows.Input;
 using osu.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
@@ -72,7 +70,6 @@ using SharpCompress.Archives.Zip;
 using YoutubeExplode.Converter;
 using YoutubeExplode.Videos.ClosedCaptions;
 using YoutubeExplode.Videos.Streams;
-using static System.Net.Mime.MediaTypeNames;
 using static Google.Apis.YouTube.v3.CommentThreadsResource.ListRequest;
 using Container = osu.Framework.Graphics.Containers.Container;
 using Language = NekoPlayer.App.Localisation.Language;
@@ -5307,36 +5304,8 @@ namespace NekoPlayer.App.Screens
         public void GetLocalizedVideoDescriptionRemake(Google.Apis.YouTube.v3.Data.Video videoData)
         {
             string str = api.GetLocalizedVideoDescription(videoData);
-            /*
-            var regex = new Regex(@"https?://[^\s]+");
 
-            int lastIndex = 0;
-
-            foreach (Match match in regex.Matches(str))
-            {
-                // URL 이전의 plain text
-                if (match.Index > lastIndex)
-                {
-                    string text = str.Substring(lastIndex, match.Index - lastIndex);
-                    //Console.WriteLine($"TEXT: {text}");
-                    videoDescription.AddText(text);
-                }
-
-                // URL
-                //Console.WriteLine($"URL: {match.Value}");
-                videoDescription.AddLink(match.Value, match.Value);
-
-                lastIndex = match.Index + match.Length;
-            }
-
-            // 마지막 남은 text
-            if (lastIndex < str.Length)
-            {
-                string text = str.Substring(lastIndex);
-                //Console.WriteLine($"TEXT: {text}");
-                videoDescription.AddText(text);
-            }
-            */
+            videoDescription.Text = string.Empty;
 
             List<YouTubeDescriptionTextToken> list = NekoPlayerDescriptionParser.Parse(str);
 
@@ -5348,10 +5317,18 @@ namespace NekoPlayer.App.Screens
                         videoDescription.AddText(item.Value);
                         break;
                     case YouTubeDescriptionTokenType.Url:
-                        videoDescription.AddLink(item.Value, item.Value);
+                        if (NekoPlayerDescriptionParser.IsTwitter(item.Value))
+                            videoDescription.AddArbitraryDrawable(new UrlRedirectDisplay(item.Value));
+                        else if (NekoPlayerDescriptionParser.IsYouTubeVideo(item.Value))
+                            videoDescription.AddArbitraryDrawable(new UrlRedirectDisplay(item.Value));
+                        else
+                            videoDescription.AddLink(item.Value, item.Value);
                         break;
                     case YouTubeDescriptionTokenType.Mention:
-                        videoDescription.AddLink(item.Value, $"https://www.youtube.com/{item.Value}");
+                        if (api.GetChannelExistsViaHandle(item.Value))
+                            videoDescription.AddLink(item.Value, $"https://www.youtube.com/{item.Value}");
+                        else
+                            videoDescription.AddText(item.Value);
                         break;
                 }
             }
@@ -5970,6 +5947,8 @@ namespace NekoPlayer.App.Screens
                 Schedule(() => item.Expire());
             }
 
+            Schedule(() => videoProgress.Value = 0);
+
             if (clearCache == true)
             {
                 await Task.Delay(1000); // Wait for any ongoing operations to complete
@@ -6476,6 +6455,12 @@ namespace NekoPlayer.App.Screens
                 hideOverlays();
                 showOverlayContainer(myPlaylistsOverlay);
             });
+        }
+
+        public void SelectVideo(string id)
+        {
+            Schedule(() => hideOverlays());
+            Task.Run(async () => SetVideoSource(id));
         }
 
 #nullable enable

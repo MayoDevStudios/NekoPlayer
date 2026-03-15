@@ -9,5 +9,6 @@ namespace NekoPlayer.App.Utils
         void TogglePreservePitch();
         void SelectPlaylist(string id);
         void OpenMyPlaylists();
+        void SelectVideo(string id);
     }
 }
